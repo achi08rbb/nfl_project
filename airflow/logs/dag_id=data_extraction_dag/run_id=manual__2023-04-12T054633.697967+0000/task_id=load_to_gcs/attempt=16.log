@@ -1,0 +1,88 @@
+[2023-04-12T07:16:04.171+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_extraction_dag.load_to_gcs manual__2023-04-12T05:46:33.697967+00:00 [queued]>
+[2023-04-12T07:16:04.186+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_extraction_dag.load_to_gcs manual__2023-04-12T05:46:33.697967+00:00 [queued]>
+[2023-04-12T07:16:04.187+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T07:16:04.189+0000] {taskinstance.py:1289} INFO - Starting attempt 16 of 17
+[2023-04-12T07:16:04.190+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T07:16:04.208+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): load_to_gcs> on 2023-04-12 05:46:33.697967+00:00
+[2023-04-12T07:16:04.223+0000] {standard_task_runner.py:55} INFO - Started process 313 to run task
+[2023-04-12T07:16:04.226+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'data_extraction_dag', 'load_to_gcs', 'manual__2023-04-12T05:46:33.697967+00:00', '--job-id', '550', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmpuv8wb6w0']
+[2023-04-12T07:16:04.230+0000] {standard_task_runner.py:83} INFO - Job 550: Subtask load_to_gcs
+[2023-04-12T07:16:04.318+0000] {task_command.py:389} INFO - Running <TaskInstance: data_extraction_dag.load_to_gcs manual__2023-04-12T05:46:33.697967+00:00 [running]> on host 4776679cf70d
+[2023-04-12T07:16:04.534+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=data_extraction_dag
+AIRFLOW_CTX_TASK_ID=load_to_gcs
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-12T05:46:33.697967+00:00
+AIRFLOW_CTX_TRY_NUMBER=16
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-12T05:46:33.697967+00:00
+[2023-04-12T07:16:04.537+0000] {logging_mixin.py:137} INFO - Loading for nfl data to parquet started
+[2023-04-12T07:16:04.880+0000] {_metadata.py:154} WARNING - Compute Engine Metadata server unavailable on attempt 1 of 5. Reason: HTTPConnectionPool(host='metadata.google.internal', port=80): Max retries exceeded with url: /computeMetadata/v1/instance/service-accounts/default/?recursive=true (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f5aef0c78e0>: Failed to establish a new connection: [Errno -2] Name or service not known'))
+[2023-04-12T07:16:04.886+0000] {_metadata.py:154} WARNING - Compute Engine Metadata server unavailable on attempt 2 of 5. Reason: HTTPConnectionPool(host='metadata.google.internal', port=80): Max retries exceeded with url: /computeMetadata/v1/instance/service-accounts/default/?recursive=true (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f5aef0c7c40>: Failed to establish a new connection: [Errno -2] Name or service not known'))
+[2023-04-12T07:16:04.892+0000] {_metadata.py:154} WARNING - Compute Engine Metadata server unavailable on attempt 3 of 5. Reason: HTTPConnectionPool(host='metadata.google.internal', port=80): Max retries exceeded with url: /computeMetadata/v1/instance/service-accounts/default/?recursive=true (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f5aef0d50d0>: Failed to establish a new connection: [Errno -2] Name or service not known'))
+[2023-04-12T07:16:04.899+0000] {_metadata.py:154} WARNING - Compute Engine Metadata server unavailable on attempt 4 of 5. Reason: HTTPConnectionPool(host='metadata.google.internal', port=80): Max retries exceeded with url: /computeMetadata/v1/instance/service-accounts/default/?recursive=true (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f5aef0d5580>: Failed to establish a new connection: [Errno -2] Name or service not known'))
+[2023-04-12T07:16:04.907+0000] {_metadata.py:154} WARNING - Compute Engine Metadata server unavailable on attempt 5 of 5. Reason: HTTPConnectionPool(host='metadata.google.internal', port=80): Max retries exceeded with url: /computeMetadata/v1/instance/service-accounts/default/?recursive=true (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f5aef0d5a00>: Failed to establish a new connection: [Errno -2] Name or service not known'))
+[2023-04-12T07:16:06.315+0000] {retry.py:148} ERROR - _request non-retriable exception: Anonymous caller does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist)., 401
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/retry.py", line 114, in retry_request
+    return await func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/core.py", line 411, in _request
+    validate_response(status, contents, path, args)
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/retry.py", line 101, in validate_response
+    raise HttpError(error)
+gcsfs.retry.HttpError: Anonymous caller does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist)., 401
+[2023-04-12T07:16:06.318+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 148, in load_to_gcs
+    df.to_parquet(f'{path}/nfl_parquets/{year}/{season_type}/{filename}_parquet', engine='pyarrow')
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/core/frame.py", line 2976, in to_parquet
+    return to_parquet(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parquet.py", line 430, in to_parquet
+    impl.write(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parquet.py", line 204, in write
+    self.api.parquet.write_table(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pyarrow/parquet/core.py", line 2985, in write_table
+    writer.write_table(table, row_group_size=row_group_size)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pyarrow/parquet/core.py", line 993, in __exit__
+    self.close()
+  File "/home/airflow/.local/lib/python3.9/site-packages/pyarrow/parquet/core.py", line 1066, in close
+    self.file_handle.close()
+  File "pyarrow/io.pxi", line 189, in pyarrow.lib.NativeFile.close
+  File "/home/airflow/.local/lib/python3.9/site-packages/fsspec/spec.py", line 1789, in close
+    self.flush(force=True)
+  File "/home/airflow/.local/lib/python3.9/site-packages/fsspec/spec.py", line 1655, in flush
+    self._initiate_upload()
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/core.py", line 1592, in _initiate_upload
+    self.location = sync(
+  File "/home/airflow/.local/lib/python3.9/site-packages/fsspec/asyn.py", line 100, in sync
+    raise return_result
+  File "/home/airflow/.local/lib/python3.9/site-packages/fsspec/asyn.py", line 55, in _runner
+    result[0] = await coro
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/core.py", line 1708, in initiate_upload
+    headers, _ = await fs._call(
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/core.py", line 418, in _call
+    status, headers, info, contents = await self._request(
+  File "/home/airflow/.local/lib/python3.9/site-packages/decorator.py", line 221, in fun
+    return await caller(func, *(extras + args), **kw)
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/retry.py", line 149, in retry_request
+    raise e
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/retry.py", line 114, in retry_request
+    return await func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/core.py", line 411, in _request
+    validate_response(status, contents, path, args)
+  File "/home/airflow/.local/lib/python3.9/site-packages/gcsfs/retry.py", line 101, in validate_response
+    raise HttpError(error)
+gcsfs.retry.HttpError: Anonymous caller does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist)., 401
+[2023-04-12T07:16:06.347+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=data_extraction_dag, task_id=load_to_gcs, execution_date=20230412T054633, start_date=20230412T071604, end_date=20230412T071606
+[2023-04-12T07:16:06.365+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 550 for task load_to_gcs (Anonymous caller does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist)., 401; 313)
+[2023-04-12T07:16:06.410+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-12T07:16:06.432+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

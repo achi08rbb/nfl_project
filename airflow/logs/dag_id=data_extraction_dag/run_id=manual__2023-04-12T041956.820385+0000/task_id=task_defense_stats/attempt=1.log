@@ -1,0 +1,45 @@
+[2023-04-12T04:37:17.802+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_extraction_dag.task_defense_stats manual__2023-04-12T04:19:56.820385+00:00 [queued]>
+[2023-04-12T04:37:17.815+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_extraction_dag.task_defense_stats manual__2023-04-12T04:19:56.820385+00:00 [queued]>
+[2023-04-12T04:37:17.816+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T04:37:17.818+0000] {taskinstance.py:1289} INFO - Starting attempt 1 of 2
+[2023-04-12T04:37:17.819+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T04:37:17.838+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_defense_stats> on 2023-04-12 04:19:56.820385+00:00
+[2023-04-12T04:37:17.855+0000] {standard_task_runner.py:55} INFO - Started process 835 to run task
+[2023-04-12T04:37:17.863+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'data_extraction_dag', 'task_defense_stats', 'manual__2023-04-12T04:19:56.820385+00:00', '--job-id', '271', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmpxp_gazf6']
+[2023-04-12T04:37:17.869+0000] {standard_task_runner.py:83} INFO - Job 271: Subtask task_defense_stats
+[2023-04-12T04:37:17.964+0000] {task_command.py:389} INFO - Running <TaskInstance: data_extraction_dag.task_defense_stats manual__2023-04-12T04:19:56.820385+00:00 [running]> on host 392d142fd52f
+[2023-04-12T04:37:18.042+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=data_extraction_dag
+AIRFLOW_CTX_TASK_ID=task_defense_stats
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-12T04:19:56.820385+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-12T04:19:56.820385+00:00
+[2023-04-12T04:37:18.045+0000] {logging_mixin.py:137} INFO - Fetching for teams defense stats started
+[2023-04-12T04:37:18.773+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 135, in task_defense_stats
+    teams_defense_stats_df = webscrape_defense_stats(year, season_type)
+  File "/opt/airflow/code/extraction_nfl.py", line 396, in webscrape_defense_stats
+    stats=pd.read_html(str(tables[1]), flavor='bs4')[0]
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/util/_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/html.py", line 1205, in read_html
+    return _parse(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/html.py", line 982, in _parse
+    parser = _parser_dispatch(flav)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/html.py", line 931, in _parser_dispatch
+    raise ImportError("html5lib not found, please install it")
+ImportError: html5lib not found, please install it
+[2023-04-12T04:37:18.796+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=data_extraction_dag, task_id=task_defense_stats, execution_date=20230412T041956, start_date=20230412T043717, end_date=20230412T043718
+[2023-04-12T04:37:18.816+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 271 for task task_defense_stats (html5lib not found, please install it; 835)
+[2023-04-12T04:37:18.835+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-12T04:37:18.861+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

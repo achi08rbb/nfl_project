@@ -1,0 +1,102 @@
+[2023-04-12T13:04:42.310+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [queued]>
+[2023-04-12T13:04:42.339+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [queued]>
+[2023-04-12T13:04:42.341+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T13:04:42.344+0000] {taskinstance.py:1289} INFO - Starting attempt 12 of 13
+[2023-04-12T13:04:42.345+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T13:04:42.382+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_pyspark> on 2023-04-11 00:00:00+00:00
+[2023-04-12T13:04:42.386+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]>, dependency 'Task Instance Not Running' FAILED: Task is in the running state
+[2023-04-12T13:04:42.391+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]>, dependency 'Task Instance State' FAILED: Task is in the 'running' state.
+[2023-04-12T13:04:42.414+0000] {local_task_job.py:151} INFO - Task is not able to be run
+[2023-04-12T13:04:42.451+0000] {standard_task_runner.py:55} INFO - Started process 8534 to run task
+[2023-04-12T13:04:42.474+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'nfl_transformation_dag', 'task_pyspark', 'scheduled__2023-04-11T00:00:00+00:00', '--job-id', '938', '--pool', 'default_pool', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmpp77c6qxy']
+[2023-04-12T13:04:42.485+0000] {standard_task_runner.py:83} INFO - Job 938: Subtask task_pyspark
+[2023-04-12T13:04:42.615+0000] {task_command.py:389} INFO - Running <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]> on host a2e619923d04
+[2023-04-12T13:04:42.822+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=nfl_transformation_dag
+AIRFLOW_CTX_TASK_ID=task_pyspark
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-11T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=12
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2023-04-11T00:00:00+00:00
+[2023-04-12T13:04:42.831+0000] {subprocess.py:63} INFO - Tmp dir root location: 
+ /tmp
+[2023-04-12T13:04:42.858+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'gcloud dataproc jobs submit pyspark                 --cluster=nfl-spark-cluster                 --region=europe-west6                 gs://nfl-data-lake_nfl-de-project/code/transform_pyspark.py                 --                     --year=2020                     --season_type=2 ']
+[2023-04-12T13:04:42.882+0000] {subprocess.py:86} INFO - Output:
+[2023-04-12T13:04:50.878+0000] {subprocess.py:93} INFO - Job [a01b3ef17ea4415aa48d4f2e3e85bb41] submitted.
+[2023-04-12T13:04:50.880+0000] {subprocess.py:93} INFO - Waiting for job output...
+[2023-04-12T13:04:59.538+0000] {subprocess.py:93} INFO - 23/04/12 13:04:57 INFO org.apache.spark.SparkEnv: Registering MapOutputTracker
+[2023-04-12T13:04:59.539+0000] {subprocess.py:93} INFO - 23/04/12 13:04:57 INFO org.apache.spark.SparkEnv: Registering BlockManagerMaster
+[2023-04-12T13:04:59.540+0000] {subprocess.py:93} INFO - 23/04/12 13:04:57 INFO org.apache.spark.SparkEnv: Registering BlockManagerMasterHeartbeat
+[2023-04-12T13:04:59.540+0000] {subprocess.py:93} INFO - 23/04/12 13:04:57 INFO org.apache.spark.SparkEnv: Registering OutputCommitCoordinator
+[2023-04-12T13:04:59.541+0000] {subprocess.py:93} INFO - 23/04/12 13:04:57 INFO org.sparkproject.jetty.util.log: Logging initialized @3693ms to org.sparkproject.jetty.util.log.Slf4jLog
+[2023-04-12T13:04:59.542+0000] {subprocess.py:93} INFO - 23/04/12 13:04:57 INFO org.sparkproject.jetty.server.Server: jetty-9.4.40.v20210413; built: 2021-04-13T20:42:42.668Z; git: b881a572662e1943a14ae12e7e1207989f218b74; jvm 1.8.0_322-b06
+[2023-04-12T13:04:59.542+0000] {subprocess.py:93} INFO - 23/04/12 13:04:57 INFO org.sparkproject.jetty.server.Server: Started @3815ms
+[2023-04-12T13:04:59.543+0000] {subprocess.py:93} INFO - 23/04/12 13:04:58 INFO org.sparkproject.jetty.server.AbstractConnector: Started ServerConnector@67587264{HTTP/1.1, (http/1.1)}{0.0.0.0:41487}
+[2023-04-12T13:05:01.892+0000] {subprocess.py:93} INFO - 23/04/12 13:05:00 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageImpl: Ignoring exception of type GoogleJsonResponseException; verified object already exists with desired state.
+[2023-04-12T13:05:08.529+0000] {subprocess.py:93} INFO - 23/04/12 13:05:06 WARN org.apache.spark.sql.catalyst.util.package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+[2023-04-12T13:05:08.530+0000] {subprocess.py:93} INFO - Cleaning the data for the teams_df started
+[2023-04-12T13:05:08.531+0000] {subprocess.py:93} INFO - Cleaning the data for the teams_df is successful!
+[2023-04-12T13:05:11.110+0000] {subprocess.py:93} INFO - Loading for nfl data to parquet started
+[2023-04-12T13:05:11.111+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2023-04-12T13:05:11.112+0000] {subprocess.py:93} INFO -   File "/tmp/a01b3ef17ea4415aa48d4f2e3e85bb41/transform_pyspark.py", line 242, in <module>
+[2023-04-12T13:05:11.112+0000] {subprocess.py:93} INFO -     df.write.format('com.google.cloud.spark.bigquery') \
+[2023-04-12T13:05:11.113+0000] {subprocess.py:93} INFO -   File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/sql/readwriter.py", line 1107, in save
+[2023-04-12T13:05:11.114+0000] {subprocess.py:93} INFO -   File "/usr/lib/spark/python/lib/py4j-0.10.9-src.zip/py4j/java_gateway.py", line 1304, in __call__
+[2023-04-12T13:05:11.115+0000] {subprocess.py:93} INFO -   File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/sql/utils.py", line 111, in deco
+[2023-04-12T13:05:11.116+0000] {subprocess.py:93} INFO -   File "/usr/lib/spark/python/lib/py4j-0.10.9-src.zip/py4j/protocol.py", line 326, in get_return_value
+[2023-04-12T13:05:11.117+0000] {subprocess.py:93} INFO - py4j.protocol.Py4JJavaError: An error occurred while calling o274.save.
+[2023-04-12T13:05:11.118+0000] {subprocess.py:93} INFO - : java.lang.ClassNotFoundException: Failed to find data source: com.google.cloud.spark.bigquery. Please find packages at http://spark.apache.org/third-party-projects.html
+[2023-04-12T13:05:11.119+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.datasources.DataSource$.lookupDataSource(DataSource.scala:692)
+[2023-04-12T13:05:11.119+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.datasources.DataSource$.lookupDataSourceV2(DataSource.scala:746)
+[2023-04-12T13:05:11.120+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.lookupV2Provider(DataFrameWriter.scala:993)
+[2023-04-12T13:05:11.120+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.saveInternal(DataFrameWriter.scala:311)
+[2023-04-12T13:05:11.122+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:301)
+[2023-04-12T13:05:11.123+0000] {subprocess.py:93} INFO - 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+[2023-04-12T13:05:11.124+0000] {subprocess.py:93} INFO - 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+[2023-04-12T13:05:11.124+0000] {subprocess.py:93} INFO - 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[2023-04-12T13:05:11.125+0000] {subprocess.py:93} INFO - 	at java.lang.reflect.Method.invoke(Method.java:498)
+[2023-04-12T13:05:11.126+0000] {subprocess.py:93} INFO - 	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+[2023-04-12T13:05:11.126+0000] {subprocess.py:93} INFO - 	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)
+[2023-04-12T13:05:11.127+0000] {subprocess.py:93} INFO - 	at py4j.Gateway.invoke(Gateway.java:282)
+[2023-04-12T13:05:11.129+0000] {subprocess.py:93} INFO - 	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+[2023-04-12T13:05:11.131+0000] {subprocess.py:93} INFO - 	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+[2023-04-12T13:05:11.133+0000] {subprocess.py:93} INFO - 	at py4j.GatewayConnection.run(GatewayConnection.java:238)
+[2023-04-12T13:05:11.134+0000] {subprocess.py:93} INFO - 	at java.lang.Thread.run(Thread.java:750)
+[2023-04-12T13:05:11.135+0000] {subprocess.py:93} INFO - Caused by: java.lang.ClassNotFoundException: com.google.cloud.spark.bigquery.DefaultSource
+[2023-04-12T13:05:11.136+0000] {subprocess.py:93} INFO - 	at java.net.URLClassLoader.findClass(URLClassLoader.java:387)
+[2023-04-12T13:05:11.137+0000] {subprocess.py:93} INFO - 	at java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+[2023-04-12T13:05:11.138+0000] {subprocess.py:93} INFO - 	at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
+[2023-04-12T13:05:11.139+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.datasources.DataSource$.$anonfun$lookupDataSource$5(DataSource.scala:666)
+[2023-04-12T13:05:11.140+0000] {subprocess.py:93} INFO - 	at scala.util.Try$.apply(Try.scala:213)
+[2023-04-12T13:05:11.141+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.datasources.DataSource$.$anonfun$lookupDataSource$4(DataSource.scala:666)
+[2023-04-12T13:05:11.142+0000] {subprocess.py:93} INFO - 	at scala.util.Failure.orElse(Try.scala:224)
+[2023-04-12T13:05:11.143+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.datasources.DataSource$.lookupDataSource(DataSource.scala:666)
+[2023-04-12T13:05:11.144+0000] {subprocess.py:93} INFO - 	... 15 more
+[2023-04-12T13:05:11.145+0000] {subprocess.py:93} INFO - 
+[2023-04-12T13:05:11.146+0000] {subprocess.py:93} INFO - 23/04/12 13:05:10 INFO org.sparkproject.jetty.server.AbstractConnector: Stopped Spark@67587264{HTTP/1.1, (http/1.1)}{0.0.0.0:0}
+[2023-04-12T13:05:22.967+0000] {subprocess.py:93} INFO - ERROR: (gcloud.dataproc.jobs.submit.pyspark) Job [a01b3ef17ea4415aa48d4f2e3e85bb41] failed with error:
+[2023-04-12T13:05:22.967+0000] {subprocess.py:93} INFO - Google Cloud Dataproc Agent reports job failure. If logs are available, they can be found at:
+[2023-04-12T13:05:22.968+0000] {subprocess.py:93} INFO - https://console.cloud.google.com/dataproc/jobs/a01b3ef17ea4415aa48d4f2e3e85bb41?project=nfl-de-project&region=europe-west6
+[2023-04-12T13:05:22.969+0000] {subprocess.py:93} INFO - gcloud dataproc jobs wait 'a01b3ef17ea4415aa48d4f2e3e85bb41' --region 'europe-west6' --project 'nfl-de-project'
+[2023-04-12T13:05:22.969+0000] {subprocess.py:93} INFO - https://console.cloud.google.com/storage/browser/nfl-spark-staging_nfl-de-project/google-cloud-dataproc-metainfo/cf386a87-5cdc-4f46-9dda-06a203a6bb84/jobs/a01b3ef17ea4415aa48d4f2e3e85bb41/
+[2023-04-12T13:05:22.970+0000] {subprocess.py:93} INFO - gs://nfl-spark-staging_nfl-de-project/google-cloud-dataproc-metainfo/cf386a87-5cdc-4f46-9dda-06a203a6bb84/jobs/a01b3ef17ea4415aa48d4f2e3e85bb41/driveroutput
+[2023-04-12T13:05:23.563+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2023-04-12T13:05:23.706+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 223, in task_pyspark
+    operator.execute(context={})
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/bash.py", line 196, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2023-04-12T13:05:23.770+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=nfl_transformation_dag, task_id=task_pyspark, execution_date=20230411T000000, start_date=20230412T130442, end_date=20230412T130523
+[2023-04-12T13:05:23.885+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 938 for task task_pyspark (Bash command failed. The command returned a non-zero exit code 1.; 8534)
+[2023-04-12T13:05:23.960+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-12T13:05:24.045+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

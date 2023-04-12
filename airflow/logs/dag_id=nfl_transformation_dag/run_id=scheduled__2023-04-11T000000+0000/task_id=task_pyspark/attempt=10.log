@@ -1,0 +1,56 @@
+[2023-04-12T12:09:08.694+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [queued]>
+[2023-04-12T12:09:08.716+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [queued]>
+[2023-04-12T12:09:08.717+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T12:09:08.718+0000] {taskinstance.py:1289} INFO - Starting attempt 10 of 11
+[2023-04-12T12:09:08.719+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T12:09:08.742+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_pyspark> on 2023-04-11 00:00:00+00:00
+[2023-04-12T12:09:08.743+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]>, dependency 'Task Instance Not Running' FAILED: Task is in the running state
+[2023-04-12T12:09:08.745+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]>, dependency 'Task Instance State' FAILED: Task is in the 'running' state.
+[2023-04-12T12:09:08.761+0000] {local_task_job.py:151} INFO - Task is not able to be run
+[2023-04-12T12:09:08.774+0000] {standard_task_runner.py:55} INFO - Started process 7824 to run task
+[2023-04-12T12:09:08.789+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'nfl_transformation_dag', 'task_pyspark', 'scheduled__2023-04-11T00:00:00+00:00', '--job-id', '934', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmp8m_wjnpv']
+[2023-04-12T12:09:08.792+0000] {standard_task_runner.py:83} INFO - Job 934: Subtask task_pyspark
+[2023-04-12T12:09:08.871+0000] {task_command.py:389} INFO - Running <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]> on host a2e619923d04
+[2023-04-12T12:09:08.951+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=nfl_transformation_dag
+AIRFLOW_CTX_TASK_ID=task_pyspark
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-11T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=10
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2023-04-11T00:00:00+00:00
+[2023-04-12T12:09:08.970+0000] {subprocess.py:63} INFO - Tmp dir root location: 
+ /tmp
+[2023-04-12T12:09:08.981+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'gcloud dataproc jobs submit pyspark                 --cluster=nfl-spark-cluster                 --region=europe-west6                 gs://nfl-data-lake_nfl-de-project/code/transform_pyspark.py                 --                     --year=2020                     --season_type=2 ']
+[2023-04-12T12:09:09.005+0000] {subprocess.py:86} INFO - Output:
+[2023-04-12T12:09:16.201+0000] {subprocess.py:93} INFO - Job [b6922e9bb2154148ad077e415cddaed8] submitted.
+[2023-04-12T12:09:16.202+0000] {subprocess.py:93} INFO - Waiting for job output...
+[2023-04-12T12:09:23.559+0000] {subprocess.py:93} INFO -   File "/tmp/b6922e9bb2154148ad077e415cddaed8/transform_pyspark.py", line 420
+[2023-04-12T12:09:23.560+0000] {subprocess.py:93} INFO -     stats.write.format(''com.google.cloud.spark.bigquery'') \
+[2023-04-12T12:09:23.561+0000] {subprocess.py:93} INFO -                          ^
+[2023-04-12T12:09:23.562+0000] {subprocess.py:93} INFO - SyntaxError: invalid syntax
+[2023-04-12T12:09:47.610+0000] {subprocess.py:93} INFO - ERROR: (gcloud.dataproc.jobs.submit.pyspark) Job [b6922e9bb2154148ad077e415cddaed8] failed with error:
+[2023-04-12T12:09:47.612+0000] {subprocess.py:93} INFO - Job failed with message [SyntaxError: invalid syntax]. Additional details can be found at:
+[2023-04-12T12:09:47.614+0000] {subprocess.py:93} INFO - https://console.cloud.google.com/dataproc/jobs/b6922e9bb2154148ad077e415cddaed8?project=nfl-de-project&region=europe-west6
+[2023-04-12T12:09:47.616+0000] {subprocess.py:93} INFO - gcloud dataproc jobs wait 'b6922e9bb2154148ad077e415cddaed8' --region 'europe-west6' --project 'nfl-de-project'
+[2023-04-12T12:09:47.618+0000] {subprocess.py:93} INFO - https://console.cloud.google.com/storage/browser/nfl-spark-staging_nfl-de-project/google-cloud-dataproc-metainfo/cf386a87-5cdc-4f46-9dda-06a203a6bb84/jobs/b6922e9bb2154148ad077e415cddaed8/
+[2023-04-12T12:09:47.620+0000] {subprocess.py:93} INFO - gs://nfl-spark-staging_nfl-de-project/google-cloud-dataproc-metainfo/cf386a87-5cdc-4f46-9dda-06a203a6bb84/jobs/b6922e9bb2154148ad077e415cddaed8/driveroutput
+[2023-04-12T12:09:47.839+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2023-04-12T12:09:47.854+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 223, in task_pyspark
+    operator.execute(context={})
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/bash.py", line 196, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2023-04-12T12:09:47.870+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=nfl_transformation_dag, task_id=task_pyspark, execution_date=20230411T000000, start_date=20230412T120908, end_date=20230412T120947
+[2023-04-12T12:09:47.897+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 934 for task task_pyspark (Bash command failed. The command returned a non-zero exit code 1.; 7824)
+[2023-04-12T12:09:47.943+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-12T12:09:47.961+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

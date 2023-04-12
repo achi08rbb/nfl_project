@@ -1,0 +1,251 @@
+[2023-04-12T13:20:11.982+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [queued]>
+[2023-04-12T13:20:11.996+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [queued]>
+[2023-04-12T13:20:11.997+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T13:20:11.998+0000] {taskinstance.py:1289} INFO - Starting attempt 17 of 18
+[2023-04-12T13:20:11.999+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T13:20:12.016+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_pyspark> on 2023-04-11 00:00:00+00:00
+[2023-04-12T13:20:12.017+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]>, dependency 'Task Instance Not Running' FAILED: Task is in the running state
+[2023-04-12T13:20:12.019+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]>, dependency 'Task Instance State' FAILED: Task is in the 'running' state.
+[2023-04-12T13:20:12.029+0000] {standard_task_runner.py:55} INFO - Started process 9223 to run task
+[2023-04-12T13:20:12.032+0000] {local_task_job.py:151} INFO - Task is not able to be run
+[2023-04-12T13:20:12.035+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'nfl_transformation_dag', 'task_pyspark', 'scheduled__2023-04-11T00:00:00+00:00', '--job-id', '948', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmp3qe_kunl']
+[2023-04-12T13:20:12.042+0000] {standard_task_runner.py:83} INFO - Job 948: Subtask task_pyspark
+[2023-04-12T13:20:12.133+0000] {task_command.py:389} INFO - Running <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]> on host a2e619923d04
+[2023-04-12T13:20:12.233+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=nfl_transformation_dag
+AIRFLOW_CTX_TASK_ID=task_pyspark
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-11T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=17
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2023-04-11T00:00:00+00:00
+[2023-04-12T13:20:12.240+0000] {subprocess.py:63} INFO - Tmp dir root location: 
+ /tmp
+[2023-04-12T13:20:12.268+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'gcloud dataproc jobs submit pyspark                 --cluster=nfl-spark-cluster                 --region=europe-west6                 --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.30.0.jar                gs://nfl-data-lake_nfl-de-project/code/transform_pyspark.py                 --                     --year=2020                     --season_type=2 ']
+[2023-04-12T13:20:12.299+0000] {subprocess.py:86} INFO - Output:
+[2023-04-12T13:20:18.622+0000] {subprocess.py:93} INFO - Job [16aa9376fa4243c7b98458538dc4d25c] submitted.
+[2023-04-12T13:20:18.623+0000] {subprocess.py:93} INFO - Waiting for job output...
+[2023-04-12T13:20:30.744+0000] {subprocess.py:93} INFO - 23/04/12 13:20:30 INFO org.apache.spark.SparkEnv: Registering MapOutputTracker
+[2023-04-12T13:20:30.745+0000] {subprocess.py:93} INFO - 23/04/12 13:20:30 INFO org.apache.spark.SparkEnv: Registering BlockManagerMaster
+[2023-04-12T13:20:30.746+0000] {subprocess.py:93} INFO - 23/04/12 13:20:30 INFO org.apache.spark.SparkEnv: Registering BlockManagerMasterHeartbeat
+[2023-04-12T13:20:30.747+0000] {subprocess.py:93} INFO - 23/04/12 13:20:30 INFO org.apache.spark.SparkEnv: Registering OutputCommitCoordinator
+[2023-04-12T13:20:30.748+0000] {subprocess.py:93} INFO - 23/04/12 13:20:30 INFO org.sparkproject.jetty.util.log: Logging initialized @4258ms to org.sparkproject.jetty.util.log.Slf4jLog
+[2023-04-12T13:20:30.749+0000] {subprocess.py:93} INFO - 23/04/12 13:20:30 INFO org.sparkproject.jetty.server.Server: jetty-9.4.40.v20210413; built: 2021-04-13T20:42:42.668Z; git: b881a572662e1943a14ae12e7e1207989f218b74; jvm 1.8.0_322-b06
+[2023-04-12T13:20:30.750+0000] {subprocess.py:93} INFO - 23/04/12 13:20:30 INFO org.sparkproject.jetty.server.Server: Started @4383ms
+[2023-04-12T13:20:30.751+0000] {subprocess.py:93} INFO - 23/04/12 13:20:30 INFO org.sparkproject.jetty.server.AbstractConnector: Started ServerConnector@77b58774{HTTP/1.1, (http/1.1)}{0.0.0.0:36019}
+[2023-04-12T13:20:35.445+0000] {subprocess.py:93} INFO - 23/04/12 13:20:32 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageImpl: Ignoring exception of type GoogleJsonResponseException; verified object already exists with desired state.
+[2023-04-12T13:20:38.754+0000] {subprocess.py:93} INFO - 23/04/12 13:20:38 WARN org.apache.spark.sql.catalyst.util.package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+[2023-04-12T13:20:38.756+0000] {subprocess.py:93} INFO - Cleaning the data for the teams_df started
+[2023-04-12T13:20:41.009+0000] {subprocess.py:93} INFO - Cleaning the data for the teams_df is successful!
+[2023-04-12T13:20:45.478+0000] {subprocess.py:93} INFO - Loading for nfl data to parquet started
+[2023-04-12T13:20:45.479+0000] {subprocess.py:93} INFO - 23/04/12 13:20:45 INFO org.apache.hadoop.io.compress.CodecPool: Got brand-new decompressor [.snappy]
+[2023-04-12T13:20:48.390+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.391+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.392+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.393+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.394+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.395+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.396+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.397+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.397+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet block size to 134217728
+[2023-04-12T13:20:48.398+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet page size to 1048576
+[2023-04-12T13:20:48.399+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet dictionary page size to 1048576
+[2023-04-12T13:20:48.399+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Dictionary is on
+[2023-04-12T13:20:48.401+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Validation is off
+[2023-04-12T13:20:48.402+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writer version is: PARQUET_1_0
+[2023-04-12T13:20:48.402+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Maximum row group padding size is 8388608 bytes
+[2023-04-12T13:20:48.403+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page size checking is: estimated
+[2023-04-12T13:20:48.404+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Min row count for page size check is: 100
+[2023-04-12T13:20:48.405+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Max row count for page size check is: 10000
+[2023-04-12T13:20:48.405+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for column indexes is: 64
+[2023-04-12T13:20:48.406+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for statistics min/max  is: 2147483647
+[2023-04-12T13:20:48.407+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page row count limit to 20000
+[2023-04-12T13:20:48.408+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writing page checksums is: on
+[2023-04-12T13:20:48.409+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet block size to 134217728
+[2023-04-12T13:20:48.409+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet page size to 1048576
+[2023-04-12T13:20:48.410+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet dictionary page size to 1048576
+[2023-04-12T13:20:48.411+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Dictionary is on
+[2023-04-12T13:20:48.412+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Validation is off
+[2023-04-12T13:20:48.413+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writer version is: PARQUET_1_0
+[2023-04-12T13:20:48.414+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Maximum row group padding size is 8388608 bytes
+[2023-04-12T13:20:48.415+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page size checking is: estimated
+[2023-04-12T13:20:48.416+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Min row count for page size check is: 100
+[2023-04-12T13:20:48.416+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Max row count for page size check is: 10000
+[2023-04-12T13:20:48.417+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for column indexes is: 64
+[2023-04-12T13:20:48.418+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for statistics min/max  is: 2147483647
+[2023-04-12T13:20:48.418+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page row count limit to 20000
+[2023-04-12T13:20:48.419+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writing page checksums is: on
+[2023-04-12T13:20:48.420+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet block size to 134217728
+[2023-04-12T13:20:48.420+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet page size to 1048576
+[2023-04-12T13:20:48.421+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet dictionary page size to 1048576
+[2023-04-12T13:20:48.422+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Dictionary is on
+[2023-04-12T13:20:48.423+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Validation is off
+[2023-04-12T13:20:48.423+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writer version is: PARQUET_1_0
+[2023-04-12T13:20:48.424+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Maximum row group padding size is 8388608 bytes
+[2023-04-12T13:20:48.424+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page size checking is: estimated
+[2023-04-12T13:20:48.425+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Min row count for page size check is: 100
+[2023-04-12T13:20:48.425+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Max row count for page size check is: 10000
+[2023-04-12T13:20:48.426+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for column indexes is: 64
+[2023-04-12T13:20:48.427+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for statistics min/max  is: 2147483647
+[2023-04-12T13:20:48.427+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page row count limit to 20000
+[2023-04-12T13:20:48.428+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writing page checksums is: on
+[2023-04-12T13:20:48.428+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet block size to 134217728
+[2023-04-12T13:20:48.429+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet page size to 1048576
+[2023-04-12T13:20:48.430+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet dictionary page size to 1048576
+[2023-04-12T13:20:48.430+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Dictionary is on
+[2023-04-12T13:20:48.431+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Validation is off
+[2023-04-12T13:20:48.432+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writer version is: PARQUET_1_0
+[2023-04-12T13:20:48.432+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Maximum row group padding size is 8388608 bytes
+[2023-04-12T13:20:48.433+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page size checking is: estimated
+[2023-04-12T13:20:48.433+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Min row count for page size check is: 100
+[2023-04-12T13:20:48.434+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Max row count for page size check is: 10000
+[2023-04-12T13:20:48.434+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for column indexes is: 64
+[2023-04-12T13:20:48.435+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for statistics min/max  is: 2147483647
+[2023-04-12T13:20:48.436+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page row count limit to 20000
+[2023-04-12T13:20:48.436+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writing page checksums is: on
+[2023-04-12T13:20:48.437+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.hadoop.io.compress.CodecPool: Got brand-new compressor [.snappy]
+[2023-04-12T13:20:48.438+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.hadoop.io.compress.CodecPool: Got brand-new compressor [.snappy]
+[2023-04-12T13:20:48.439+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.hadoop.io.compress.CodecPool: Got brand-new compressor [.snappy]
+[2023-04-12T13:20:48.439+0000] {subprocess.py:93} INFO - 23/04/12 13:20:46 INFO org.apache.hadoop.io.compress.CodecPool: Got brand-new compressor [.snappy]
+[2023-04-12T13:20:48.440+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/_temporary/0/_temporary/attempt_202304121320462815460516602489530_0010_m_000002_11/' directory.
+[2023-04-12T13:20:48.441+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/_temporary/0/_temporary/attempt_202304121320468311396186022828639_0010_m_000000_9/' directory.
+[2023-04-12T13:20:48.442+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/_temporary/0/_temporary/attempt_202304121320462969149717925185603_0010_m_000001_10/' directory.
+[2023-04-12T13:20:48.443+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/_temporary/0/_temporary/attempt_202304121320466488948009859237688_0010_m_000003_12/' directory.
+[2023-04-12T13:20:48.444+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/_temporary/0/_temporary/' directory.
+[2023-04-12T13:20:48.445+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageImpl: Ignoring exception of type GoogleJsonResponseException; verified object already exists with desired state.
+[2023-04-12T13:20:48.446+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/_temporary/0/_temporary/' directory.
+[2023-04-12T13:20:48.448+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageImpl: Ignoring exception of type GoogleJsonResponseException; verified object already exists with desired state.
+[2023-04-12T13:20:48.449+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/_temporary/0/_temporary/' directory.
+[2023-04-12T13:20:48.450+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageImpl: Ignoring exception of type GoogleJsonResponseException; verified object already exists with desired state.
+[2023-04-12T13:20:48.451+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/_temporary/0/_temporary/' directory.
+[2023-04-12T13:20:48.453+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.455+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.codec.CodecConfig: Compression: SNAPPY
+[2023-04-12T13:20:48.458+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet block size to 134217728
+[2023-04-12T13:20:48.459+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet page size to 1048576
+[2023-04-12T13:20:48.461+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Parquet dictionary page size to 1048576
+[2023-04-12T13:20:48.463+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Dictionary is on
+[2023-04-12T13:20:48.466+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Validation is off
+[2023-04-12T13:20:48.467+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writer version is: PARQUET_1_0
+[2023-04-12T13:20:48.469+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Maximum row group padding size is 8388608 bytes
+[2023-04-12T13:20:48.471+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page size checking is: estimated
+[2023-04-12T13:20:48.472+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Min row count for page size check is: 100
+[2023-04-12T13:20:48.474+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Max row count for page size check is: 10000
+[2023-04-12T13:20:48.476+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for column indexes is: 64
+[2023-04-12T13:20:48.476+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Truncate length for statistics min/max  is: 2147483647
+[2023-04-12T13:20:48.477+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Page row count limit to 20000
+[2023-04-12T13:20:48.477+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO org.apache.parquet.hadoop.ParquetOutputFormat: Writing page checksums is: on
+[2023-04-12T13:20:48.478+0000] {subprocess.py:93} INFO - 23/04/12 13:20:47 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/_temporary/0/_temporary/attempt_202304121320466385320827456179113_0010_m_000004_13/' directory.
+[2023-04-12T13:20:48.479+0000] {subprocess.py:93} INFO - 23/04/12 13:20:48 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageFileSystem: Successfully repaired 'gs://dataproc-temp-europe-west6-834475897757-zf5hpybi/.spark-bigquery-local-1681305630822-74eefb4d-fc88-47ea-8a67-86fb2d7eb7c9/' directory.
+[2023-04-12T13:20:51.436+0000] {subprocess.py:93} INFO - 23/04/12 13:20:49 ERROR com.google.cloud.bigquery.connector.common.BigQueryClient: Unable to create the job to load to nfl-de-project.nfl_data_all.teams_2020_2
+[2023-04-12T13:20:51.437+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2023-04-12T13:20:51.438+0000] {subprocess.py:93} INFO -   File "/tmp/16aa9376fa4243c7b98458538dc4d25c/transform_pyspark.py", line 242, in <module>
+[2023-04-12T13:20:51.438+0000] {subprocess.py:93} INFO -     df.write.format('bigquery') \
+[2023-04-12T13:20:51.439+0000] {subprocess.py:93} INFO -   File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/sql/readwriter.py", line 1107, in save
+[2023-04-12T13:20:51.440+0000] {subprocess.py:93} INFO -   File "/usr/lib/spark/python/lib/py4j-0.10.9-src.zip/py4j/java_gateway.py", line 1304, in __call__
+[2023-04-12T13:20:51.440+0000] {subprocess.py:93} INFO -   File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/sql/utils.py", line 111, in deco
+[2023-04-12T13:20:51.441+0000] {subprocess.py:93} INFO -   File "/usr/lib/spark/python/lib/py4j-0.10.9-src.zip/py4j/protocol.py", line 326, in get_return_value
+[2023-04-12T13:20:51.442+0000] {subprocess.py:93} INFO - py4j.protocol.Py4JJavaError: An error occurred while calling o276.save.
+[2023-04-12T13:20:51.442+0000] {subprocess.py:93} INFO - : com.google.cloud.bigquery.connector.common.BigQueryConnectorException: Failed to write to BigQuery
+[2023-04-12T13:20:51.443+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.write.BigQueryWriteHelper.writeDataFrameToBigQuery(BigQueryWriteHelper.java:111)
+[2023-04-12T13:20:51.444+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.write.BigQueryDeprecatedIndirectInsertableRelation.insert(BigQueryDeprecatedIndirectInsertableRelation.java:43)
+[2023-04-12T13:20:51.444+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.write.CreatableRelationProviderHelper.createRelation(CreatableRelationProviderHelper.java:58)
+[2023-04-12T13:20:51.445+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.BigQueryRelationProvider.createRelation(BigQueryRelationProvider.scala:107)
+[2023-04-12T13:20:51.446+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.datasources.SaveIntoDataSourceCommand.run(SaveIntoDataSourceCommand.scala:46)
+[2023-04-12T13:20:51.446+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:70)
+[2023-04-12T13:20:51.447+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:68)
+[2023-04-12T13:20:51.447+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.command.ExecutedCommandExec.doExecute(commands.scala:90)
+[2023-04-12T13:20:51.448+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+[2023-04-12T13:20:51.449+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+[2023-04-12T13:20:51.451+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+[2023-04-12T13:20:51.452+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+[2023-04-12T13:20:51.453+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+[2023-04-12T13:20:51.454+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.QueryExecution.toRdd$lzycompute(QueryExecution.scala:132)
+[2023-04-12T13:20:51.455+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.QueryExecution.toRdd(QueryExecution.scala:131)
+[2023-04-12T13:20:51.456+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.$anonfun$runCommand$1(DataFrameWriter.scala:989)
+[2023-04-12T13:20:51.457+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$5(SQLExecution.scala:103)
+[2023-04-12T13:20:51.457+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:163)
+[2023-04-12T13:20:51.458+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:90)
+[2023-04-12T13:20:51.458+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:775)
+[2023-04-12T13:20:51.459+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:64)
+[2023-04-12T13:20:51.459+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.runCommand(DataFrameWriter.scala:989)
+[2023-04-12T13:20:51.460+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.saveToV1Source(DataFrameWriter.scala:438)
+[2023-04-12T13:20:51.461+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.saveInternal(DataFrameWriter.scala:415)
+[2023-04-12T13:20:51.461+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:301)
+[2023-04-12T13:20:51.462+0000] {subprocess.py:93} INFO - 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+[2023-04-12T13:20:51.463+0000] {subprocess.py:93} INFO - 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+[2023-04-12T13:20:51.463+0000] {subprocess.py:93} INFO - 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[2023-04-12T13:20:51.464+0000] {subprocess.py:93} INFO - 	at java.lang.reflect.Method.invoke(Method.java:498)
+[2023-04-12T13:20:51.465+0000] {subprocess.py:93} INFO - 	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+[2023-04-12T13:20:51.465+0000] {subprocess.py:93} INFO - 	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)
+[2023-04-12T13:20:51.465+0000] {subprocess.py:93} INFO - 	at py4j.Gateway.invoke(Gateway.java:282)
+[2023-04-12T13:20:51.466+0000] {subprocess.py:93} INFO - 	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+[2023-04-12T13:20:51.466+0000] {subprocess.py:93} INFO - 	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+[2023-04-12T13:20:51.467+0000] {subprocess.py:93} INFO - 	at py4j.GatewayConnection.run(GatewayConnection.java:238)
+[2023-04-12T13:20:51.468+0000] {subprocess.py:93} INFO - 	at java.lang.Thread.run(Thread.java:750)
+[2023-04-12T13:20:51.468+0000] {subprocess.py:93} INFO - Caused by: com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.BigQueryException: Not found: Dataset nfl-de-project:nfl_data_all
+[2023-04-12T13:20:51.469+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.spi.v2.HttpBigQueryRpc.translate(HttpBigQueryRpc.java:115)
+[2023-04-12T13:20:51.469+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.spi.v2.HttpBigQueryRpc.create(HttpBigQueryRpc.java:220)
+[2023-04-12T13:20:51.470+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.BigQueryImpl$5.call(BigQueryImpl.java:405)
+[2023-04-12T13:20:51.471+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.BigQueryImpl$5.call(BigQueryImpl.java:394)
+[2023-04-12T13:20:51.472+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.api.gax.retrying.DirectRetryingExecutor.submit(DirectRetryingExecutor.java:103)
+[2023-04-12T13:20:51.473+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.BigQueryRetryHelper.run(BigQueryRetryHelper.java:86)
+[2023-04-12T13:20:51.473+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.BigQueryRetryHelper.runWithRetries(BigQueryRetryHelper.java:49)
+[2023-04-12T13:20:51.473+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.BigQueryImpl.create(BigQueryImpl.java:393)
+[2023-04-12T13:20:51.474+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.BigQueryImpl.create(BigQueryImpl.java:358)
+[2023-04-12T13:20:51.475+0000] {subprocess.py:93} INFO - 	at com.google.cloud.bigquery.connector.common.BigQueryClient.createAndWaitFor(BigQueryClient.java:332)
+[2023-04-12T13:20:51.475+0000] {subprocess.py:93} INFO - 	at com.google.cloud.bigquery.connector.common.BigQueryClient.createAndWaitFor(BigQueryClient.java:327)
+[2023-04-12T13:20:51.476+0000] {subprocess.py:93} INFO - 	at com.google.cloud.bigquery.connector.common.BigQueryClient.loadDataIntoTable(BigQueryClient.java:571)
+[2023-04-12T13:20:51.476+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.write.BigQueryWriteHelper.loadDataToBigQuery(BigQueryWriteHelper.java:138)
+[2023-04-12T13:20:51.477+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.write.BigQueryWriteHelper.writeDataFrameToBigQuery(BigQueryWriteHelper.java:108)
+[2023-04-12T13:20:51.477+0000] {subprocess.py:93} INFO - 	... 35 more
+[2023-04-12T13:20:51.478+0000] {subprocess.py:93} INFO - Caused by: com.google.cloud.spark.bigquery.repackaged.com.google.api.client.googleapis.json.GoogleJsonResponseException: 404 Not Found
+[2023-04-12T13:20:51.478+0000] {subprocess.py:93} INFO - POST https://www.googleapis.com/bigquery/v2/projects/nfl-de-project/jobs?prettyPrint=false
+[2023-04-12T13:20:51.479+0000] {subprocess.py:93} INFO - {
+[2023-04-12T13:20:51.479+0000] {subprocess.py:93} INFO -   "code": 404,
+[2023-04-12T13:20:51.480+0000] {subprocess.py:93} INFO -   "errors": [
+[2023-04-12T13:20:51.480+0000] {subprocess.py:93} INFO -     {
+[2023-04-12T13:20:51.481+0000] {subprocess.py:93} INFO -       "domain": "global",
+[2023-04-12T13:20:51.481+0000] {subprocess.py:93} INFO -       "message": "Not found: Dataset nfl-de-project:nfl_data_all",
+[2023-04-12T13:20:51.482+0000] {subprocess.py:93} INFO -       "reason": "notFound"
+[2023-04-12T13:20:51.482+0000] {subprocess.py:93} INFO -     }
+[2023-04-12T13:20:51.483+0000] {subprocess.py:93} INFO -   ],
+[2023-04-12T13:20:51.483+0000] {subprocess.py:93} INFO -   "message": "Not found: Dataset nfl-de-project:nfl_data_all",
+[2023-04-12T13:20:51.484+0000] {subprocess.py:93} INFO -   "status": "NOT_FOUND"
+[2023-04-12T13:20:51.484+0000] {subprocess.py:93} INFO - }
+[2023-04-12T13:20:51.484+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.api.client.googleapis.json.GoogleJsonResponseException.from(GoogleJsonResponseException.java:146)
+[2023-04-12T13:20:51.485+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest.newExceptionOnError(AbstractGoogleJsonClientRequest.java:118)
+[2023-04-12T13:20:51.485+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest.newExceptionOnError(AbstractGoogleJsonClientRequest.java:37)
+[2023-04-12T13:20:51.486+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.api.client.googleapis.services.AbstractGoogleClientRequest$3.interceptResponse(AbstractGoogleClientRequest.java:466)
+[2023-04-12T13:20:51.488+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.api.client.http.HttpRequest.execute(HttpRequest.java:1111)
+[2023-04-12T13:20:51.489+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.api.client.googleapis.services.AbstractGoogleClientRequest.executeUnparsed(AbstractGoogleClientRequest.java:552)
+[2023-04-12T13:20:51.491+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.api.client.googleapis.services.AbstractGoogleClientRequest.executeUnparsed(AbstractGoogleClientRequest.java:493)
+[2023-04-12T13:20:51.492+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.api.client.googleapis.services.AbstractGoogleClientRequest.execute(AbstractGoogleClientRequest.java:603)
+[2023-04-12T13:20:51.492+0000] {subprocess.py:93} INFO - 	at com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.spi.v2.HttpBigQueryRpc.create(HttpBigQueryRpc.java:218)
+[2023-04-12T13:20:51.493+0000] {subprocess.py:93} INFO - 	... 47 more
+[2023-04-12T13:20:51.493+0000] {subprocess.py:93} INFO - 
+[2023-04-12T13:20:51.494+0000] {subprocess.py:93} INFO - 23/04/12 13:20:49 INFO org.sparkproject.jetty.server.AbstractConnector: Stopped Spark@77b58774{HTTP/1.1, (http/1.1)}{0.0.0.0:0}
+[2023-04-12T13:20:54.734+0000] {subprocess.py:93} INFO - ERROR: (gcloud.dataproc.jobs.submit.pyspark) Job [16aa9376fa4243c7b98458538dc4d25c] failed with error:
+[2023-04-12T13:20:54.735+0000] {subprocess.py:93} INFO - Google Cloud Dataproc Agent reports job failure. If logs are available, they can be found at:
+[2023-04-12T13:20:54.736+0000] {subprocess.py:93} INFO - https://console.cloud.google.com/dataproc/jobs/16aa9376fa4243c7b98458538dc4d25c?project=nfl-de-project&region=europe-west6
+[2023-04-12T13:20:54.737+0000] {subprocess.py:93} INFO - gcloud dataproc jobs wait '16aa9376fa4243c7b98458538dc4d25c' --region 'europe-west6' --project 'nfl-de-project'
+[2023-04-12T13:20:54.737+0000] {subprocess.py:93} INFO - https://console.cloud.google.com/storage/browser/nfl-spark-staging_nfl-de-project/google-cloud-dataproc-metainfo/cf386a87-5cdc-4f46-9dda-06a203a6bb84/jobs/16aa9376fa4243c7b98458538dc4d25c/
+[2023-04-12T13:20:54.738+0000] {subprocess.py:93} INFO - gs://nfl-spark-staging_nfl-de-project/google-cloud-dataproc-metainfo/cf386a87-5cdc-4f46-9dda-06a203a6bb84/jobs/16aa9376fa4243c7b98458538dc4d25c/driveroutput
+[2023-04-12T13:20:54.892+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2023-04-12T13:20:54.905+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 224, in task_pyspark
+    operator.execute(context={})
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/bash.py", line 196, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2023-04-12T13:20:54.917+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=nfl_transformation_dag, task_id=task_pyspark, execution_date=20230411T000000, start_date=20230412T132011, end_date=20230412T132054
+[2023-04-12T13:20:54.936+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 948 for task task_pyspark (Bash command failed. The command returned a non-zero exit code 1.; 9223)
+[2023-04-12T13:20:54.950+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-12T13:20:54.967+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,46 @@
+[2023-04-12T11:20:52.336+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_extraction_dag.upload_positions_to_gcs manual__2023-04-12T11:14:16.454364+00:00 [queued]>
+[2023-04-12T11:20:52.354+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_extraction_dag.upload_positions_to_gcs manual__2023-04-12T11:14:16.454364+00:00 [queued]>
+[2023-04-12T11:20:52.355+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T11:20:52.356+0000] {taskinstance.py:1289} INFO - Starting attempt 5 of 6
+[2023-04-12T11:20:52.357+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T11:20:52.379+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): upload_positions_to_gcs> on 2023-04-12 11:14:16.454364+00:00
+[2023-04-12T11:20:52.405+0000] {standard_task_runner.py:55} INFO - Started process 2127 to run task
+[2023-04-12T11:20:52.410+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'data_extraction_dag', 'upload_positions_to_gcs', 'manual__2023-04-12T11:14:16.454364+00:00', '--job-id', '907', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmp3f4q_e9b']
+[2023-04-12T11:20:52.414+0000] {standard_task_runner.py:83} INFO - Job 907: Subtask upload_positions_to_gcs
+[2023-04-12T11:20:52.517+0000] {task_command.py:389} INFO - Running <TaskInstance: data_extraction_dag.upload_positions_to_gcs manual__2023-04-12T11:14:16.454364+00:00 [running]> on host a2e619923d04
+[2023-04-12T11:20:52.629+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=data_extraction_dag
+AIRFLOW_CTX_TASK_ID=upload_positions_to_gcs
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-12T11:14:16.454364+00:00
+AIRFLOW_CTX_TRY_NUMBER=5
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-12T11:14:16.454364+00:00
+[2023-04-12T11:20:52.636+0000] {subprocess.py:63} INFO - Tmp dir root location: 
+ /tmp
+[2023-04-12T11:20:52.641+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'gsutil cp /opt/***/csv/ gs://nfl-data-lake_nfl-de-project/nfl_csv/']
+[2023-04-12T11:20:52.660+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: data_extraction_dag.upload_positions_to_gcs manual__2023-04-12T11:14:16.454364+00:00 [running]>, dependency 'Task Instance Not Running' FAILED: Task is in the running state
+[2023-04-12T11:20:52.662+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: data_extraction_dag.upload_positions_to_gcs manual__2023-04-12T11:14:16.454364+00:00 [running]>, dependency 'Task Instance State' FAILED: Task is in the 'running' state.
+[2023-04-12T11:20:52.676+0000] {local_task_job.py:151} INFO - Task is not able to be run
+[2023-04-12T11:20:52.683+0000] {subprocess.py:86} INFO - Output:
+[2023-04-12T11:20:56.040+0000] {subprocess.py:93} INFO - Omitting directory "file:///opt/***/csv/". (Did you mean to do cp -r?)
+[2023-04-12T11:20:56.041+0000] {subprocess.py:93} INFO - CommandException: No URLs matched. Do the files you're operating on exist?
+[2023-04-12T11:20:56.481+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2023-04-12T11:20:56.494+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 158, in upload_positions_to_gcs
+    operator.execute(context={})
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/bash.py", line 196, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2023-04-12T11:20:56.508+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=data_extraction_dag, task_id=upload_positions_to_gcs, execution_date=20230412T111416, start_date=20230412T112052, end_date=20230412T112056
+[2023-04-12T11:20:56.531+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 907 for task upload_positions_to_gcs (Bash command failed. The command returned a non-zero exit code 1.; 2127)
+[2023-04-12T11:20:56.565+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-12T11:20:56.585+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

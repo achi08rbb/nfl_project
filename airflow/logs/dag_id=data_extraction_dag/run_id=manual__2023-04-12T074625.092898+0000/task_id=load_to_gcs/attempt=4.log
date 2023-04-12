@@ -1,0 +1,52 @@
+[2023-04-12T07:57:33.459+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_extraction_dag.load_to_gcs manual__2023-04-12T07:46:25.092898+00:00 [queued]>
+[2023-04-12T07:57:33.474+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_extraction_dag.load_to_gcs manual__2023-04-12T07:46:25.092898+00:00 [queued]>
+[2023-04-12T07:57:33.475+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T07:57:33.476+0000] {taskinstance.py:1289} INFO - Starting attempt 4 of 5
+[2023-04-12T07:57:33.477+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T07:57:33.494+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): load_to_gcs> on 2023-04-12 07:46:25.092898+00:00
+[2023-04-12T07:57:33.504+0000] {standard_task_runner.py:55} INFO - Started process 1084 to run task
+[2023-04-12T07:57:33.511+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'data_extraction_dag', 'load_to_gcs', 'manual__2023-04-12T07:46:25.092898+00:00', '--job-id', '665', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmptp8_qdq3']
+[2023-04-12T07:57:33.514+0000] {standard_task_runner.py:83} INFO - Job 665: Subtask load_to_gcs
+[2023-04-12T07:57:33.623+0000] {task_command.py:389} INFO - Running <TaskInstance: data_extraction_dag.load_to_gcs manual__2023-04-12T07:46:25.092898+00:00 [running]> on host a2e619923d04
+[2023-04-12T07:57:33.665+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: data_extraction_dag.load_to_gcs manual__2023-04-12T07:46:25.092898+00:00 [running]>, dependency 'Task Instance State' FAILED: Task is in the 'running' state.
+[2023-04-12T07:57:33.674+0000] {taskinstance.py:1080} INFO - Dependencies not met for <TaskInstance: data_extraction_dag.load_to_gcs manual__2023-04-12T07:46:25.092898+00:00 [running]>, dependency 'Task Instance Not Running' FAILED: Task is in the running state
+[2023-04-12T07:57:33.679+0000] {local_task_job.py:151} INFO - Task is not able to be run
+[2023-04-12T07:57:33.726+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=data_extraction_dag
+AIRFLOW_CTX_TASK_ID=load_to_gcs
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-12T07:46:25.092898+00:00
+AIRFLOW_CTX_TRY_NUMBER=4
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-12T07:46:25.092898+00:00
+[2023-04-12T07:57:33.728+0000] {logging_mixin.py:137} INFO - Loading for nfl data to parquet started
+[2023-04-12T07:57:33.731+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 147, in load_to_gcs
+    df=pd.read_json(json)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/util/_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/json/_json.py", line 733, in read_json
+    json_reader = JsonReader(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/json/_json.py", line 818, in __init__
+    data = self._get_data_from_filepath(filepath_or_buffer)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/json/_json.py", line 858, in _get_data_from_filepath
+    self.handles = get_handle(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/common.py", line 713, in get_handle
+    ioargs = _get_filepath_or_buffer(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/common.py", line 451, in _get_filepath_or_buffer
+    raise ValueError(msg)
+ValueError: Invalid file path or buffer object type: <class 'NoneType'>
+[2023-04-12T07:57:33.753+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=data_extraction_dag, task_id=load_to_gcs, execution_date=20230412T074625, start_date=20230412T075733, end_date=20230412T075733
+[2023-04-12T07:57:33.772+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 665 for task load_to_gcs (Invalid file path or buffer object type: <class 'NoneType'>; 1084)
+[2023-04-12T07:57:33.805+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-12T07:57:33.823+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

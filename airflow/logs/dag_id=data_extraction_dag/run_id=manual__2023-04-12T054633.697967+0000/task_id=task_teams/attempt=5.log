@@ -1,0 +1,37 @@
+[2023-04-12T06:47:12.750+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_extraction_dag.task_teams manual__2023-04-12T05:46:33.697967+00:00 [queued]>
+[2023-04-12T06:47:12.765+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_extraction_dag.task_teams manual__2023-04-12T05:46:33.697967+00:00 [queued]>
+[2023-04-12T06:47:12.766+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T06:47:12.767+0000] {taskinstance.py:1289} INFO - Starting attempt 5 of 6
+[2023-04-12T06:47:12.769+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T06:47:12.790+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_teams> on 2023-04-12 05:46:33.697967+00:00
+[2023-04-12T06:47:12.805+0000] {standard_task_runner.py:55} INFO - Started process 2552 to run task
+[2023-04-12T06:47:12.820+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'data_extraction_dag', 'task_teams', 'manual__2023-04-12T05:46:33.697967+00:00', '--job-id', '468', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmpq7_k9z0h']
+[2023-04-12T06:47:12.839+0000] {standard_task_runner.py:83} INFO - Job 468: Subtask task_teams
+[2023-04-12T06:47:13.025+0000] {task_command.py:389} INFO - Running <TaskInstance: data_extraction_dag.task_teams manual__2023-04-12T05:46:33.697967+00:00 [running]> on host a073412e57f0
+[2023-04-12T06:47:13.143+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=data_extraction_dag
+AIRFLOW_CTX_TASK_ID=task_teams
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-12T05:46:33.697967+00:00
+AIRFLOW_CTX_TRY_NUMBER=5
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-12T05:46:33.697967+00:00
+[2023-04-12T06:47:13.149+0000] {logging_mixin.py:137} INFO - Fetching for teams started
+[2023-04-12T06:47:14.280+0000] {logging_mixin.py:137} INFO - Fetching for teams ended
+[2023-04-12T06:47:14.281+0000] {logging_mixin.py:137} INFO - Loading for nfl data to parquet started
+[2023-04-12T06:47:14.282+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 115, in task_teams
+    teams.to_parquet(f'{path}/nfl_parquets/{year}/{season_type}/{filename}_parquet', engine='pyarrow')
+NameError: name 'filename' is not defined
+[2023-04-12T06:47:14.324+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=data_extraction_dag, task_id=task_teams, execution_date=20230412T054633, start_date=20230412T064712, end_date=20230412T064714
+[2023-04-12T06:47:14.365+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 468 for task task_teams (name 'filename' is not defined; 2552)
+[2023-04-12T06:47:14.398+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-12T06:47:14.445+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

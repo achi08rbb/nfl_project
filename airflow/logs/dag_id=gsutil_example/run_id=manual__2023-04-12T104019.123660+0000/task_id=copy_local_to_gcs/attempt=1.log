@@ -1,0 +1,34 @@
+[2023-04-12T10:40:37.496+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gsutil_example.copy_local_to_gcs manual__2023-04-12T10:40:19.123660+00:00 [queued]>
+[2023-04-12T10:40:37.520+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gsutil_example.copy_local_to_gcs manual__2023-04-12T10:40:19.123660+00:00 [queued]>
+[2023-04-12T10:40:37.522+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T10:40:37.524+0000] {taskinstance.py:1289} INFO - Starting attempt 1 of 1
+[2023-04-12T10:40:37.525+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-12T10:40:37.553+0000] {taskinstance.py:1309} INFO - Executing <Task(BashOperator): copy_local_to_gcs> on 2023-04-12 10:40:19.123660+00:00
+[2023-04-12T10:40:37.578+0000] {standard_task_runner.py:55} INFO - Started process 154 to run task
+[2023-04-12T10:40:37.582+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'gsutil_example', 'copy_local_to_gcs', 'manual__2023-04-12T10:40:19.123660+00:00', '--job-id', '853', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmpifj30l5c']
+[2023-04-12T10:40:37.587+0000] {standard_task_runner.py:83} INFO - Job 853: Subtask copy_local_to_gcs
+[2023-04-12T10:40:37.750+0000] {task_command.py:389} INFO - Running <TaskInstance: gsutil_example.copy_local_to_gcs manual__2023-04-12T10:40:19.123660+00:00 [running]> on host a2e619923d04
+[2023-04-12T10:40:37.872+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=gsutil_example
+AIRFLOW_CTX_TASK_ID=copy_local_to_gcs
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-12T10:40:19.123660+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-12T10:40:19.123660+00:00
+[2023-04-12T10:40:37.890+0000] {subprocess.py:63} INFO - Tmp dir root location: 
+ /tmp
+[2023-04-12T10:40:37.903+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'gsutil cp -r /opt/***/csv/ gs://nfl-data-lake_nfl-de-project/nfl_csv']
+[2023-04-12T10:40:37.936+0000] {subprocess.py:86} INFO - Output:
+[2023-04-12T10:40:46.846+0000] {subprocess.py:93} INFO - ServiceException: 401 Anonymous caller does not have storage.objects.list access to the Google Cloud Storage bucket. Permission 'storage.objects.list' denied on resource (or it may not exist).
+[2023-04-12T10:40:47.465+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2023-04-12T10:40:47.485+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/bash.py", line 196, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2023-04-12T10:40:47.493+0000] {taskinstance.py:1327} INFO - Marking task as FAILED. dag_id=gsutil_example, task_id=copy_local_to_gcs, execution_date=20230412T104019, start_date=20230412T104037, end_date=20230412T104047
+[2023-04-12T10:40:47.532+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 853 for task copy_local_to_gcs (Bash command failed. The command returned a non-zero exit code 1.; 154)
+[2023-04-12T10:40:47.564+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-12T10:40:47.605+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

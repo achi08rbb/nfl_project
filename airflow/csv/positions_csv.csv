@@ -1,0 +1,19 @@
+,positionName2,positionParent
+0,Quarterback,Offense
+1,Running Back,Offense
+2,Wide Receiver,Offense
+3,Fullback,Offense
+4,Tight End,Offense
+5,Center,Offense
+6,Offensive Tackle,Offense
+7,Guard,Offense
+8,Cornerback,Defense
+9,Linebacker,Defense
+10,Defensive End,Defense
+11,Defensive Tackle,Defense
+12,Safety,Defense
+13,Long Snapper,Special Team
+14,Defensive Back,Special Team
+15,Offensive Lineman,Special Team
+16,Place kicker,Special Team
+17,Punter,Special Team
