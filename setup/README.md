@@ -170,10 +170,11 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
     
 Look for the airflow worker container id and run the following:
    
-    ```
+```
 docker-compose exec -it
 <container-id-of-airflow-worker> bash
-    ```
+
+```
 
 You can now navigate within the container as you would in your own local setup
 
@@ -181,5 +182,8 @@ You can now navigate within the container as you would in your own local setup
 - Make sure to run the following inside the airflow worker container so you could use gsutil (within airflow container) later:
            
 ```
-gcloud auth application-default login ```
+
+gcloud auth application-default login
+
+```
 
