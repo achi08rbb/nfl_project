@@ -64,7 +64,7 @@ Pre-Requisites
     ```
     gcloud auth application-default login
     ```
-9. You have set up your GCP!
+9. You have set up your GCP! Let's build the infrastracture.
 
 
 # **Terraform**
