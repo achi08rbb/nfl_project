@@ -159,8 +159,10 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
     or
 
     docker-compose down --volumes --remove-orphans
+    ```
 
     ix. To check if your credentials are right where they should be, run:
+
 
     ```
     docker ps
