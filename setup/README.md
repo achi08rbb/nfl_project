@@ -175,7 +175,7 @@ docker-compose exec -it
 
 ```
 
-    xi. You can now navigate within the container as you would in your own local setup
+You can now navigate within the container as you would in your own local setup
 
 
 - Make sure to run the following inside the airflow worker container so you could use gsutil (within airflow container) later:
