@@ -167,8 +167,7 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
     ```
     docker ps
     ```
-    
-Look for the airflow worker container id and run the following:
+    x. Look for the airflow worker container id and run the following:
    
 ```
 docker-compose exec -it
@@ -176,7 +175,7 @@ docker-compose exec -it
 
 ```
 
-You can now navigate within the container as you would in your own local setup
+    xi. You can now navigate within the container as you would in your own local setup
 
 
 - Make sure to run the following inside the airflow worker container so you could use gsutil (within airflow container) later:
