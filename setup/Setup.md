@@ -64,7 +64,7 @@ Pre-Requisites
     ```
     gcloud auth application-default login
     ```
-9. You have set up your GCP!
+9. You have set up your GCP! Let's build the infrastracture.
 
 
 # **Terraform**
@@ -159,20 +159,30 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
     or
 
     docker-compose down --volumes --remove-orphans
+    ```
 
     ix. To check if your credentials are right where they should be, run:
+
 
     ```
     docker ps
     ```
-    Look for the airflow worker container id and run the following:
-    ```
-    docker-compose exec -it <container-id-of-airflow-worker> bash
-    ```
-    You can now navigate within the container as you would in your own local setup
+    x. Look for the airflow worker container id and run the following:
+   
+```
+docker-compose exec -it
+<container-id-of-airflow-worker> bash
 
-        - Make sure to run the following inside the airflow worker container so you could use gsutil later:
-            ```
-            gcloud auth application-default login
-            ```
+```
+
+You can now navigate within the container as you would in your own local setup
+
+
+- Make sure to run the following inside the airflow worker container so you could use gsutil (within airflow container) later:
+           
+```
+
+gcloud auth application-default login
+
+```
 

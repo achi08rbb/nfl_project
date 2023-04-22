@@ -120,30 +120,31 @@ columns_select = [
 
 df_athletes_clean = (
     df_athletes.select(*columns_select)
-    .withColumn("teamId", F.col("teamId").cast("integer"))
-    .withColumn("id", F.col("id").cast("integer"))
-    .withColumn("dateOfBirth", F.col("dateOfBirth").cast("date"))
-    .withColumn("year", F.lit(year).cast("int"))
-    .withColumn("seasonType", F.lit(season_type).cast("int"))
-    .withColumnRenamed("id", "athleteId")
-    .withColumnRenamed("weight", "weight_lbs")
-    .withColumnRenamed("height", "height_inches")
-    .withColumnRenamed("birthPlace.city", "birthPlaceCity")
-    .withColumnRenamed("birthPlace.state", "birthPlaceState")
-    .withColumnRenamed("birthPlace.country", "birthPlaceCountry")
-    .withColumnRenamed("position.id", "positionId")
-    .withColumnRenamed("position.name", "positionName")
-    .withColumnRenamed("experience.years", "experienceYears")
-    .withColumn("experienceYears", F.col("experienceYears").cast("integer"))
-    .withColumnRenamed("status.name", "statusName")
-    .withColumnRenamed("position.parent.name", "positionParentName")
-    .withColumnRenamed("position.parent.abbreviation", "positionParentAbbreviation")
-    .withColumnRenamed("headshot.href", "headshot")
-    .withColumn("headshot", F.regexp_replace(F.col("headshot"), "a.espncdn", "www.espn"))
+    .selectExpr(
+        "CAST(id AS int) as athleteId",
+        "CAST(firstName AS string) as firstName",
+        "CAST(lastName AS string) as lastName",
+        "CAST(fullName AS string) as fullName",
+        "CAST(shortName AS string) as shortName",
+        "CAST(weight AS double) as weightLbs",
+        "CAST(height AS double) as heightInches",
+        "CAST(age AS int) as age",
+        "CAST(dateOfBirth AS date) as dateOfBirth",
+        "CAST(debutYear AS int) as debutYear",
+        "CAST(`birthPlace.city` AS string) as birthPlaceCity",
+        "CAST(`birthPlace.state` AS string) as birthPlaceState",
+        "CAST(`birthPlace.country` AS string) as birthPlaceCountry",
+        "CAST(`position.id` AS int) as positionId",
+        "CAST(`position.name` AS string) as positionName",
+        "CAST(`experience.years` AS int) as experienceYears",
+        "CAST(`status.name` AS string) as statusName",
+        "CAST(teamId AS int) as teamId",
+        "CAST(headshot AS string) as headshot",
+    )
     .na.fill(0)
     # .where(F.col("statusName") == "Active")
-    # fix the .(dot) notation before using select to prevent struct type expected str returned
-    # .withColumn("headshot",
+    # # fix the .(dot) notation before using select to prevent struct type expected str returned
+    # # .withColumn("headshot",
     .orderBy(F.col("teamId"), F.col("positionId"))
 )
 

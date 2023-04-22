@@ -82,3 +82,19 @@ positionParent: string
 "CAST(`status.name` AS string) as statusName",
 "CAST(teamId AS int) as teamId",
 "CAST(headshot AS string) as headshot"
+
+Athletes Stats
+
+"CAST(name AS string) as name",
+"CAST(displayName AS string) as displayName",
+"CAST(shortDisplayName AS string) as shortDisplayName",
+"CAST(description AS string) as description",
+"CAST(abbreviation AS string) as abbreviation",
+"CAST(value AS double) as value",
+"CAST(displayValue AS string) as displayValue",
+"CAST(rank AS double) as rank",
+"CAST(rankDisplayValue AS string) as rankDisplayValue",
+"CAST(perGameValue AS double) as perGameValue",
+"CAST(perGameDisplayValue AS string) as perGameDisplayValue",
+"CAST(`split.categories.displayName` AS string) as statCategory",
+"CAST(athleteId AS string) as athleteId"
