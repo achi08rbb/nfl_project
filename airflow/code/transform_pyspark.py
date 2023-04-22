@@ -36,7 +36,6 @@ columns = [
     "displayName",
     "shortDisplayName",
     "isActive",
-    "isAllStar",
     "logo",
 ]
 
@@ -45,6 +44,8 @@ print(f"Cleaning the data for the teams_df started")
 
 df_teams_clean = (
     df_teams.select(columns)
+    .withColumn("teamId", F.col("id").cast("Integer"))
+    .withColumn("year", F.lit(year).cast("integer"))
     .withColumn("teamId", F.col("id").cast("Integer"))
     .drop("id")
     .orderBy("teamId")
@@ -65,13 +66,22 @@ df_teams_stats_clean = (
         "rankDisplayValue",
         "displayName",
         "shortDisplayName",
-        "__index_level_0__"
     )
     .fillna(0)
-    .withColumnRenamed("categories.displayName", "category")
-    .withColumn("teamId", F.col("teamId").cast("integer"))
-    .withColumn("year", F.lit(year))
-    .withColumn("seasonType", F.lit(season_type))
+    .withColumn("year", F.lit(year).cast("integer"))
+    .withColumn("seasonType", F.lit(season_type).cast("integer"))
+    .selectExpr(
+        "CAST(name as STRING) as statName",
+        "CAST(description as STRING) as statDescription",
+        "CAST(abbreviation as string) as statAbbreviation",
+        "CAST(value as double) as statValue",
+        "CAST(perGameValue as double) as statperGameValue",
+        "CAST(rank as int) as teamRank",
+        "CAST(`categories.displayName` as string) as statCategory",
+        "CAST(teamId as int) as teamId",
+        "CAST(year as int) as year",
+        "CAST(seasonType as int) as seasonType",
+    )
     .orderBy("teamId")
 )
 
@@ -351,8 +361,6 @@ teammates_all.write.format('bigquery') \
     .save()
 
 #===================================================================================
-
-
 
 # Dashboard 2: Radar chart - weakness/strength
 

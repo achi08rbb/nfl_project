@@ -39,12 +39,8 @@ from extraction_nfl import get_teams, get_teams_stats, get_athlete_ids, get_athl
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = "nfl-data-lake_nfl-de-project"
 
-# dataset_file = "yellow_tripdata_2021-01.csv"
-# dataset_url = f"https://s3.amazonaws.com/nyc-tlc/trip+data/{dataset_file}"
-# path_to_local_home = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
-# parquet_file = dataset_file.replace('.csv', '.parquet')
-# BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'trips_data_all')
 
+# Params
 year=2020
 season_type=2
 
@@ -229,23 +225,6 @@ def nfl_transform_load_BQ():
 nfl_transform_load_BQ()
 
 
-# default_args = {
-#     "owner": "airflow",
-#     "start_date": days_ago(1),
-#     "depends_on_past": False,
-#     "retries": 1,
-# }
-
-# # NOTE: DAG declaration - using a Context Manager (an implicit way)
-# @dag(
-#     dag_id="data_transformation_dag",
-#     schedule_interval="@once",
-#     default_args=default_args,
-#     catchup=False,
-#     max_active_runs=1,
-#     tags=['nfl-de-project'],
-# )
-
 # nfl_spark=BashOperator(
 #     task_id="Submit pyspark script to dataproc"
 #     bash_command=f""
@@ -271,17 +250,6 @@ nfl_transform_load_BQ()
     #     python_callable=format_to_parquet,
     #     op_kwargs={
     #         "src_file": f"{path_to_local_home}/{dataset_file}",
-    #     },
-    # )
-
-    # # TODO: Homework - research and try XCOM to communicate output values between 2 tasks/operators
-    # local_to_gcs_task = PythonOperator(
-    #     task_id="local_to_gcs_task",
-    #     python_callable=upload_to_gcs,
-    #     op_kwargs={
-    #         "bucket": BUCKET,
-    #         "object_name": f"raw/{parquet_file}",
-    #         "local_file": f"{path_to_local_home}/{parquet_file}",
     #     },
     # )
 
