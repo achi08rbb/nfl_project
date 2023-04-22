@@ -34,24 +34,27 @@ columns = [
     "location",
     "name",
     "displayName",
-    "shortDisplayName",
     "isActive",
     "logo",
 ]
 
-# log: start
 print(f"Cleaning the data for the teams_df started")
 
 df_teams_clean = (
     df_teams.select(columns)
-    .withColumn("teamId", F.col("id").cast("Integer"))
+    .selectExpr(
+        "CAST(id AS int) as teamId",
+        "CAST(name AS string) as teamName",
+        "CAST(displayName AS string) as teamDisplayName",
+        "CAST(location AS string) as teamLocation",
+        "CAST(isActive AS boolean) as isActive",
+        "CAST(logo AS string) as teamLogo",
+    )
     .withColumn("year", F.lit(year).cast("integer"))
-    .withColumn("teamId", F.col("id").cast("Integer"))
     .drop("id")
     .orderBy("teamId")
 )
 
-# log: end
 print(f"Cleaning the data for the teams_df is successful!")
 
 #===============================================================
@@ -142,6 +145,7 @@ df_athletes_clean = (
         "CAST(headshot AS string) as headshot",
     )
     .na.fill(0)
+    .withColumn("year", F.lit(year).cast("integer"))
     # .where(F.col("statusName") == "Active")
     # # fix the .(dot) notation before using select to prevent struct type expected str returned
     # # .withColumn("headshot",
@@ -163,11 +167,21 @@ df_athletes_stats = spark.read.parquet(f"{BUCKET}/nfl_parquets/athletes_stats/{y
 
 df_athletes_stats_clean = (
     df_athletes_stats
-    .withColumnRenamed("split.categories.displayName", "category")
-    .withColumn("athleteId", F.col("athleteId").cast("integer"))
-    .withColumn("year", F.lit(year))
-    .withColumn("seasonType", F.lit(season_type))
-    .drop("perGameDisplayValue", "rankDisplayValue", "__index_level_0__")
+    #
+    .drop("perGameDisplayValue", "rankDisplayValue", "abbreviation", "displayValue")
+    .selectExpr(
+        "CAST(name AS string) as statName",
+        "CAST(displayName AS string) as statDisplayName",
+        "CAST(shortDisplayName AS string) as statShortDisplayName",
+        "CAST(description AS string) as statDescription",
+        "CAST(value AS double) as statValue",
+        "CAST(rank AS int) as statRank",
+        "CAST(perGameValue AS double) as perGameValue",
+        "CAST(`split.categories.displayName` AS string) as statCategory",
+        "CAST(athleteId AS int) as athleteId",
+    )
+    .withColumn("year", F.lit(year).cast("integer"))
+    .withColumn("seasonType", F.lit(season_type).cast("integer"))
     .na.fill(0)
     .orderBy(F.col("athleteId"))
 )
@@ -180,8 +194,15 @@ df_leaders = spark.read.parquet(f"{BUCKET}/nfl_parquets/leaders/{year}/{season_t
 df_leaders_clean = (
     df_leaders.withColumnRenamed("athlete.$ref", "athleteref")
     .withColumn("athleteId", F.regexp_extract(F.col("athleteref"), r"\/(\w*)\?", 1))  #1 : 1 word
-    .withColumn("year", F.lit(year))
-    .withColumn("seasonType", F.lit(season_type))
+    .selectExpr(
+        "CAST(athleteId AS int) as athleteId",
+        "CAST(displayValue AS string) as leaderDisplayValue",
+        "CAST(value AS double) as leaderValue",
+        "CAST(name AS string) as statName",
+        "CAST(shortDisplayName AS string) as leaderShortDisplayName",
+    )
+    .withColumn("year", F.lit(year).cast("integer"))
+    .withColumn("seasonType", F.lit(season_type).cast("integer"))
     .drop("rel", "statistics.$ref", "team.$ref", "athleteref", "__index_level_0__")
 )
 
@@ -198,37 +219,32 @@ df_defense = (
     .cache()
 )
 
-df_defense_clean = (
-    df_defense.withColumnRenamed("Team", "team")
-    .withColumnRenamed("('Unnamed: 0_level_0', 'GP')", "gamesPlayed")
-    .withColumnRenamed("('Total', 'YDS')", "totalYDS")
-    .withColumnRenamed("('Total', 'YDS/G')", "totalYDSG")
-    .withColumnRenamed("('Passing', 'YDS')", "passingYDS")
-    .withColumnRenamed("('Passing', 'YDS/G')", "passingYDSG")
-    .withColumnRenamed("('Rushing', 'YDS')", "rushingYDS")
-    .withColumnRenamed("('Rushing', 'YDS/G')", "rushingYDSG")
-    .withColumnRenamed("('Points', 'PTS')", "points")
-    .withColumnRenamed("('Points', 'PTS/G')", "pointsPerGame")
-    .withColumn("gamesPlayed", F.col("gamesPlayed").cast("double"))
-    .withColumn("totalYDS", F.col("totalYDS").cast("double"))
-    .withColumn("totalYDSG", F.col("totalYDSG").cast("double"))
-    .withColumn("passingYDS", F.col("passingYDS").cast("double"))
-    .withColumn("passingYDSG", F.col("passingYDSG").cast("double"))
-    .withColumn("rushingYDS", F.col("rushingYDS").cast("double"))
-    .withColumn("rushingYDSG", F.col("rushingYDSG").cast("double"))
-    .withColumn("points", F.col("points").cast("double"))
-    .withColumn("pointsPerGame", F.col("pointsPerGame").cast("double"))
+df_defense_clean = (df_defense
+    .selectExpr(
+    "CAST(Team AS string) AS teamName",
+    "CAST(`('Unnamed: 0_level_0', 'GP')` AS double) AS gamesPlayed",
+    "CAST(`('Total', 'YDS')` AS double) AS totalYDS",
+    "CAST(`('Total', 'YDS/G')` AS double) AS totalYDSG",
+    "CAST(`('Passing', 'YDS')` AS double) AS passingYDS",
+    "CAST(`('Passing', 'YDS/G')` AS double) AS passingYDSG",
+    "CAST(`('Rushing', 'YDS')` AS double) AS rushingYDS",
+    "CAST(`('Rushing', 'YDS/G')` AS double) AS rushingYDSG",
+    "CAST(`('Points', 'PTS')` AS double) AS points",
+    "CAST(`('Points', 'PTS/G')` AS double) AS pointsPerGame",
+    )
     .drop("__index_level_0__")
 )
 
-df_defense_stack= (df_defense_clean.select(
-    "team",
-    F.expr(
-        "stack(9,'gamesPlayed', gamesPlayed, 'totalYDS', totalYDS, 'totalYDSG', totalYDSG, 'passingYDS', passingYDS, 'passingYDSG', passingYDSG, 'rushingYDS', rushingYDS, 'rushingYDSG', rushingYDSG, 'points', points, 'pointsPerGame', pointsPerGame) AS (name, value)"
-    ))
-    .withColumn("year", F.lit(year))
-    .withColumn("seasonType", F.lit(season_type))
-    .withColumn("category", F.lit("Defensive")))
+df_defense_stack = (
+    df_defense_clean.select(
+        "teamName",F.expr(
+            "stack(9,'gamesPlayed', gamesPlayed, 'totalYDS', totalYDS, 'totalYDSG', totalYDSG, 'passingYDS', passingYDS, 'passingYDSG', passingYDSG, 'rushingYDS', rushingYDS, 'rushingYDSG', rushingYDSG, 'points', points, 'pointsPerGame', pointsPerGame) AS (statName, statValue)"
+        ))
+    .withColumn("year", F.lit(year).cast("int"))
+    .withColumn("seasonType", F.lit(season_type).cast("int"))
+    .withColumn("statCategory", F.lit("Defensive").cast("string"))
+)
+# make sure the rows have the same data types
 #================================================================
 #Loading all to bigquery
 # log: start
@@ -257,12 +273,18 @@ for df, filename in zip(df_list, filenames):
     df.write.format('bigquery') \
     .mode('overwrite') \
     .option('table', f"{BQ_DATASET}.{filename}_{year}_{season_type}") \
+    .partitionBy('year')
     .save()
 
 # log: end
 print(f"Loading for nfl data to parquet ended")
 
 #================================================================
+
+
+
+
+
 #================================================================
 
 ## SQL TRANSFORMATIONS FOR DASHBOARD

@@ -1,6 +1,15 @@
 Team
 not needed
 
+"CAST(location AS string) as teamLocation",
+"CAST(name AS string) as teamName",
+"CAST(displayName AS string) as teamDisplayName",
+"CAST(shortDisplayName AS string) as teamShortDisplayName",
+"CAST(isActive AS boolean) as isActive",
+"CAST(logos AS string) as teamLogo",
+"CAST(teamId AS int) as teamId",
+"CAST(year AS int) as year"
+
 Team Stats
 
 
@@ -85,16 +94,33 @@ positionParent: string
 
 Athletes Stats
 
-"CAST(name AS string) as name",
-"CAST(displayName AS string) as displayName",
-"CAST(shortDisplayName AS string) as shortDisplayName",
-"CAST(description AS string) as description",
-"CAST(abbreviation AS string) as abbreviation",
-"CAST(value AS double) as value",
-"CAST(displayValue AS string) as displayValue",
-"CAST(rank AS double) as rank",
-"CAST(rankDisplayValue AS string) as rankDisplayValue",
+"CAST(name AS string) as statName",
+"CAST(displayName AS string) as statDisplayName",
+"CAST(shortDisplayName AS string) as statShortDisplayName",
+"CAST(description AS string) as statDescription",
+"CAST(value AS double) as statValue",
+"CAST(rank AS int) as statRank",
 "CAST(perGameValue AS double) as perGameValue",
-"CAST(perGameDisplayValue AS string) as perGameDisplayValue",
 "CAST(`split.categories.displayName` AS string) as statCategory",
-"CAST(athleteId AS string) as athleteId"
+"CAST(athleteId AS int) as athleteId"
+
+Leaders
+
+"CAST(displayValue AS string) as leaderDisplayValue",
+"CAST(value AS double) as leaderValue",
+"CAST(name AS string) as leaderName",
+"CAST(shortDisplayName AS string) as leaderShortDisplayName",
+"CAST(athleteId AS int) as athleteId"
+
+Defense
+
+"CAST(Team AS string) AS teamName",
+"CAST(`('Unnamed: 0_level_0', 'GP')` AS double) AS gamesPlayed",
+"CAST(`('Total', 'YDS')` AS double) AS totalYDS",
+"CAST(`('Total', 'YDS/G')` AS double) AS totalYDSG",
+"CAST(`('Passing', 'YDS')` AS double) AS passingYDS",
+"CAST(`('Passing', 'YDS/G')` AS double) AS passingYDSG",
+"CAST(`('Rushing', 'YDS')` AS double) AS rushingYDS",
+"CAST(`('Rushing', 'YDS/G')` AS double) AS rushingYDSG",
+"CAST(`('Points', 'PTS')` AS double) AS points",
+"CAST(`('Points', 'PTS/G')` AS double) AS pointsPerGame"
