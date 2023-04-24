@@ -41,6 +41,10 @@ Pre-Requisites
 
 6. In your CLI, create the environment variable for the path to your downloaded credentials `google_credentials.json`
     - name it `GOOGLE_APPLICATION_CREDENTIALS`
+    - For uniformity, put your credentials in the remote copy of the cloned repository as noted in the [Local Setup section](#local-setup-for-terraform-and-gcp)
+    ```
+    <path/to/cloned/repo>/airflow
+    ```
     
     ```
     export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"
@@ -49,7 +53,7 @@ Pre-Requisites
 
 8. Initialize the SDK [following these instructions](https://cloud.google.com/sdk/docs/initializing)
 
-    - In your MINGW/Git Bash CLI, enable `bash` by typing it in the command line
+    - IMPORTANT: In your MINGW/Git Bash CLI, enable `bash` by typing it in the command line
     - type `nano ~/.bashrc file` to edit the .bashrc file (located in your home directory `~` ) and append this at the end of the file:
     ```
     export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"
@@ -57,8 +61,8 @@ Pre-Requisites
     - type `source ~/.bashrc` to enable the change 
         - Do this everytime you start a new session of you CLI
     
-    - run `gloud init`
-    - choose the `nfl-project` when prompted
+    - run `gloud init` and log in with your account 
+    - choose the `nfl-project-de` when prompted
 
 8. To obtain access credentials for your user account, run the following code and log in with the email associated with your google cloud:
     ```
@@ -167,22 +171,19 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
     ```
     docker ps
     ```
-    x. Look for the airflow worker container id and run the following:
+    x. Look for the airflow worker container id and run the following (Make sure you're in your airflow folder where you docker-compose.yaml file is found):
    
-```
-docker-compose exec -it
-<container-id-of-airflow-worker> bash
+    ```
+    docker exec -it <container-id-of-airflow-worker> bash
 
-```
+    ```
 
-You can now navigate within the container as you would in your own local setup
+    You can now navigate within the container as you would in your own local setup.
+    Make sure to run the following inside the airflow worker container so you could use gsutil (within airflow container) later:
+            
+    ```
 
+    gcloud auth application-default login
 
-- Make sure to run the following inside the airflow worker container so you could use gsutil (within airflow container) later:
-           
-```
-
-gcloud auth application-default login
-
-```
-
+    ```
+5. You can choose to run the dags for different years

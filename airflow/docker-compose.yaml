@@ -73,18 +73,18 @@ x-airflow-common:
     # WARNING: Use _PIP_ADDITIONAL_REQUIREMENTS option ONLY for a quick checks
     # for other purpose (development, test and especially production usage) build/extend Airflow image.
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
-    GOOGLE_APPLICATION_CREDENTIALS: /.google/credentials/google_credentials.json
+    GOOGLE_APPLICATION_CREDENTIALS: /.google/credentials/google_credentials.json # location in the container
     AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/.google/credentials/google_credentials.json'
     # TODO: Please change GCP_PROJECT_ID & GCP_GCS_BUCKET, as per your config
-    GCP_PROJECT_ID: "nfl-de-project"
-    GCP_GCS_BUCKET: "nfl-data-lake_nfl-de-project"
+    GCP_PROJECT_ID: "nfl-project-de"
+    GCP_GCS_BUCKET: "nfl-data-lake_nfl-project-de"
     
 
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
-    # - ./code:/opt/airflow/code # a folder of scripts and module
+    - ./code:/opt/airflow/code # a folder of scripts and module
     - ./.google/credentials/:/.google/credentials:ro
 
 

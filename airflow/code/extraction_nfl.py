@@ -393,6 +393,17 @@ def webscrape_defense_stats(year:int, season_type:int) -> pd.DataFrame:
     teams=pd.read_html(str(tables[0]), flavor='bs4', header=0)[0]
     
     teams_defense_stats_df=pd.concat([teams,stats], axis=1)
+
+    teams_defense_stats_df.columns=['teamName',
+            'gamesPlayed',
+            'totalYDS',
+            'totalYDSG',
+            'passingYDS',
+            'passingYDSG',
+            'rushingYDS',
+            'rushingYDSG',
+            'points',
+            'pointsPerGame']
     
     teams_defense_stats_df.columns=teams_defense_stats_df.columns.astype('string')    
     
@@ -441,6 +452,13 @@ def load_to_local(df_list: list, filenames: list):
     # log: end
     print(f"Loading for nfl data to parquet ended")
 
+### Load data to GCS 
+def load_to_gcs(df_list: list, filenames: list):
+    print(f"Loading for nfl data to parquet started")
+    path=f'gs://nfl-data-lake_nfl-project-de'
+    for df, filename in zip(df_list, filenames):
+        df.to_parquet(f'{path}/nfl_parquets/{filename}/{year}/{season_type}/{filename}_parquet', engine='pyarrow')
+    print(f"Loading for nfl data to parquet ended")
 #============================================================
 if __name__=="__main__":
     
@@ -488,7 +506,7 @@ if __name__=="__main__":
     ]
 
     # Extracting
-    teams_df=get_teams(teamIds)
+    # teams_df=get_teams(teamIds)
     
 #     stats_df=get_teams_stats(teamIds)
     
@@ -498,32 +516,32 @@ if __name__=="__main__":
     
 #     athletes_df=get_athletes(athlete_ids)
     
-#     teams_defense_stats_df=webscrape_defense_stats(year,season_type)
+    teams_defense_stats_df=webscrape_defense_stats(year,season_type)
     
 #     leaders_df=get_leaders(year,season_type)
     
     # Loading
     
     df_list=[
-        teams_df #, 
+        # teams_df #, 
         # stats_df,
         # athletes_df,
         # athletes_stats_df,
         # leaders_df,
-        # teams_defense_stats_df
+        teams_defense_stats_df
     ]
 
     filenames=[
-        'teams' #,
+        #'teams' 
         # 'team_stats',
         # 'athletes',
         # 'athletes_stats',
         # 'leaders',
-        # 'teams_defense_stats'
+        'teams_defense_stats'
     ]
 
 
-    load_to_local(df_list, filenames)
+    load_to_gcs(df_list, filenames)
 
 #=================================================
     

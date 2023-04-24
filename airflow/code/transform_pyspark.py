@@ -20,9 +20,10 @@ season_type=args.season_type
 
 #===============================================================
 #Submit to bigquery
-BUCKET = 'gs://nfl-data-lake_nfl-de-project'
-temp_bucket = "dataproc-temp-europe-west6-834475897757-zf5hpybi"
+BUCKET = 'gs://nfl-data-lake_nfl-project-de'
+temp_bucket = "dataproc-temp-europe-west6-447072446412-ooqjzme9"
 spark.conf.set('temporaryGcsBucket', temp_bucket)
+
 #===============================================================
 # Transform TEAM DETAILS (once only)
 
@@ -74,13 +75,13 @@ df_teams_stats_clean = (
     .withColumn("year", F.lit(year).cast("integer"))
     .withColumn("seasonType", F.lit(season_type).cast("integer"))
     .selectExpr(
-        "CAST(name as STRING) as statName",
-        "CAST(description as STRING) as statDescription",
-        "CAST(abbreviation as string) as statAbbreviation",
-        "CAST(value as double) as statValue",
-        "CAST(perGameValue as double) as statperGameValue",
+        "CAST(name as string) as teamStatName",
+        "CAST(description as string) as teamStatDescription",
+        "CAST(abbreviation as string) as teamStatAbbreviation",
+        "CAST(value as double) as teamStatValue",
+        "CAST(perGameValue as double) as teamStatPerGameValue",
         "CAST(rank as int) as teamRank",
-        "CAST(`categories.displayName` as string) as statCategory",
+        "CAST(`categories.displayName` as string) as teamStatCategory",
         "CAST(teamId as int) as teamId",
         "CAST(year as int) as year",
         "CAST(seasonType as int) as seasonType",
@@ -88,7 +89,15 @@ df_teams_stats_clean = (
     .orderBy("teamId")
 )
 
+df_teams_stats_clean = df_teams_stats_clean.withColumn('teamStatCategory', 
+    F.when(df_teams_stats_clean.teamStatName == 'interceptionTouchdowns', 'Scoring')
+    .otherwise(df_teams_stats_clean.teamStatCategory)
+)
 
+df_teams_stats_clean = df_teams_stats_clean.withColumn('teamStatCategory',
+    F.when(df_teams_stats_clean.teamStatCategory == 'Defensive Interceptions', 'Defensive')
+    .otherwise(df_teams_stats_clean.teamStatCategory)
+)
 #===============================================================
 # Transform ATHLETES
 
@@ -142,7 +151,7 @@ df_athletes_clean = (
         "CAST(`experience.years` AS int) as experienceYears",
         "CAST(`status.name` AS string) as statusName",
         "CAST(teamId AS int) as teamId",
-        "CAST(headshot AS string) as headshot",
+        "CAST(`headshot.href` AS string) as headshot",
     )
     .na.fill(0)
     .withColumn("year", F.lit(year).cast("integer"))
@@ -155,10 +164,9 @@ df_athletes_clean = (
 # Join athletes and positions
 df_athletes_clean = (
     df_athletes_clean.
-    join( df_positions, df_athletes_clean["positionName"] == df_positions["positionName2"], how="inner",)
+    join( df_positions, df_athletes_clean["positionName"] == df_positions["positionName2"], how="inner")
     .drop("_c0", "positionName2", "statusId")
 )
-
 
 #===============================================================
 # Transform ATHLETES STATS
@@ -170,14 +178,14 @@ df_athletes_stats_clean = (
     #
     .drop("perGameDisplayValue", "rankDisplayValue", "abbreviation", "displayValue")
     .selectExpr(
-        "CAST(name AS string) as statName",
-        "CAST(displayName AS string) as statDisplayName",
-        "CAST(shortDisplayName AS string) as statShortDisplayName",
-        "CAST(description AS string) as statDescription",
-        "CAST(value AS double) as statValue",
-        "CAST(rank AS int) as statRank",
-        "CAST(perGameValue AS double) as perGameValue",
-        "CAST(`split.categories.displayName` AS string) as statCategory",
+        "CAST(name AS string) as athleteStatName",
+        "CAST(displayName AS string) as athleteStatDisplayName",
+        "CAST(shortDisplayName AS string) as athleteStatShortDisplayName",
+        "CAST(description AS string) as athleteStatDescription",
+        "CAST(value AS double) as athleteStatValue",
+        "CAST(rank AS int) as athleteStatRank",
+        "CAST(perGameValue AS double) as athletePerGameValue",
+        "CAST(`split.categories.displayName` AS string) as athleteStatCategory",
         "CAST(athleteId AS int) as athleteId",
     )
     .withColumn("year", F.lit(year).cast("integer"))
@@ -220,18 +228,16 @@ df_defense = (
 )
 
 df_defense_clean = (df_defense
-    .selectExpr(
-    "CAST(Team AS string) AS teamName",
-    "CAST(`('Unnamed: 0_level_0', 'GP')` AS double) AS gamesPlayed",
-    "CAST(`('Total', 'YDS')` AS double) AS totalYDS",
-    "CAST(`('Total', 'YDS/G')` AS double) AS totalYDSG",
-    "CAST(`('Passing', 'YDS')` AS double) AS passingYDS",
-    "CAST(`('Passing', 'YDS/G')` AS double) AS passingYDSG",
-    "CAST(`('Rushing', 'YDS')` AS double) AS rushingYDS",
-    "CAST(`('Rushing', 'YDS/G')` AS double) AS rushingYDSG",
-    "CAST(`('Points', 'PTS')` AS double) AS points",
-    "CAST(`('Points', 'PTS/G')` AS double) AS pointsPerGame",
-    )
+    .withColumn("gamesPlayed", F.col("gamesPlayed").cast("double"))
+    .withColumn("totalYDS", F.col("totalYDS").cast("double"))
+    .withColumn("totalYDSG", F.col("totalYDSG").cast("double"))
+    .withColumn("passingYDS", F.col("passingYDS").cast("double"))
+    .withColumn("passingYDSG", F.col("passingYDSG").cast("double"))
+    .withColumn("rushingYDS", F.col("rushingYDS").cast("double"))
+    .withColumn("rushingYDSG", F.col("rushingYDSG").cast("double"))
+    .withColumn("points", F.col("points").cast("double"))
+    .withColumn("pointsPerGame", F.col("pointsPerGame").cast("double"))
+    .withColumn("statCategory", F.lit("Defensive").cast("string"))
     .drop("__index_level_0__")
 )
 
@@ -244,26 +250,19 @@ df_defense_stack = (
     .withColumn("seasonType", F.lit(season_type).cast("int"))
     .withColumn("statCategory", F.lit("Defensive").cast("string"))
 )
-# make sure the rows have the same data types
 #================================================================
-#Loading all to bigquery
+# Loading all to bigquery
 # log: start
 print(f"Loading for nfl data to parquet started")
 
 df_list=[
     df_teams_clean,
-    df_teams_stats_clean,
-    df_athletes_clean,
-    df_athletes_stats_clean,
     df_leaders_clean,
     df_defense_stack
 ]
 
 filenames=[
     'teams',
-    'teams_stats',
-    'athletes',
-    'athletes_stats',
     'leaders',
     'teams_defense_stats'
 ]
@@ -272,119 +271,139 @@ BQ_DATASET="nfl_data_all"
 for df, filename in zip(df_list, filenames):
     df.write.format('bigquery') \
     .mode('overwrite') \
-    .option('table', f"{BQ_DATASET}.{filename}_{year}_{season_type}") \
-    .partitionBy('year')
+    .option('table', f"{BQ_DATASET}.{year}_{season_type}_{filename}") \
     .save()
+
+    # Within each partition, data is ordered by clusters, what will be your cluster? category
+df_w_partition=[ 
+    df_teams_stats_clean,
+    df_athletes_clean,
+    df_athletes_stats_clean
+]
+
+filenames_w_partition=[
+    'teams_stats',
+    'athletes',
+    'athletes_stats'
+]
+
+for df, filename in zip(df_w_partition, filenames_w_partition):
+    if 'teamId' in df.columns:
+        df.write.format('bigquery') \
+        .mode('overwrite') \
+        .option('table', f"{BQ_DATASET}.{year}_{season_type}_{filename}_PARTITIONED") \
+        .partitionBy('teamId') \
+        .save()
+
+    elif 'athleteId' in df.columns:
+        df.write.format('bigquery') \
+        .mode('overwrite') \
+        .option('table', f"{BQ_DATASET}.{year}_{season_type}_{filename}_PARTITIONED") \
+        .partitionBy('athleteId') \
+        .save()
 
 # log: end
 print(f"Loading for nfl data to parquet ended")
 
-#================================================================
+#===============================================================
 
+# ## SQL TRANSFORMATIONS FOR DASHBOARD
 
+# # Dashboard 1 : Who's your extraordinary teammate
 
+# df_athletes_clean.createOrReplaceTempView("athletes")
+# df_athletes_stats_clean.createOrReplaceTempView("athletes_stats")
+# df_leaders_clean.createOrReplaceTempView("leaders")
 
-
-#================================================================
-
-## SQL TRANSFORMATIONS FOR DASHBOARD
-
-# Dashboard 1 : Who's your extraordinary teammate
-
-df_athletes_clean.createOrReplaceTempView("athletes")
-df_athletes_stats_clean.createOrReplaceTempView("athletes_stats")
-df_leaders_clean.createOrReplaceTempView("leaders")
-
-# Get the top 1 leader in each metric
-leaders = spark.sql(
-    """
-    WITH stats AS (
-    SELECT l.name as Forte, l.value as ValueForte, a.teamId, l.athleteId, a.shortName as athleteName, a.positionParent, a.positionName
-    FROM leaders l
-    JOIN athletes a ON a.athleteId=l.athleteId
-    WHERE value IN (SELECT max(value) FROM leaders GROUP BY name)
-    ORDER BY Forte DESC, teamId
-    )
+# # Get the top 1 leader in each metric
+# leaders = spark.sql(
+#     """
+#     WITH stats AS (
+#     SELECT l.name as Forte, l.value as ValueForte, a.teamId, l.athleteId, a.shortName as athleteName, a.positionParent, a.positionName
+#     FROM leaders l
+#     JOIN athletes a ON a.athleteId=l.athleteId
+#     WHERE value IN (SELECT max(value) FROM leaders GROUP BY name)
+#     ORDER BY Forte DESC, teamId
+#     )
     
-    SELECT athleteName, Forte, ValueForte, athleteId, teamId, positionParent, positionName
-    FROM stats
-    ORDER BY teamId, athleteId
-    """
-)
+#     SELECT athleteName, Forte, ValueForte, athleteId, teamId, positionParent, positionName
+#     FROM stats
+#     ORDER BY teamId, athleteId
+#     """
+# )
 
-leaders.createOrReplaceTempView("top")
+# leaders.createOrReplaceTempView("top")
 
-# Get stats of the top (1) leaders
-leaders_stats = spark.sql(
-    """
-    SELECT DISTINCT a.*, t.athleteName, t.teamId, t.positionParent, t.positionName
-    FROM top as t
-    JOIN athletes_stats as a ON a.athleteId=t.athleteId
-    """
-)
-leaders_stats.createOrReplaceTempView("leaders_stats")
+# # Get stats of the top (1) leaders
+# leaders_stats = spark.sql(
+#     """
+#     SELECT DISTINCT a.*, t.athleteName, t.teamId, t.positionParent, t.positionName
+#     FROM top as t
+#     JOIN athletes_stats as a ON a.athleteId=t.athleteId
+#     """
+# )
+# leaders_stats.createOrReplaceTempView("leaders_stats")
 
-# Get the teammates and their stats
+# # Get the teammates and their stats
 
-teammates_all = spark.sql(
-    """
-    -- from athletes table, get the name and other info
-    WITH leader_teammates AS
-    (SELECT a.shortName as athleteName, a.positionParent, a.positionName, a.athleteId, a.teamId, a.headshot
-    FROM athletes a),
+# teammates_all = spark.sql(
+#     """
+#     -- from athletes table, get the name and other info
+#     WITH leader_teammates AS
+#     (SELECT a.shortName as athleteName, a.positionParent, a.positionName, a.athleteId, a.teamId, a.headshot
+#     FROM athletes a),
     
-    -- table for the athletes in the leaders' team
+#     -- table for the athletes in the leaders' team
     
-    teammates AS
-    (SELECT DISTINCT l1.*
-    FROM leader_teammates l1
-    JOIN leaders_stats l2 ON l1.teamId = l2.teamId),
+#     teammates AS
+#     (SELECT DISTINCT l1.*
+#     FROM leader_teammates l1
+#     JOIN leaders_stats l2 ON l1.teamId = l2.teamId),
     
-    -- getting the stats for each athlete
+#     -- getting the stats for each athlete
     
-    teammates_stats AS
-    (SELECT t.teamId, t.athleteName, t.positionParent, t.positionName, t.headshot, as.*
-    FROM teammates AS t
-    JOIN athletes_stats AS as ON as.athleteId=t.athleteId
-    WHERE as.name IN (SELECT Forte FROM top)
-    ORDER BY teamId),
+#     teammates_stats AS
+#     (SELECT t.teamId, t.athleteName, t.positionParent, t.positionName, t.headshot, as.*
+#     FROM teammates AS t
+#     JOIN athletes_stats AS as ON as.athleteId=t.athleteId
+#     WHERE as.name IN (SELECT Forte FROM top)
+#     ORDER BY teamId),
     
-    -- getting the average value for each metric
+#     -- getting the average value for each metric
     
-    metric_average AS
-    (SELECT ROUND(AVG(value),4) as averageValue, name as metricName, category
-    FROM athletes_stats
-    WHERE name IN (SELECT Forte FROM top) and value != 0
-    GROUP BY name, category)
+#     metric_average AS
+#     (SELECT ROUND(AVG(value),4) as averageValue, name as metricName, category
+#     FROM athletes_stats
+#     WHERE name IN (SELECT Forte FROM top) and value != 0
+#     GROUP BY name, category)
     
-    -- main query 
+#     -- main query 
     
-    SELECT ma.averageValue, ts.*
-    FROM metric_average ma
-    JOIN teammates_stats ts ON (ts.name=ma.metricName and ts.category=ma.category)
+#     SELECT ma.averageValue, ts.*
+#     FROM metric_average ma
+#     JOIN teammates_stats ts ON (ts.name=ma.metricName and ts.category=ma.category)
     
-    EXCEPT 
+#     EXCEPT 
     
-    SELECT ma.averageValue, ts.*
-    FROM metric_average ma
-    JOIN teammates_stats ts ON ts.name=ma.metricName
-    WHERE ts.category='Passing' and ts.name IN ('sacks','interceptions')
-    """
-)
-# Write to csv --> make this big query
+#     SELECT ma.averageValue, ts.*
+#     FROM metric_average ma
+#     JOIN teammates_stats ts ON ts.name=ma.metricName
+#     WHERE ts.category='Passing' and ts.name IN ('sacks','interceptions')
+#     """
+# )
+# # Write to csv --> make this big query
 
-# teammates_all.write.option("header", True).mode("overwrite").csv(
-#     os.path.join(f"./dashboards/{year}/{season_type}/", "dashboard1_scatter")
+# # teammates_all.write.option("header", True).mode("overwrite").csv(
+# #     os.path.join(f"./dashboards/{year}/{season_type}/", "dashboard1_scatter")
 
 
-BQ_DATASET="nfl_data_all"
-teammates_all.write.format('bigquery') \
-    .mode('overwrite') \
-    .option('table', f"{BQ_DATASET}.leaders_teammates_{year}_{season_type}") \
-    .save()
+# BQ_DATASET="nfl_data_all"
+# teammates_all.write.format('bigquery') \
+#     .mode('overwrite') \
+#     .option('table', f"{BQ_DATASET}.leaders_teammates_{year}_{season_type}") \
+#     .save()
 
 #===================================================================================
-
 # Dashboard 2: Radar chart - weakness/strength
 
 df_teams_stats_clean.createOrReplaceTempView("teams_stats")
@@ -392,13 +411,13 @@ df_teams_clean.createOrReplaceTempView("teams")
 
 stats = spark.sql(
     """
-    SELECT ts.name, ts.abbreviation, ts.value, ts.category, ts.teamId, t.displayName, ts.rank, PERCENT_RANK() OVER(
-                        PARTITION BY ts.name
-                        ORDER BY rank DESC)*100 AS percentileRank, 
-                        t.logo 
+    SELECT ts.teamStatName, ts.teamStatAbbreviation, ts.teamStatValue, ts.teamStatCategory, ts.teamId, ts.teamRank, PERCENT_RANK() OVER(
+                        PARTITION BY ts.teamStatName
+                        ORDER BY ts.teamRank DESC)*100 AS percentileRank, 
+                        t.teamLogo 
     FROM teams_stats ts
     JOIN teams t ON t.teamId=ts.teamId
-    WHERE ts.category IN ('General','Passing','Rushing','Receiving', 'Kicking') and ts.name IN ("fumbles",
+    WHERE ts.teamStatCategory IN ('General','Passing','Rushing','Receiving', 'Kicking') and ts.teamStatName IN ("fumbles",
     "fumblesRecovered",
     "fumblesTouchdowns",
     "fumblesForced",
@@ -425,27 +444,25 @@ stats = spark.sql(
     "totalKickingPoints")
     
     UNION ALL
-    
-    SELECT ts.name, ts.abbreviation, ts.value, ts.category, ts.teamId, t.displayName, ts.rank, PERCENT_RANK() OVER(
-                        PARTITION BY ts.name
-                        ORDER BY rank DESC)*100 AS percentileRank, 
-                        t.logo 
+    SELECT ts.teamStatName, ts.teamStatAbbreviation, ts.teamStatValue, ts.teamStatCategory, ts.teamId, ts.teamRank, PERCENT_RANK() OVER(
+                    PARTITION BY ts.teamStatName
+                    ORDER BY ts.teamRank DESC)*100 AS percentileRank, 
+                    t.teamLogo
     FROM teams_stats ts
     JOIN teams t ON t.teamId=ts.teamId
-    WHERE ts. category IN ('Defensive', 'Defensive Interceptions', 'Scoring') and ts.name IN (
+    WHERE ts.teamStatCategory IN ('Defensive','Scoring') and ts.teamStatName IN (
     "totalTackles",
     "avgSackYards", 
     "avgStuffYards",
     "avgInterceptionYards",
     "interceptions",
     "passingTouchdowns",
-    "receivingTouchdowns",
     "returnTouchdowns",
     "rushingTouchdowns",
     "interceptionTouchdowns",
     "totalPointsPerGame")
     
-    ORDER BY category, name, percentileRank DESC
+    ORDER BY teamStatCategory, teamStatName, percentileRank DESC
     """
 )
 
@@ -457,7 +474,7 @@ stats = spark.sql(
 BQ_DATASET="nfl_data_all"
 stats.write.format('bigquery') \
     .mode('overwrite') \
-    .option('table', f"{BQ_DATASET}.radar_stats_{year}_{season_type}") \
+    .option('table', f"{BQ_DATASET}.{year}_{season_type}_radar_stats") \
     .save()
 
 #=======================================================================
@@ -469,7 +486,7 @@ defense_stats = spark.sql(
     """
     SELECT t.teamId,ads.*
     FROM addtl_defense_stats ads
-    JOIN teams t ON ads.team=t.displayName
+    JOIN teams t ON ads.teamName=t.teamDisplayName
     """
 )
 
@@ -478,12 +495,12 @@ defense_stats.createOrReplaceTempView("defense_stats")
 # Making dense rank
 dense_rank = spark.sql(
     """
-    SELECT teamId, category, name, value,
+    SELECT teamId, teamStatCategory, teamStatName, teamStatValue,
             DENSE_RANK() OVER(
-                PARTITION BY name
-                ORDER BY value DESC) as valuesDenseRank
+                PARTITION BY teamStatName
+                ORDER BY teamStatValue DESC) as statValuesDenseRank
     FROM teams_stats
-    WHERE category IN ('Passing', 'Rushing', 'Receiving') AND name IN (
+    WHERE teamStatCategory IN ('Passing', 'Rushing', 'Receiving') AND teamStatName IN (
     'netTotalYards',
     'yardsPerGame',
     'completionPct',
@@ -500,12 +517,12 @@ dense_rank = spark.sql(
     'rushingTouchdowns'
     )
     UNION ALL
-    SELECT teamId, category, name, value,
+    SELECT teamId, teamstatCategory, teamStatName, teamStatValue,
             DENSE_RANK() OVER(
-                PARTITION BY name
-                ORDER BY value DESC) as valuesDenseRank
+                PARTITION BY teamStatName
+                ORDER BY teamStatValue DESC) as statValuesDenseRank
     FROM teams_stats
-    WHERE category IN ('General','Defensive', 'Defensive Interception') and name IN ('fumblesForced','fumblesTouchdowns','passesDefended',
+    WHERE teamStatCategory IN ('General','Defensive', 'Defensive Interception') and teamStatName IN ('fumblesForced','fumblesTouchdowns','passesDefended',
     'avgInterceptionYards',
     'avgSackYards',
     'avgStuffYards',
@@ -513,10 +530,10 @@ dense_rank = spark.sql(
     'defensiveTouchdowns'
     )
     UNION ALL
-    SELECT teamId, category, name, value,
+    SELECT teamId, statCategory as teamStatCategory, statName as teamStatName, statValue as teamStatValue,
         DENSE_RANK() OVER(
-                PARTITION BY name
-                ORDER BY value) as valuesDenseRank
+                PARTITION BY statName
+                ORDER BY statValue) as statValuesDenseRank
     FROM defense_stats
     """
 )
@@ -528,22 +545,22 @@ classify = spark.sql(
     """
     WITH defense AS
     (SELECT dr.teamId,
-            AVG(dr.valuesDenseRank) as defenseAvgRank
+            AVG(dr.statValuesDenseRank) as defenseAvgRank
     FROM dense_rank dr
-    WHERE category IN ('General','Defensive', 'Defensive Interception')
+    WHERE teamStatCategory IN ('General','Defensive', 'Defensive Interception')
     GROUP BY dr.teamId
     ),
     
     offense AS
     (
     SELECT dr.teamId,
-            AVG(dr.valuesDenseRank) as offenseAvgRank
+            AVG(dr.statValuesDenseRank) as offenseAvgRank
     FROM dense_rank dr
-    WHERE category IN ('Passing', 'Rushing', 'Receiving', 'Scoring')
+    WHERE teamStatCategory IN ('Passing', 'Rushing', 'Receiving', 'Scoring')
     GROUP BY dr.teamId
     )
     
-    SELECT o.teamId,t.displayName, t.logo, 
+    SELECT o.teamId,t.teamDisplayName, t.teamLogo, 
             DENSE_RANK() OVER(
             ORDER BY defenseAvgRank) as defRank,
             DENSE_RANK() OVER(
@@ -555,14 +572,8 @@ classify = spark.sql(
     """
 )
 
-# Writing to csv
-# classify.write.mode("overwrite").option("header", True).csv(
-#     os.path.join(f"./dashboards/{year}/{season_type}/", "dashboard3_window")
-# )
-
 BQ_DATASET="nfl_data_all"
 classify.write.format('bigquery') \
     .mode('overwrite') \
-    .option('table', f"{BQ_DATASET}.best_worst_teams_{year}_{season_type}") \
+    .option('table', f"{BQ_DATASET}.{year}_{season_type}_best_worst_teams") \
     .save()
-

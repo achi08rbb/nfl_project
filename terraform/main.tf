@@ -93,7 +93,7 @@ resource "google_dataproc_cluster" "spark-cluster" {
       machine_type  = "e2-standard-4"
       disk_config {
         boot_disk_type    = "pd-ssd"
-        boot_disk_size_gb = 500
+        boot_disk_size_gb = 250
       }
     }
     preemptible_worker_config {
@@ -111,7 +111,7 @@ resource "google_dataproc_cluster" "spark-cluster" {
     gce_cluster_config {
       tags = ["project", var.project]
       # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-      service_account = "nfl-user@nfl-de-project.iam.gserviceaccount.com"
+      service_account = "nfl-user@nfl-project-de.iam.gserviceaccount.com"
       service_account_scopes = [
         "cloud-platform"
       ]

@@ -4,7 +4,7 @@ locals {
 }
 
 variable "project" {
-  description = "nfl-de-project"
+  description = "nfl-project-de"
 }
 
 variable "region" {
@@ -28,7 +28,7 @@ variable "storage_class" {
 variable "BQ_DATASET" {
   description = "BigQuery Dataset that raw data (from GCS) will be written to"
   type = string
-  default = "trips_data_all"
+  default = "nfl_data_all"
 }
 
 variable "DATAPROC_CLUSTER" {

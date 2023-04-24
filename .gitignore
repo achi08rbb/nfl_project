@@ -1,3 +1,3 @@
-.google
-./airflow/.google
-airflow/logs/scheduler
+.google/credentials/
+./airflow/.google/credentials/
+./airflow/logs/

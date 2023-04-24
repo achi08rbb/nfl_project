@@ -124,3 +124,96 @@ Defense
 "CAST(`('Rushing', 'YDS/G')` AS double) AS rushingYDSG",
 "CAST(`('Points', 'PTS')` AS double) AS points",
 "CAST(`('Points', 'PTS/G')` AS double) AS pointsPerGame"
+
+
+mapping = {
+    'teamName','gamesPlaye 'totalYDS',: 'totalYDSG: 'passingYDS',: 'passingYDSG: 'rushingYDS',: 'rushingYDSG: 'points',: 'pointsPerGame',
+}
+
+
+# Dashboard 1 : Who's your extraordinary teammate
+
+df_athletes_clean.createOrReplaceTempView("athletes")
+df_athletes_stats_clean.createOrReplaceTempView("athletes_stats")
+df_leaders_clean.createOrReplaceTempView("leaders")
+
+# Get the top 1 leader in each metric
+leaders = spark.sql(
+    """
+    WITH stats AS (
+    SELECT l.name as Forte, l.leaderValue as ValueForte, a.teamId, l.athleteId, a.shortName as athleteName, a.positionParent, a.positionName
+    FROM leaders l
+    JOIN athletes a ON a.athleteId=l.athleteId
+    WHERE value IN (SELECT max(leaderValue) FROM leaders GROUP BY name)
+    ORDER BY Forte DESC, teamId
+    )
+    
+    SELECT athleteName, Forte, leaderValueForte, athleteId, teamId, positionParent, positionName
+    FROM stats
+    ORDER BY teamId, athleteId
+    """
+)
+
+leaders.createOrReplaceTempView("top")
+
+# Get stats of the top (1) leaders
+leaders_stats = spark.sql(
+    """
+    SELECT DISTINCT a.*, t.athleteName, t.teamId, t.positionParent, t.positionName
+    FROM top as t
+    JOIN athletes_stats as a ON a.athleteId=t.athleteId
+    """
+)
+leaders_stats.createOrReplaceTempView("leaders_stats")
+
+# Get the teammates and their stats
+
+teammates_all = spark.sql(
+    """
+    -- from athletes table, get the name and other info
+    WITH leader_teammates AS
+    (SELECT a.shortName as athleteName, a.positionParent, a.positionName, a.athleteId, a.teamId, a.headshot
+    FROM athletes a),
+    
+    -- table for the athletes in the leaders' team
+    
+    teammates AS
+    (SELECT DISTINCT l1.*
+    FROM leader_teammates l1
+    JOIN leaders_stats l2 ON l1.teamId = l2.teamId),
+    
+    -- getting the stats for each athlete
+    
+    teammates_stats AS
+    (SELECT t.teamId, t.athleteName, t.positionParent, t.positionName, t.headshot, as.*
+    FROM teammates AS t
+    JOIN athletes_stats AS as ON as.athleteId=t.athleteId
+    WHERE as.name IN (SELECT Forte FROM top)
+    ORDER BY teamId),
+    
+    -- getting the average value for each metric
+    
+    metric_average AS
+    (SELECT ROUND(AVG(value),4) as averageValue, name as metricName, athleteStatCategory
+    FROM athletes_stats
+    WHERE name IN (SELECT Forte FROM top) and value != 0
+    GROUP BY name, athleteStatCategory)
+    
+    -- main query 
+    
+    SELECT ma.averageValue, ts.*
+    FROM metric_average ma
+    JOIN teammates_stats ts ON (ts.name=ma.metricName and ts.teamStatCategory=ma.athleteStatCategory)
+    
+    EXCEPT 
+    
+    SELECT ma.averageValue, ts.*
+    FROM metric_average ma
+    JOIN teammates_stats ts ON ts.name=ma.metricName
+    WHERE ts.teamStatCategory='Passing' and ts.name IN ('sacks','interceptions')
+    """
+)
+# Write to csv --> make this big query
+
+# teammates_all.write.option("header", True).mode("overwrite").csv(
+#     os.path.join(f"./dashboards/{year}/{season_type}/", "dashboard1_scatter")

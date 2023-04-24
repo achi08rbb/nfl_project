@@ -31,7 +31,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir pandas sqlalchemy psycopg2-binary
 
-COPY code ./code
+# COPY code ./code
 COPY csv ./csv
 #creates a folder in the airflow directory in docker
 
