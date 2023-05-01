@@ -274,7 +274,7 @@ for df, filename in zip(df_list, filenames):
     .option('table', f"{BQ_DATASET}.{year}_{season_type}_{filename}") \
     .save()
 
-    # Within each partition, data is ordered by clusters, what will be your cluster? category
+ # Within each partition, data is ordered by clusters, what will be your cluster? category
 df_w_partition=[ 
     df_teams_stats_clean,
     df_athletes_clean,

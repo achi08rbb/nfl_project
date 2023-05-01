@@ -1,0 +1,46 @@
+[2023-04-23T09:43:14.777+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_extraction_dag.task_athletes__1 manual__2023-04-23T09:13:51.275453+00:00 [queued]>
+[2023-04-23T09:43:14.812+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_extraction_dag.task_athletes__1 manual__2023-04-23T09:13:51.275453+00:00 [queued]>
+[2023-04-23T09:43:14.813+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-23T09:43:14.816+0000] {taskinstance.py:1289} INFO - Starting attempt 1 of 3
+[2023-04-23T09:43:14.818+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-23T09:43:14.872+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_athletes__1> on 2023-04-23 09:13:51.275453+00:00
+[2023-04-23T09:43:14.901+0000] {standard_task_runner.py:55} INFO - Started process 312 to run task
+[2023-04-23T09:43:14.953+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'data_extraction_dag', 'task_athletes__1', 'manual__2023-04-23T09:13:51.275453+00:00', '--job-id', '1082', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmp01bzb6r8']
+[2023-04-23T09:43:14.984+0000] {standard_task_runner.py:83} INFO - Job 1082: Subtask task_athletes__1
+[2023-04-23T09:43:15.728+0000] {task_command.py:389} INFO - Running <TaskInstance: data_extraction_dag.task_athletes__1 manual__2023-04-23T09:13:51.275453+00:00 [running]> on host 235fa867d994
+[2023-04-23T09:43:16.212+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=data_extraction_dag
+AIRFLOW_CTX_TASK_ID=task_athletes__1
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-23T09:13:51.275453+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-23T09:13:51.275453+00:00
+[2023-04-23T09:43:16.222+0000] {logging_mixin.py:137} INFO - Fetching for athlete details started
+[2023-04-23T09:43:56.540+0000] {local_task_job.py:276} WARNING - State of this instance has been externally set to None. Terminating instance.
+[2023-04-23T09:43:56.599+0000] {process_utils.py:129} INFO - Sending Signals.SIGTERM to group 312. PIDs of all processes in the group: [312]
+[2023-04-23T09:43:56.601+0000] {process_utils.py:84} INFO - Sending the signal Signals.SIGTERM to group 312
+[2023-04-23T09:43:56.926+0000] {taskinstance.py:1488} ERROR - Received SIGTERM. Terminating subprocesses.
+[2023-04-23T09:43:59.605+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 125, in task_athletes
+    athletes=get_athletes(athlete_ids, year).to_json()
+  File "/opt/airflow/code/extraction_nfl.py", line 368, in get_athletes
+    q.join()
+  File "/usr/local/lib/python3.9/queue.py", line 90, in join
+    self.all_tasks_done.wait()
+  File "/usr/local/lib/python3.9/threading.py", line 312, in wait
+    waiter.acquire()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 1490, in signal_handler
+    raise AirflowException("Task received SIGTERM signal")
+airflow.exceptions.AirflowException: Task received SIGTERM signal
+[2023-04-23T09:44:05.540+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=data_extraction_dag, task_id=task_athletes__1, execution_date=20230423T091351, start_date=20230423T094314, end_date=20230423T094405
+[2023-04-23T09:44:09.228+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 1082 for task task_athletes__1 (Task received SIGTERM signal; 312)
+[2023-04-23T09:44:09.743+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=312, status='terminated', exitcode=1, started='09:43:14') (312) terminated with exit code 1

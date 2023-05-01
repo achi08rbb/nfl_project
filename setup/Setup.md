@@ -1,26 +1,61 @@
-# Environment setup
+# **Environment setup**
  - For this project you'll need:
-    - Python 3 (e.g. installed with Anaconda)
     - Google Cloud SDK
     - Docker with docker-compose
     - Terraform
 
-# **Local Setup for Terraform and GCP: Important Pre-requisites**
+# **Important Pre-requisites**
 
 1. Terraform client installation: https://www.terraform.io/downloads
 2. Cloud Provider account: https://console.cloud.google.com/
-3. Clone the contents of this repo in your device
-4. If running on windows, use MINGW/Git Bash for the commands shown here
+3. Docker and docker-compose: https://docs.docker.com/compose/install/ (installing Docker Desktop would install docker-compose)
+4. Clone the contents of this repo in your device 
+    - Open a terminal or command prompt on your computer.
+    - Navigate to the directory where you want to clone the repository.
+    - Use the git clone command followed by the URL of the repository you want to clone. 
+        ```
+        git clone https://github.com/achi08rbb/NFL_DE_PROJECT.git
+        ```
+    - It should look something like this: 
+    
+    - ![](./images/2023-05-01-15-42-32.png)
+    - In this case the repo is located in the `7ProjectAirflow` directory:
+
+5. If running on windows, use MINGW/Git Bash for the commands shown here
+# Running using Virtual Machine
+
+1. Generate ssh key used to log in on your gcp project
+    - Open GitBash
+    - Create ~/.ssh/ directory if not yet existent
+    - Generate key using the following code
+    ```
+    ssh-keygen -t rsa -f ~/.ssh/gcp -C <username> -b 2048
+    ```
+    - Answer the prompt or leave them blank (default)
+    - Private and public key (.pub) created (Don't share the private key)
+    - Your keys are now located in `~/.ssh/`
+
+2. Go to compute engine --> metadata--> ssh keys
+    - Go to your CLI and open contents of your ssh key. Copy them.
+    ```
+    cat ~/.ssh/gcp.pub
+    ```
+    - Paste the contents of you `gcp.pub` key in the field
+    - ![](2023-05-01-22-32-18.png)
+
+3. Create you VM instance and configure
+4. 
 
 # **GCP**
 
-1.  After making your google cloud account, follow instructions here in making your project: https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_1_basics_n_setup/1_terraform_gcp/2_gcp_overview.md#initial-setup
+1. Create an account with your Google email ID
 
-2. Name you project `nfl-project-de`. Take note of your project ID.
+2. Setup your project named `nfl-project-de`. Take note of your `project ID`.
 
 3. Make a Service Account and grant it with the following roles:
     - ![](./images/2023-04-09-23-15-05.png)
     - ![](./images/2023-04-09-23-16-46.png)
+
     - BigQuery Admin
     - Storage Admin
     - Storage Object Admin
@@ -29,11 +64,14 @@
     - Dataproc Service Agent
     - Viewer
 
-4. Download your Service Account credentials file
+4. Download your Service Account credentials file and name it `google_credentials.json`
     - Store it in your project path, into a path like `<project-path>/.google/credentials/`
-    - ![](./images/223-04-09-23-18-18.png)
-    - ![](./images/223-04-09-23-18-41.png)
-    - ![](./images/223-04-09-23-18-54.png)
+
+    - ![](./images/2023-04-09-23-18-18.png)
+
+    - ![](./images/2023-04-09-23-18-41.png)
+
+    - ![](./images/2023-04-09-23-18-54.png)
 
 5. Enable the following APIs:
     - https://console.cloud.google.com/apis/library/iam.googleapis.com
@@ -44,11 +82,11 @@
     - name it `GOOGLE_APPLICATION_CREDENTIALS`
     - For uniformity, put your credentials in the remote copy of the cloned repository as noted in the [Local Setup section](#local-setup-for-terraform-and-gcp)
     ```
-    <path/to/cloned/repo>/airflow
+    <project-path>/airflow
     ```
     
     ```
-    export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"
+    export GOOGLE_APPLICATION_CREDENTIALS="<project-path>/.google/credentials/google_credentials.json"
     ```
 7. Download [SDK](https://cloud.google.com/sdk/docs/quickstart) and choose the installer for your OS.
 
@@ -57,7 +95,7 @@
     - IMPORTANT: In your MINGW/Git Bash CLI, enable `bash` by typing it in the command line
     - type `nano ~/.bashrc file` to edit the .bashrc file (located in your home directory `~` ) and append this at the end of the file:
     ```
-    export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"
+    export GOOGLE_APPLICATION_CREDENTIALS="<project-path>/.google/credentials/google_credentials.json"
     ```
     - type `source ~/.bashrc` to enable the change 
         - Do this everytime you start a new session of you CLI
@@ -86,7 +124,7 @@
 
 3. Go to your CLI and `cd` to the terraform folder in the cloned project repo
     ```
-    cd <path-where-you-cloned-the-repo>/terraform
+    cd <project-path>/terraform
     ```
 
 4. Follow these execution steps:
@@ -111,14 +149,12 @@
 
 # **Airflow**
 Prerequisites:
-1. Docker and docker compose 
-
-https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/2022/week_3_data_warehouse/airflow/1_setup_official.md
+- Docker and docker compose 
 
 1. Go to your main project directory and move to the airflow folder
     
     ```
-    cd <path-to-your-project>/airflow
+    cd <project-path>/airflow
     ```
 
 2. Make sure you've done `source ~/.bashrc`, as instructed in [GCP](#gcp) setup section, to have your GOOGLE_APPLICATION_CREDENTIALS available in the session.
@@ -134,9 +170,9 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
 
     i. Start docker daemon by opening Docker Desktop in Windows and run the following in your CLI
 
-        ```
-        echo -e "AIRFLOW_UID=$(id -u) > .env
-        ```
+    ```
+    echo -e "AIRFLOW_UID=$(id -u) > .env
+    ```
 
     ii. Build the image
     
@@ -179,11 +215,11 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
     ```
     docker ps
     ```
+
     x. Look for the airflow worker container id and run the following (Make sure you're in your airflow folder where you docker-compose.yaml file is found):
    
     ```
     docker exec -it <container-id-of-airflow-worker> bash
-
     ```
 
     You can now navigate within the container as you would in your own local setup.
@@ -192,15 +228,15 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
     ```
     gcloud init
     ```
+    Choose your project when prompted.
     ```
     gcloud auth application-default login
     ```
     
-5. You can choose to run the dags for different years, just change the params in the parameter section of the dag in `airflow/dags/data_ingestion.py`. If airflow was setup correctly, changes within the dag (on your local copy) should sync with the dag in the docker container.
-
+5. You can choose to run the DAGs for different years, just change the params in the parameter section of the dag in `airflow/dags/data_ingestion.py`. If airflow was setup correctly, changes within the DAG (on your local copy) should sync with the dag in the docker container.
 
 6. Change your bucket variable in the `airflow/code/transform_pyspark.py`.
 
-7. Run the 2 dags separately
-
-8. 
+7. Run the 2 dags separately, in this order:
+    1. `nfl_extract_load_GCS` 
+    2. `nfl_transform_load_BQ` 
