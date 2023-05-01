@@ -1,6 +1,6 @@
 locals {
   data_lake_bucket = "nfl-data-lake"
-  dataproc_bucket = "nfl-spark-staging"
+  dataproc_bucket  = "nfl-spark-staging"
 }
 
 variable "project" {
@@ -9,8 +9,8 @@ variable "project" {
 
 variable "region" {
   description = "Region for GCP resources. Choose as per your location: https://cloud.google.com/about/locations"
-  default = "europe-west6"
-  type = string
+  default     = "europe-west6"
+  type        = string
 }
 
 # If you did not set up the `GOOGLE_APPLICATION_CREDENTIALS` variable, uncomment this
@@ -22,18 +22,27 @@ variable "region" {
 
 variable "storage_class" {
   description = "Storage class type for your bucket. Check official docs for more info."
-  default = "STANDARD"
+  default     = "STANDARD"
 }
 
 variable "BQ_DATASET" {
   description = "BigQuery Dataset that raw data (from GCS) will be written to"
-  type = string
-  default = "nfl_data_all"
+  type        = string
+  default     = "nfl_data_all"
 }
 
 variable "DATAPROC_CLUSTER" {
   description = "Name of dataproc cluster for spark jobs"
-  type = string
-  default = "nfl-spark-cluster"
+  type        = string
+  default     = "nfl-spark-cluster"
 }
+
+variable "service_account" {
+  description = "Name of service account"
+  type        = string
+  default     = "nfl-user@nfl-project-de.iam.gserviceaccount.com"
+}
+
+# "projects/nfl-project-de/regions/europe-west6/subnetworks/default"
+
 

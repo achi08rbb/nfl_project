@@ -85,7 +85,7 @@ x-airflow-common:
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
     - ./code:/opt/airflow/code # a folder of scripts and module
-    - ./.google/credentials/:/.google/credentials:ro
+    - ~/.google/credentials/:/.google/credentials:ro
 
 
   user: "${AIRFLOW_UID:-50000}:0" # OVERWRITTEN BY .ENV CONTENTS
