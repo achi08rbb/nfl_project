@@ -89,7 +89,7 @@
     - Paste the contents of you `gcp.pub` key in the field
     - ![](./images/2023-05-01-22-32-18.png)
 
-3. Create you VM instance and configure.
+3. Create you VM instance and configure. Make sure you allocate enough boot disk storage.
 
 4.  Take note of the External IP address and enter the following in your CLI:
     ```
@@ -223,6 +223,7 @@
     ```
     gcloud auth application-default login
     ```
+4. Finished authorizing and installing. Let's build the infrastracture!
 
 # **Terraform**
 - Set up your GCP infrastracture using terraform
