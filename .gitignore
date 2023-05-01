@@ -1,3 +1,5 @@
 .google/credentials/
 ./airflow/.google/credentials/
-./airflow/logs/
+./airflow/logs
+7ProjectAirflow.code-workspace
+airflow/.google/credentials/google_credentials.json

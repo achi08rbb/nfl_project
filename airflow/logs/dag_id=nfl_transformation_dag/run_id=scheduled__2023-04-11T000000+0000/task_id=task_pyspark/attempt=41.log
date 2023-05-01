@@ -1,0 +1,53 @@
+[2023-04-23T15:59:40.479+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [queued]>
+[2023-04-23T15:59:40.496+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [queued]>
+[2023-04-23T15:59:40.497+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-23T15:59:40.499+0000] {taskinstance.py:1289} INFO - Starting attempt 41 of 43
+[2023-04-23T15:59:40.500+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-23T15:59:40.515+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_pyspark> on 2023-04-11 00:00:00+00:00
+[2023-04-23T15:59:40.524+0000] {standard_task_runner.py:55} INFO - Started process 11940 to run task
+[2023-04-23T15:59:40.528+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'nfl_transformation_dag', 'task_pyspark', 'scheduled__2023-04-11T00:00:00+00:00', '--job-id', '1217', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmpvljbyrbp']
+[2023-04-23T15:59:40.531+0000] {standard_task_runner.py:83} INFO - Job 1217: Subtask task_pyspark
+[2023-04-23T15:59:40.615+0000] {task_command.py:389} INFO - Running <TaskInstance: nfl_transformation_dag.task_pyspark scheduled__2023-04-11T00:00:00+00:00 [running]> on host 235fa867d994
+[2023-04-23T15:59:40.681+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=nfl_transformation_dag
+AIRFLOW_CTX_TASK_ID=task_pyspark
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-11T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=41
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2023-04-11T00:00:00+00:00
+[2023-04-23T15:59:40.685+0000] {subprocess.py:63} INFO - Tmp dir root location: 
+ /tmp
+[2023-04-23T15:59:40.689+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'gcloud dataproc jobs submit pyspark                 --cluster=nfl-spark-cluster                 --region=europe-west6                 --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.30.0.jar                gs://nfl-data-lake_nfl-project-de/code/transform_pyspark.py                 --                     --year=2022                     --season_type=2 ']
+[2023-04-23T15:59:40.705+0000] {subprocess.py:86} INFO - Output:
+[2023-04-23T15:59:45.343+0000] {subprocess.py:93} INFO - Job [8546a85c542046a4b8c9b88e07011f9d] submitted.
+[2023-04-23T15:59:45.344+0000] {subprocess.py:93} INFO - Waiting for job output...
+[2023-04-23T15:59:54.399+0000] {subprocess.py:93} INFO -   File "/tmp/8546a85c542046a4b8c9b88e07011f9d/transform_pyspark.py", line 277
+[2023-04-23T15:59:54.400+0000] {subprocess.py:93} INFO -     .save()
+[2023-04-23T15:59:54.401+0000] {subprocess.py:93} INFO -     ^
+[2023-04-23T15:59:54.406+0000] {subprocess.py:93} INFO - SyntaxError: invalid syntax
+[2023-04-23T16:00:20.968+0000] {subprocess.py:93} INFO - ERROR: (gcloud.dataproc.jobs.submit.pyspark) Job [8546a85c542046a4b8c9b88e07011f9d] failed with error:
+[2023-04-23T16:00:20.970+0000] {subprocess.py:93} INFO - Job failed with message [SyntaxError: invalid syntax]. Additional details can be found at:
+[2023-04-23T16:00:20.971+0000] {subprocess.py:93} INFO - https://console.cloud.google.com/dataproc/jobs/8546a85c542046a4b8c9b88e07011f9d?project=nfl-project-de&region=europe-west6
+[2023-04-23T16:00:20.974+0000] {subprocess.py:93} INFO - gcloud dataproc jobs wait '8546a85c542046a4b8c9b88e07011f9d' --region 'europe-west6' --project 'nfl-project-de'
+[2023-04-23T16:00:20.976+0000] {subprocess.py:93} INFO - https://console.cloud.google.com/storage/browser/nfl-spark-staging_nfl-project-de/google-cloud-dataproc-metainfo/3f31be1a-ebc3-4b4c-987d-83767542db1e/jobs/8546a85c542046a4b8c9b88e07011f9d/
+[2023-04-23T16:00:20.978+0000] {subprocess.py:93} INFO - gs://nfl-spark-staging_nfl-project-de/google-cloud-dataproc-metainfo/3f31be1a-ebc3-4b4c-987d-83767542db1e/jobs/8546a85c542046a4b8c9b88e07011f9d/driveroutput
+[2023-04-23T16:00:21.287+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2023-04-23T16:00:21.308+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 231, in task_pyspark
+    operator.execute(context={})
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/bash.py", line 196, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2023-04-23T16:00:21.324+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=nfl_transformation_dag, task_id=task_pyspark, execution_date=20230411T000000, start_date=20230423T155940, end_date=20230423T160021
+[2023-04-23T16:00:21.348+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 1217 for task task_pyspark (Bash command failed. The command returned a non-zero exit code 1.; 11940)
+[2023-04-23T16:00:21.389+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-23T16:00:21.405+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check

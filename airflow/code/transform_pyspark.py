@@ -68,7 +68,6 @@ df_teams_stats_clean = (
         "displayValue",
         "perGameDisplayValue",
         "rankDisplayValue",
-        "displayName",
         "shortDisplayName",
     )
     .fillna(0)
@@ -76,6 +75,7 @@ df_teams_stats_clean = (
     .withColumn("seasonType", F.lit(season_type).cast("integer"))
     .selectExpr(
         "CAST(name as string) as teamStatName",
+        "CAST(displayName as string) as teamStatDisplayName",
         "CAST(description as string) as teamStatDescription",
         "CAST(abbreviation as string) as teamStatAbbreviation",
         "CAST(value as double) as teamStatValue",
@@ -411,7 +411,7 @@ df_teams_clean.createOrReplaceTempView("teams")
 
 stats = spark.sql(
     """
-    SELECT ts.teamStatName, ts.teamStatAbbreviation, ts.teamStatValue, ts.teamStatCategory, ts.teamId, ts.teamRank, PERCENT_RANK() OVER(
+    SELECT ts.teamStatName, ts.teamStatDescription, ts.teamStatDisplayName, ts.teamStatAbbreviation, ts.teamStatValue, ts.teamStatCategory, ts.teamId, ts.teamRank, PERCENT_RANK() OVER(
                         PARTITION BY ts.teamStatName
                         ORDER BY ts.teamRank DESC)*100 AS percentileRank, 
                         t.teamLogo 
@@ -429,7 +429,7 @@ stats = spark.sql(
     "longPassing",
     "rushingAttempts",
     "rushingYards",
-    "rushingTouchdowns",
+    "rushingYardsPerGame",
     "longRushing",
     "yardsPerRushAttempt",
     "longReception",
@@ -444,7 +444,7 @@ stats = spark.sql(
     "totalKickingPoints")
     
     UNION ALL
-    SELECT ts.teamStatName, ts.teamStatAbbreviation, ts.teamStatValue, ts.teamStatCategory, ts.teamId, ts.teamRank, PERCENT_RANK() OVER(
+    SELECT ts.teamStatName,  ts.teamStatDescription, ts.teamStatDisplayName, ts.teamStatAbbreviation, ts.teamStatValue, ts.teamStatCategory, ts.teamId, ts.teamRank, PERCENT_RANK() OVER(
                     PARTITION BY ts.teamStatName
                     ORDER BY ts.teamRank DESC)*100 AS percentileRank, 
                     t.teamLogo

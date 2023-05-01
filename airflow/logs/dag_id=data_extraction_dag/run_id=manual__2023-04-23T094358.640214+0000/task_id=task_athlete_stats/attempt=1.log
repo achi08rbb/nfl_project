@@ -1,0 +1,25 @@
+[2023-04-23T09:46:01.562+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_extraction_dag.task_athlete_stats manual__2023-04-23T09:43:58.640214+00:00 [queued]>
+[2023-04-23T09:46:01.630+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_extraction_dag.task_athlete_stats manual__2023-04-23T09:43:58.640214+00:00 [queued]>
+[2023-04-23T09:46:01.632+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-23T09:46:01.636+0000] {taskinstance.py:1289} INFO - Starting attempt 1 of 3
+[2023-04-23T09:46:01.639+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-23T09:46:01.733+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_athlete_stats> on 2023-04-23 09:43:58.640214+00:00
+[2023-04-23T09:46:01.785+0000] {standard_task_runner.py:55} INFO - Started process 1709 to run task
+[2023-04-23T09:46:01.800+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'data_extraction_dag', 'task_athlete_stats', 'manual__2023-04-23T09:43:58.640214+00:00', '--job-id', '1120', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmpg8j2etd8']
+[2023-04-23T09:46:01.826+0000] {standard_task_runner.py:83} INFO - Job 1120: Subtask task_athlete_stats
+[2023-04-23T09:46:02.245+0000] {task_command.py:389} INFO - Running <TaskInstance: data_extraction_dag.task_athlete_stats manual__2023-04-23T09:43:58.640214+00:00 [running]> on host 235fa867d994
+[2023-04-23T09:46:02.919+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=data_extraction_dag
+AIRFLOW_CTX_TASK_ID=task_athlete_stats
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-23T09:43:58.640214+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-23T09:43:58.640214+00:00
+[2023-04-23T09:46:03.035+0000] {logging_mixin.py:137} INFO - Fetching for athlete stats started
+[2023-04-23T09:46:37.734+0000] {local_task_job.py:276} WARNING - State of this instance has been externally set to failed. Terminating instance.
+[2023-04-23T09:46:37.859+0000] {process_utils.py:129} INFO - Sending Signals.SIGTERM to group 1709. PIDs of all processes in the group: [1709]
+[2023-04-23T09:46:37.863+0000] {process_utils.py:84} INFO - Sending the signal Signals.SIGTERM to group 1709
+[2023-04-23T09:46:37.891+0000] {taskinstance.py:1488} ERROR - Received SIGTERM. Terminating subprocesses.
+[2023-04-23T09:46:39.303+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=1709, status='terminated', exitcode=0, started='09:46:00') (1709) terminated with exit code 0

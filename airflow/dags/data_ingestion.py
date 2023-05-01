@@ -29,14 +29,16 @@ sys.path.append(os.path.join(os.path.dirname('/opt/airflow/code/')))
 # Import functions from the module                
 from extraction_nfl import get_teams, get_teams_stats, get_athlete_ids, get_athletes_stats, get_athletes, webscrape_defense_stats, get_leaders
 
-
+#===================================================================================
+# CHANGE YOUR PROJECT VARIABLES HERE
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "nfl-project-de")
-BUCKET = "nfl-data-lake_nfl-project-de"
+BUCKET = os.environ.get("GCP_GCS_BUCKET", "nfl-data-lake_nfl-project-de")
 
+#===================================================================================
 # CHANGE DESIRED PARAMS HERE
 year=2022
 season_type=2
-
+#===================================================================================
 teamIds=[
     '1',
     '2',
@@ -222,7 +224,6 @@ def nfl_transform_load_BQ():
             )
         operator.execute(context={})
     
-    task_script_to_GCS()
-    task_pyspark()
+    task_script_to_GCS() >> task_pyspark()
 
 nfl_transform_load_BQ()

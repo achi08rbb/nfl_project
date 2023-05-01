@@ -5,8 +5,8 @@
     - Docker with docker-compose
     - Terraform
 
-# **Local Setup for Terraform and GCP**
-Pre-Requisites
+# **Local Setup for Terraform and GCP: Important Pre-requisites**
+
 1. Terraform client installation: https://www.terraform.io/downloads
 2. Cloud Provider account: https://console.cloud.google.com/
 3. Clone the contents of this repo in your device
@@ -14,9 +14,9 @@ Pre-Requisites
 
 # **GCP**
 
-1.  After making your google cloud account. Follow instructions here in making your project: https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_1_basics_n_setup/1_terraform_gcp/2_gcp_overview.md#initial-setup
+1.  After making your google cloud account, follow instructions here in making your project: https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_1_basics_n_setup/1_terraform_gcp/2_gcp_overview.md#initial-setup
 
-2. Take note of your project ID 
+2. Name you project `nfl-project-de`. Take note of your project ID.
 
 3. Make a Service Account and grant it with the following roles:
     - ![](./images/2023-04-09-23-15-05.png)
@@ -28,6 +28,7 @@ Pre-Requisites
     - Dataproc Worker
     - Dataproc Service Agent
     - Viewer
+
 4. Download your Service Account credentials file
     - Store it in your project path, into a path like `<project-path>/.google/credentials/`
     - ![](./images/223-04-09-23-18-18.png)
@@ -74,17 +75,18 @@ Pre-Requisites
 # **Terraform**
 - Set up your GCP infrastracture using terraform
 - The following resources will be created:
+
     1. Big Query: Data Warehouse
     2. Google Cloud Storage: Data Lake
     3. Google Dataproc: Spark Cluster (for running spark jobs)
 
 1. After installing terraform, follow this guide: https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cligo 
 
-2. Modify the project variable in the variables.tf according to your GCP Project ID.
+2. Modify the project variables in the `variables.tf` according to your GCP Project ID.
 
 3. Go to your CLI and `cd` to the terraform folder in the cloned project repo
     ```
-    cd <path-where-you-cloned-the-repo>/nflproject/terraform
+    cd <path-where-you-cloned-the-repo>/terraform
     ```
 
 4. Follow these execution steps:
@@ -114,8 +116,13 @@ Prerequisites:
 https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/2022/week_3_data_warehouse/airflow/1_setup_official.md
 
 1. Go to your main project directory and move to the airflow folder
-    `cd <path-to-your-project>/airflow
+    
+    ```
+    cd <path-to-your-project>/airflow
+    ```
+
 2. Make sure you've done `source ~/.bashrc`, as instructed in [GCP](#gcp) setup section, to have your GOOGLE_APPLICATION_CREDENTIALS available in the session.
+3. Make sure you change the variables within the `airflow/dags/data_ingestion.py` like your Project ID and Bucket.
 3. Make the required directories for setting up airflow
     
     ```bash
@@ -132,6 +139,7 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
         ```
 
     ii. Build the image
+    
     ```
     docker-compose build
     ```
@@ -155,7 +163,7 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
     ```
     docker-compose down
     ```
-    viii. To stop and delete containers, delete volumes with database data, and download images, run:
+    viii. To stop and delete containers later on, delete volumes with database data, and download images, run:
 
     ```
     docker-compose down --volumes --rmi all
@@ -179,11 +187,20 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
     ```
 
     You can now navigate within the container as you would in your own local setup.
-    Make sure to run the following inside the airflow worker container so you could use gsutil (within airflow container) later:
+    Make sure to run the following code inside the airflow worker container so you could use gsutil (within airflow container) later:
             
     ```
-
-    gcloud auth application-default login
-
+    gcloud init
     ```
-5. You can choose to run the dags for different years
+    ```
+    gcloud auth application-default login
+    ```
+    
+5. You can choose to run the dags for different years, just change the params in the parameter section of the dag in `airflow/dags/data_ingestion.py`. If airflow was setup correctly, changes within the dag (on your local copy) should sync with the dag in the docker container.
+
+
+6. Change your bucket variable in the `airflow/code/transform_pyspark.py`.
+
+7. Run the 2 dags separately
+
+8. 

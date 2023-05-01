@@ -1,0 +1,52 @@
+[2023-04-24T14:40:07.003+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_script_to_GCS manual__2023-04-24T14:35:19.187015+00:00 [queued]>
+[2023-04-24T14:40:07.020+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_script_to_GCS manual__2023-04-24T14:35:19.187015+00:00 [queued]>
+[2023-04-24T14:40:07.021+0000] {taskinstance.py:1288} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-24T14:40:07.021+0000] {taskinstance.py:1289} INFO - Starting attempt 2 of 4
+[2023-04-24T14:40:07.022+0000] {taskinstance.py:1290} INFO - 
+--------------------------------------------------------------------------------
+[2023-04-24T14:40:07.038+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_script_to_GCS> on 2023-04-24 14:35:19.187015+00:00
+[2023-04-24T14:40:07.047+0000] {standard_task_runner.py:55} INFO - Started process 3479 to run task
+[2023-04-24T14:40:07.050+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'nfl_transformation_dag', 'task_script_to_GCS', 'manual__2023-04-24T14:35:19.187015+00:00', '--job-id', '1241', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmpkkqvpigl']
+[2023-04-24T14:40:07.053+0000] {standard_task_runner.py:83} INFO - Job 1241: Subtask task_script_to_GCS
+[2023-04-24T14:40:07.135+0000] {task_command.py:389} INFO - Running <TaskInstance: nfl_transformation_dag.task_script_to_GCS manual__2023-04-24T14:35:19.187015+00:00 [running]> on host 36bdc6733002
+[2023-04-24T14:40:07.210+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=nfl_transformation_dag
+AIRFLOW_CTX_TASK_ID=task_script_to_GCS
+AIRFLOW_CTX_EXECUTION_DATE=2023-04-24T14:35:19.187015+00:00
+AIRFLOW_CTX_TRY_NUMBER=2
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-24T14:35:19.187015+00:00
+[2023-04-24T14:40:07.213+0000] {subprocess.py:63} INFO - Tmp dir root location: 
+ /tmp
+[2023-04-24T14:40:07.215+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'gsutil -m cp -r /opt/***/code/ gs://nfl-data-lake_nfl-project-de/']
+[2023-04-24T14:40:07.233+0000] {subprocess.py:86} INFO - Output:
+[2023-04-24T14:40:13.500+0000] {subprocess.py:93} INFO - Copying file:///opt/***/code/extraction_nfl.py [Content-Type=text/x-python]...
+[2023-04-24T14:40:13.563+0000] {subprocess.py:93} INFO - / [0/5 files][    0.0 B/ 63.0 KiB]   0% Done                                    Copying file:///opt/***/code/transform_pyspark.py [Content-Type=text/x-python]...
+[2023-04-24T14:40:13.824+0000] {subprocess.py:93} INFO - / [0/5 files][    0.0 B/ 63.0 KiB]   0% Done                                    Copying file:///opt/***/code/__init__.py [Content-Type=text/x-python]...
+[2023-04-24T14:40:13.826+0000] {subprocess.py:93} INFO - Copying file:///opt/***/code/__pycache__/extraction_nfl.cpython-311.pyc [Content-Type=application/x-python-code]...
+[2023-04-24T14:40:13.842+0000] {subprocess.py:93} INFO - / [0/5 files][ 33.5 KiB/ 63.0 KiB]  53% Done                                    / [0/5 files][ 33.5 KiB/ 63.0 KiB]  53% Done                                    Copying file:///opt/***/code/__pycache__/extraction_nfl.cpython-39.pyc [Content-Type=application/x-python-code]...
+[2023-04-24T14:40:15.004+0000] {subprocess.py:93} INFO - / [0/5 files][ 33.5 KiB/ 63.0 KiB]  53% Done                                    ServiceException: 401 Anonymous caller does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist).
+[2023-04-24T14:40:15.010+0000] {subprocess.py:93} INFO - ServiceException: 401 Anonymous caller does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist).
+[2023-04-24T14:40:15.159+0000] {subprocess.py:93} INFO - ServiceException: 401 Anonymous caller does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist).
+[2023-04-24T14:40:15.207+0000] {subprocess.py:93} INFO - ServiceException: 401 Anonymous caller does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist).
+[2023-04-24T14:40:15.225+0000] {subprocess.py:93} INFO - ServiceException: 401 Anonymous caller does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist).
+[2023-04-24T14:40:15.240+0000] {subprocess.py:93} INFO - CommandException: 5 files/objects could not be transferred.
+[2023-04-24T14:40:15.856+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2023-04-24T14:40:15.868+0000] {taskinstance.py:1776} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/decorators/base.py", line 217, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/data_ingestion.py", line 210, in task_script_to_GCS
+    operator.execute(context={})
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/bash.py", line 196, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2023-04-24T14:40:15.882+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=nfl_transformation_dag, task_id=task_script_to_GCS, execution_date=20230424T143519, start_date=20230424T144007, end_date=20230424T144015
+[2023-04-24T14:40:15.900+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 1241 for task task_script_to_GCS (Bash command failed. The command returned a non-zero exit code 1.; 3479)
+[2023-04-24T14:40:15.935+0000] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-04-24T14:40:15.968+0000] {taskinstance.py:2596} INFO - 0 downstream tasks scheduled from follow-on schedule check
