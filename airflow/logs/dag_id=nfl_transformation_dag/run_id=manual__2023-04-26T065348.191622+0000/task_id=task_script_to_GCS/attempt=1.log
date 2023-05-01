@@ -1,35 +1,0 @@
-[2023-04-26T06:53:52.579+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_script_to_GCS manual__2023-04-26T06:53:48.191622+00:00 [queued]>
-[2023-04-26T06:53:52.609+0000] {taskinstance.py:1090} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: nfl_transformation_dag.task_script_to_GCS manual__2023-04-26T06:53:48.191622+00:00 [queued]>
-[2023-04-26T06:53:52.610+0000] {taskinstance.py:1288} INFO - 
---------------------------------------------------------------------------------
-[2023-04-26T06:53:52.611+0000] {taskinstance.py:1289} INFO - Starting attempt 1 of 3
-[2023-04-26T06:53:52.612+0000] {taskinstance.py:1290} INFO - 
---------------------------------------------------------------------------------
-[2023-04-26T06:53:52.640+0000] {taskinstance.py:1309} INFO - Executing <Task(_PythonDecoratedOperator): task_script_to_GCS> on 2023-04-26 06:53:48.191622+00:00
-[2023-04-26T06:53:52.651+0000] {standard_task_runner.py:55} INFO - Started process 109 to run task
-[2023-04-26T06:53:52.700+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'nfl_transformation_dag', 'task_script_to_GCS', 'manual__2023-04-26T06:53:48.191622+00:00', '--job-id', '1304', '--raw', '--subdir', 'DAGS_FOLDER/data_ingestion.py', '--cfg-path', '/tmp/tmp74qlgvo6']
-[2023-04-26T06:53:52.723+0000] {standard_task_runner.py:83} INFO - Job 1304: Subtask task_script_to_GCS
-[2023-04-26T06:53:53.149+0000] {task_command.py:389} INFO - Running <TaskInstance: nfl_transformation_dag.task_script_to_GCS manual__2023-04-26T06:53:48.191622+00:00 [running]> on host 36bdc6733002
-[2023-04-26T06:53:53.398+0000] {taskinstance.py:1516} INFO - Exporting the following env vars:
-AIRFLOW_CTX_DAG_OWNER=***
-AIRFLOW_CTX_DAG_ID=nfl_transformation_dag
-AIRFLOW_CTX_TASK_ID=task_script_to_GCS
-AIRFLOW_CTX_EXECUTION_DATE=2023-04-26T06:53:48.191622+00:00
-AIRFLOW_CTX_TRY_NUMBER=1
-AIRFLOW_CTX_DAG_RUN_ID=manual__2023-04-26T06:53:48.191622+00:00
-[2023-04-26T06:53:53.412+0000] {subprocess.py:63} INFO - Tmp dir root location: 
- /tmp
-[2023-04-26T06:53:53.425+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'gsutil -m cp -r /opt/***/code/ gs://nfl-data-lake_nfl-project-de/']
-[2023-04-26T06:53:53.463+0000] {subprocess.py:86} INFO - Output:
-[2023-04-26T06:54:00.880+0000] {subprocess.py:93} INFO - Copying file:///opt/***/code/__init__.py [Content-Type=text/x-python]...
-[2023-04-26T06:54:00.882+0000] {subprocess.py:93} INFO - Copying file:///opt/***/code/transform_pyspark.py [Content-Type=text/x-python]...
-[2023-04-26T06:54:00.884+0000] {subprocess.py:93} INFO - Copying file:///opt/***/code/extraction_nfl.py [Content-Type=text/x-python]...
-[2023-04-26T06:54:00.891+0000] {subprocess.py:93} INFO - Copying file:///opt/***/code/__pycache__/extraction_nfl.cpython-311.pyc [Content-Type=application/x-python-code]...
-[2023-04-26T06:54:00.937+0000] {subprocess.py:93} INFO - / [0/5 files][    0.0 B/ 63.0 KiB]   0% Done                                    / [0/5 files][    0.0 B/ 63.0 KiB]   0% Done                                    / [0/5 files][    0.0 B/ 63.0 KiB]   0% Done                                    / [0/5 files][    0.0 B/ 63.0 KiB]   0% Done                                    Copying file:///opt/***/code/__pycache__/extraction_nfl.cpython-39.pyc [Content-Type=application/x-python-code]...
-[2023-04-26T06:54:03.078+0000] {subprocess.py:93} INFO - / [0/5 files][    0.0 B/ 63.0 KiB]   0% Done                                    -- [1/5 files][ 63.0 KiB/ 63.0 KiB]  99% Done                                    \\ [2/5 files][ 63.0 KiB/ 63.0 KiB]  99% Done                                    \ [3/5 files][ 63.0 KiB/ 63.0 KiB]  99% Done                                    \ [4/5 files][ 63.0 KiB/ 63.0 KiB]  99% Done                                    \ [5/5 files][ 63.0 KiB/ 63.0 KiB] 100% Done
-[2023-04-26T06:54:03.080+0000] {subprocess.py:93} INFO - Operation completed over 5 objects/63.0 KiB.
-[2023-04-26T06:54:03.650+0000] {subprocess.py:97} INFO - Command exited with return code 0
-[2023-04-26T06:54:03.653+0000] {python.py:177} INFO - Done. Returned value was: None
-[2023-04-26T06:54:03.670+0000] {taskinstance.py:1327} INFO - Marking task as SUCCESS. dag_id=nfl_transformation_dag, task_id=task_script_to_GCS, execution_date=20230426T065348, start_date=20230426T065352, end_date=20230426T065403
-[2023-04-26T06:54:03.733+0000] {local_task_job.py:212} INFO - Task exited with return code 0
-[2023-04-26T06:54:03.761+0000] {taskinstance.py:2596} INFO - 1 downstream tasks scheduled from follow-on schedule check
