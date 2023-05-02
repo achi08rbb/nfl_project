@@ -86,7 +86,7 @@ default_args = {
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 @dag(
-    dag_id="data_extraction_dag",
+    dag_id="nfl_extraction_dag",
     schedule_interval="@once",
     default_args=default_args,
     catchup=False,

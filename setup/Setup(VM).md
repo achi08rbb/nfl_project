@@ -68,7 +68,7 @@
     ```
 9. You have set up your GCP! Let's build the infrastracture.
 
-# **Running the Project using Virtual Machine**
+# **Running the Project using GCP Virtual Machine (LINUX)**
 
 1. Generate ssh key used to log in on your gcp project
     - Open GitBash
@@ -187,16 +187,22 @@
 1. Run the following:
     ```
     curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+
     sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
     sudo apt-get update && sudo apt-get install terraform
     ```
-
+2. Verify the installation:
+    ```
+    terraform --version
+    ```
 ### Clone the repo within your VM
 
-1. Clone the contents of this project repo in your `~` directory. (Do cd `~` if you're not there.) 
-        ```
-        git clone https://github.com/achi08rbb/NFL_DE_PROJECT.git
-        ```
+1. Clone the contents of this project repo in your `~` directory. (Do `cd ~` if you're not there.) 
+
+     ```
+    git clone https://github.com/achi08rbb/NFL_DE_PROJECT.git
+    ```
     - It should look something like this: 
     - ![](./images/2023-05-02-00-46-27.png)
 2. You can securely copy your credentials from you local machine to your remote VM instance using the following:
@@ -204,7 +210,7 @@
     ```
     mkdir -p ~/.google/credentials/
     ```
-    - In your local CLI:
+    - In your local CLI (Open a new window of GitBash or your chosen CLI):
     ```
     scp ~/.google/credentials/google_credentials.json <instance.region.project>:~/.google/credentials/
     ```
@@ -216,13 +222,13 @@
     - Type `source ~/.bashrc` to enable the change 
         - Do this everytime you start a new session of you CLI
     
-    - Run `gloud init` and log in with your account, choose login with new account (if your account is not shown). Follow the given link and authorize with the gmail account associated with the project.
+    - Run `gloud init` and log in with your account, choose login with new gmail account (if your account is not shown). Follow the given link and authorize with the gmail account associated with the project.
     - Choose the `nfl-project-de` when prompted
 
-    - To obtain access credentials for your user account, run the following code and log in with the email associated with your google cloud:
+    <!-- - To obtain access credentials for your user account, run the following code and log in with the email associated with your google cloud:
     ```
     gcloud auth application-default login
-    ```
+    ``` -->
 4. Finished authorizing and installing. Let's build the infrastracture!
 
 # **Terraform**
@@ -239,7 +245,7 @@
 
 3. Go to your CLI and `cd` to the terraform folder in the cloned project repo
     ```
-    cd <project-path>/terraform
+    cd ~/NFL_DE_PROJECT/terraform
     ```
 
 4. Follow these execution steps:
@@ -269,7 +275,7 @@ Prerequisites:
 1. Go to your main project directory and move to the airflow folder
     
     ```
-    cd <project-path>/airflow
+    cd ~/NFL_DE_PROJECT/airflow
     ```
 
 2. Make sure you've done `source ~/.bashrc`, as instructed in [GCP](#gcp) setup section, to have your GOOGLE_APPLICATION_CREDENTIALS available in the session.
@@ -307,14 +313,15 @@ Prerequisites:
     docker-compose up
     ```    
     v. In another terminal, run docker-compose ps to see which containers are up & running (there should be 7, matching with the services in your docker-compose file).
+     ```
+    docker ps
+    ```
 
-    vi. Login to Airflow web UI on localhost:8080 with default creds: airflow/airflow
-    
-    vii. On finishing your run or to shut down the container/s:
+    vi. On finishing your run or to shut down the container/s:
     ```
     docker-compose down
     ```
-    viii. To stop and delete containers later on, delete volumes with database data, and download images, run:
+    vii. To stop and delete containers later on, delete volumes with database data, and download images, run:
 
     ```
     docker-compose down --volumes --rmi all
@@ -324,34 +331,36 @@ Prerequisites:
     docker-compose down --volumes --remove-orphans
     ```
 
-    ix. To check if your credentials are right where they should be, run:
+5. Login to Airflow web UI on localhost:8080 with default creds: airflow/airflow
+    - If you can't access localhost:8080 you may need to forward ports of your VM machine to your local machine
+    - The easiest way to do this is connect your VM to VSCODE and forward ports there:
+        - Open a remote window by clicking the bottom-left icon (><) and choose connect to Host (Remote-SSH)
+            - ![](./images/2023-05-02-12-24-09.png)
+        - Forward port for Airflow webserver (8080):
+            - ![](./images/2023-05-02-11-57-16.png)
+        - You should now be able to access localhost:8080 in your browser
+    
 
-
-    ```
-    docker ps
-    ```
-
-    x. Look for the airflow worker container id and run the following (Make sure you're in your airflow folder where you docker-compose.yaml file is found):
+6. To check if your credentials are right where they should be. Look for the airflow worker container id using `docker ps` (In another SSH session) and run the following (Make sure you're in your airflow folder where you docker-compose.yaml file is found):
    
     ```
     docker exec -it <container-id-of-airflow-worker> bash
     ```
 
-    You can now navigate within the container as you would in your own local setup.
-    Make sure to run the following code inside the airflow worker container so you could use gsutil (within airflow container) later:
+    - You can now navigate within the container as you would in your own local setup.
+    
+    - Make sure to run the following code inside the airflow worker container so you could use gsutil (within airflow container) later:
             
     ```
     gcloud init
     ```
-    Choose your project when prompted.
-    ```
-    gcloud auth application-default login
-    ```
-    
-5. You can choose to run the DAGs for different years, just change the params in the parameter section of the dag in `airflow/dags/data_ingestion.py`. If airflow was setup correctly, changes within the DAG (on your local copy) should sync with the dag in the docker container.
 
-6. Change your bucket variable in the `airflow/code/transform_pyspark.py`.
+    Choose your account and project when prompted.
 
-7. Run the 2 dags separately, in this order:
+7. You can choose to run the DAGs for different years, just change the params in the parameter section of the DAG in `airflow/dags/data_ingestion.py`. If airflow was setup correctly, changes within the DAG (on your local copy) should sync with the DAG in the docker container.
+
+8. Change your bucket variable in the `airflow/code/transform_pyspark.py`.
+
+9. Run the 2 dags separately, in this order:
     1. `nfl_extract_load_GCS` 
     2. `nfl_transform_load_BQ` 

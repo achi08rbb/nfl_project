@@ -41,11 +41,11 @@ Stream processing: Kafka, Pulsar, Kinesis, ...
 
 ### Batch / Workflow orchestration
   - The end-to-end pipeline was orchestrated using Airflow (Docker-containerized). The following DAGs are contained in [Airflow DAGS](./airflow/dags/) folder:
-    1. `nfl_extract_load_GCS`
+    1. `nfl_extraction_dag`
       - contains the tasks extracting the needed data from selected [ESPN API endpoints](https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c)
       - loads the extracted data to the Google Cloud Storage (Data Lake)
 
-    2. `nfl_transform_load_BQ`
+    2. `nfl_transformation_dag`
       - transforms the data using a PySpark Job submitted to Dataproc which handles all the clusters needed for transformation
       - loads the transformed data to Google Big Query (Data Warehouse)
 
