@@ -379,7 +379,7 @@ Prerequisites:
 
 - This project made use of the radar_stats and best_worst_teams table for 2022 regular season.
 
-To connect BigQuery data to Tableau, you can follow these steps:
+- To connect BigQuery data to Tableau, you can follow these steps:
 
 1. Open Tableau and click on "Connect to Data" on the start page.
 
