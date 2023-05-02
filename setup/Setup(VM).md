@@ -22,7 +22,7 @@
     - Viewer
 
 4. Download your Service Account credentials file and name it `google_credentials.json`
-    - Store it in your home directory: `~/.google/credentials/`
+    - Store it in your home directory: `$HOME/.google/credentials/`
 
 5. Enable the following APIs:
     - https://console.cloud.google.com/apis/library/iam.googleapis.com
@@ -33,7 +33,7 @@
     - name it `GOOGLE_APPLICATION_CREDENTIALS`
 
     ```
-    export GOOGLE_APPLICATION_CREDENTIALS="~/.google/credentials/google_credentials.json"
+    export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.google/credentials/google_credentials.json"
     ```
 7. Download [SDK](https://cloud.google.com/sdk/docs/quickstart) and choose the installer for your OS.
 
@@ -42,7 +42,7 @@
     - IMPORTANT: In your MINGW/Git Bash CLI, enable `bash` by typing it in the command line
     - type `nano ~/.bashrc file` to edit the .bashrc file (located in your home directory `~` ) and append this at the end of the file:
     ```
-    export GOOGLE_APPLICATION_CREDENTIALS="~/.google/credentials/google_credentials.json"
+    export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.google/credentials/google_credentials.json"
     ```
     - type `source ~/.bashrc` to enable the change 
         - Do this everytime you start a new session of you CLI
@@ -201,7 +201,7 @@
 1. Clone the contents of this project repo in your `~` directory. (Do `cd ~` if you're not there.) 
 
      ```
-    git clone https://github.com/achi08rbb/NFL_DE_PROJECT.git
+    git clone https://github.com/achi08rbb/nfl_project.git
     ```
     - It should look something like this: 
     - ![](./images/2023-05-02-00-46-27.png)
@@ -217,7 +217,7 @@
 3. In your SSH session,
     - Type `nano ~/.bashrc file` to edit the .bashrc file (located in your home directory `~` ) and append this at the end of the file:
     ```
-    export GOOGLE_APPLICATION_CREDENTIALS="~/.google/credentials/google_credentials.json"
+    export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.google/credentials/google_credentials.json"
     ```
     - Type `source ~/.bashrc` to enable the change 
         - Do this everytime you start a new session of you CLI
@@ -245,7 +245,7 @@
 
 3. Go to your CLI and `cd` to the terraform folder in the cloned project repo
     ```
-    cd ~/NFL_DE_PROJECT/terraform
+    cd ~/nfl_project/terraform
     ```
 
 4. Follow these execution steps:
@@ -259,6 +259,9 @@
     # Create new infra, this usually takes around 2 mins to complete
     terraform apply -var="project=<your-gcp-project-id>"
 
+    ```
+
+    ```
     # Delete infra after your work, to avoid costs on any running services
     terraform destroy
     ```
@@ -275,7 +278,7 @@ Prerequisites:
 1. Go to your main project directory and move to the airflow folder
     
     ```
-    cd ~/NFL_DE_PROJECT/airflow
+    cd ~/nfl_project/airflow
     ```
 
 2. Make sure you've done `source ~/.bashrc`, as instructed in [GCP](#gcp) setup section, to have your GOOGLE_APPLICATION_CREDENTIALS available in the session.
@@ -331,10 +334,11 @@ Prerequisites:
     docker-compose down --volumes --remove-orphans
     ```
 
-5. Login to Airflow web UI on localhost:8080 with default creds: airflow/airflow
+5. Login to Airflow web UI on localhost:8080 with default creds: user: airflow, password: airflow
+
     - If you can't access localhost:8080 you may need to forward ports of your VM machine to your local machine
     - The easiest way to do this is to connect your VM to VSCODE and forward ports there:
-        - Open a remote window by clicking the bottom-left icon (><) and choose connect to Host (Remote-SSH)
+        - Open a remote window by clicking the bottom-left icon (><) in the VSCode window. At the search bar, choose connect to Host (Remote-SSH)
             - ![](./images/2023-05-02-12-24-09.png)
         - Forward port for Airflow webserver (8080):
             - ![](./images/2023-05-02-11-57-16.png)
@@ -366,3 +370,27 @@ Prerequisites:
 9. Run the 2 dags separately, in this order:
     1. `nfl_extraction_dag`
     2. `nfl_transformation_dag`
+
+10. Your data will now be loaded in your data lake and data warehouse
+
+# **Tableau**
+
+- This project made use of the radar_stats and best_worst_teams table for 2022 regular season.
+
+To connect BigQuery data to Tableau, you can follow these steps:
+
+1. Open Tableau and click on "Connect to Data" on the start page.
+
+2. In the "To a Server" section, select "Google BigQuery".
+
+3. Enter your Google Cloud Platform project ID and click "Sign In" to authenticate your account. If you do not have a project yet, create one in the Google Cloud Console.
+
+4. Select the project you want to use, then select the dataset that contains the data you want to connect to.
+
+5. Choose how to authenticate with the data by selecting the authentication method (OAuth, Service Account, or User Name/Password). You can also set up additional connection options, such as the number of rows to preview, the SSL mode, and so on.
+
+6. Click on "Connect" to establish the connection.
+
+7. Once the connection is established, you can choose which tables or views to include in your analysis by selecting them from the left-hand panel.
+
+8. Drag and drop the selected table or view to the Tableau worksheet to start analyzing your data.
