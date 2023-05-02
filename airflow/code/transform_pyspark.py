@@ -307,104 +307,9 @@ print(f"Loading for nfl data to parquet ended")
 
 #===============================================================
 
-# ## SQL TRANSFORMATIONS FOR DASHBOARD
+# SQL TRANSFORMATIONS FOR DASHBOARD
 
-# # Dashboard 1 : Who's your extraordinary teammate
-
-# df_athletes_clean.createOrReplaceTempView("athletes")
-# df_athletes_stats_clean.createOrReplaceTempView("athletes_stats")
-# df_leaders_clean.createOrReplaceTempView("leaders")
-
-# # Get the top 1 leader in each metric
-# leaders = spark.sql(
-#     """
-#     WITH stats AS (
-#     SELECT l.name as Forte, l.value as ValueForte, a.teamId, l.athleteId, a.shortName as athleteName, a.positionParent, a.positionName
-#     FROM leaders l
-#     JOIN athletes a ON a.athleteId=l.athleteId
-#     WHERE value IN (SELECT max(value) FROM leaders GROUP BY name)
-#     ORDER BY Forte DESC, teamId
-#     )
-    
-#     SELECT athleteName, Forte, ValueForte, athleteId, teamId, positionParent, positionName
-#     FROM stats
-#     ORDER BY teamId, athleteId
-#     """
-# )
-
-# leaders.createOrReplaceTempView("top")
-
-# # Get stats of the top (1) leaders
-# leaders_stats = spark.sql(
-#     """
-#     SELECT DISTINCT a.*, t.athleteName, t.teamId, t.positionParent, t.positionName
-#     FROM top as t
-#     JOIN athletes_stats as a ON a.athleteId=t.athleteId
-#     """
-# )
-# leaders_stats.createOrReplaceTempView("leaders_stats")
-
-# # Get the teammates and their stats
-
-# teammates_all = spark.sql(
-#     """
-#     -- from athletes table, get the name and other info
-#     WITH leader_teammates AS
-#     (SELECT a.shortName as athleteName, a.positionParent, a.positionName, a.athleteId, a.teamId, a.headshot
-#     FROM athletes a),
-    
-#     -- table for the athletes in the leaders' team
-    
-#     teammates AS
-#     (SELECT DISTINCT l1.*
-#     FROM leader_teammates l1
-#     JOIN leaders_stats l2 ON l1.teamId = l2.teamId),
-    
-#     -- getting the stats for each athlete
-    
-#     teammates_stats AS
-#     (SELECT t.teamId, t.athleteName, t.positionParent, t.positionName, t.headshot, as.*
-#     FROM teammates AS t
-#     JOIN athletes_stats AS as ON as.athleteId=t.athleteId
-#     WHERE as.name IN (SELECT Forte FROM top)
-#     ORDER BY teamId),
-    
-#     -- getting the average value for each metric
-    
-#     metric_average AS
-#     (SELECT ROUND(AVG(value),4) as averageValue, name as metricName, category
-#     FROM athletes_stats
-#     WHERE name IN (SELECT Forte FROM top) and value != 0
-#     GROUP BY name, category)
-    
-#     -- main query 
-    
-#     SELECT ma.averageValue, ts.*
-#     FROM metric_average ma
-#     JOIN teammates_stats ts ON (ts.name=ma.metricName and ts.category=ma.category)
-    
-#     EXCEPT 
-    
-#     SELECT ma.averageValue, ts.*
-#     FROM metric_average ma
-#     JOIN teammates_stats ts ON ts.name=ma.metricName
-#     WHERE ts.category='Passing' and ts.name IN ('sacks','interceptions')
-#     """
-# )
-# # Write to csv --> make this big query
-
-# # teammates_all.write.option("header", True).mode("overwrite").csv(
-# #     os.path.join(f"./dashboards/{year}/{season_type}/", "dashboard1_scatter")
-
-
-# BQ_DATASET="nfl_data_all"
-# teammates_all.write.format('bigquery') \
-#     .mode('overwrite') \
-#     .option('table', f"{BQ_DATASET}.leaders_teammates_{year}_{season_type}") \
-#     .save()
-
-#===================================================================================
-# Dashboard 2: Radar chart - weakness/strength
+# DASHBOARD 1: Radar chart - weakness/strength
 
 df_teams_stats_clean.createOrReplaceTempView("teams_stats")
 df_teams_clean.createOrReplaceTempView("teams")
@@ -478,7 +383,7 @@ stats.write.format('bigquery') \
     .save()
 
 #=======================================================================
-
+# DASHBOARD 2: Scatter plot
 # View for defense stats
 df_defense_stack.createOrReplaceTempView("addtl_defense_stats")
 
