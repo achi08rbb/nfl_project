@@ -1,12 +1,13 @@
 # **Environment setup**
  - For this project you'll need:
+    - Google Cloud Account
     - Google Cloud SDK
     - Docker with docker-compose
     - Terraform
 
 # **GCP**
 
-1. Create an account with your Google email ID
+1. Create a GCP account with your Google email address
 
 2. Setup your project named `nfl-project-de`. Take note of your `project ID`.
 
@@ -24,7 +25,8 @@
 4. Download your Service Account credentials file and name it `google_credentials.json`
     - Store it in your home directory: `$HOME/.google/credentials/`
 
-5. Enable the following APIs:
+5. Enable the following APIs in the console:
+
     - https://console.cloud.google.com/apis/library/iam.googleapis.com
     - https://console.cloud.google.com/apis/library/iamcredentials.googleapis.com
     - https://console.developers.google.com/apis/api/dataproc.googleapis.com/
@@ -39,7 +41,7 @@
 
 8. Initialize the SDK [following these instructions](https://cloud.google.com/sdk/docs/initializing)
 
-    - IMPORTANT: In your MINGW/Git Bash CLI, enable `bash` by typing it in the command line
+    > ***IMPORTANT***: In your MINGW/Git Bash CLI, enable `bash` by typing it in the command line before proceeding
     - type `nano ~/.bashrc file` to edit the .bashrc file (located in your home directory `~` ) and append this at the end of the file:
     ```
     export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.google/credentials/google_credentials.json"
@@ -336,9 +338,9 @@ Prerequisites:
 
 5. Login to Airflow web UI on localhost:8080 with default creds: user: airflow, password: airflow
 
-    - If you can't access localhost:8080 you may need to forward ports of your VM machine to your local machine
+    - If you can't access localhost:8080, you may need to forward ports of your VM machine to your local machine
     - The easiest way to do this is to connect your VM to VSCODE and forward ports there:
-        - Open a remote window by clicking the bottom-left icon (><) in the VSCode window. At the search bar, choose connect to Host (Remote-SSH)
+        - Open a remote window by clicking the bottom-left icon (><) in the VSCode window. At the search bar, choose `Connect to Host (Remote-SSH)`
             - ![](./images/2023-05-02-12-24-09.png)
         - Forward port for Airflow webserver (8080):
             - ![](./images/2023-05-02-11-57-16.png)
