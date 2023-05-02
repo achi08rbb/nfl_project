@@ -16,25 +16,18 @@
 2. Setup your project named `nfl-project-de`. Take note of your `project ID`.
 
 3. Make a Service Account and grant it with the following roles:
-    - ![](./images/2023-04-09-23-15-05.png)
-    - ![](./images/2023-04-09-23-16-46.png)
 
     - BigQuery Admin
     - Storage Admin
     - Storage Object Admin
     - Storage Object Creator
+    - Storage Object Viewer
     - Dataproc Worker
     - Dataproc Service Agent
     - Viewer
 
 4. Download your Service Account credentials file and name it `google_credentials.json`
-    - Store it in your project path, into a path like `~/.google/credentials/`
-
-    - ![](./images/2023-04-09-23-18-18.png)
-
-    - ![](./images/2023-04-09-23-18-41.png)
-
-    - ![](./images/2023-04-09-23-18-54.png)
+    - Store it in your home directory: `~/.google/credentials/`
 
 5. Enable the following APIs:
     - https://console.cloud.google.com/apis/library/iam.googleapis.com
@@ -61,6 +54,7 @@
     
     - run `gloud init` and log in with your account 
     - choose the `nfl-project-de` when prompted
+    - run ``gcloud auth application-default login` and authorize your gmail account.
 
 8. To obtain access credentials for your user account, run the following code and log in with the email associated with your google cloud:
     ```
@@ -81,13 +75,12 @@
     - Private and public key (.pub) created (Don't share the private key)
     - Your keys are now located in `~/.ssh/`
 
-2. Go to compute engine --> metadata--> ssh keys
+2. Go to GCP Project --> Compute Engine --> Metadata--> SSH keys
     - Go to your CLI and open contents of your ssh key. Copy them.
     ```
     cat ~/.ssh/gcp.pub
     ```
-    - Paste the contents of you `gcp.pub` key in the field
-    - ![](./images/2023-05-01-22-32-18.png)
+    - Paste the contents of you `gcp.pub` key in the GCP Console SSH key field 
 
 3. Create you VM instance and configure. Make sure you allocate enough boot disk storage.
 
@@ -96,7 +89,7 @@
     ssh -i ~/.ssh/gcp <username>@<externalipaddress>
     ```
 
-5. Alternatively, you can create SSH access without using the console. You can do the following to create SSH access to your VM. Just make sure you have selected your project upon initializing the Google SDK using `gcloud auth application-default login`:
+5. Alternatively, you can create SSH access without using the console. You can do the following to create SSH access to your VM. Just make sure you have selected your project upon initializing the Google SDK using `gcloud init` and `gcloud auth application-default login`:
     ```
     gcloud compute config-ssh
     ```
