@@ -4,11 +4,6 @@
     - Docker with docker-compose
     - Terraform
 
-# **Important Pre-requisites**
-
-1. Terraform client installation: https://www.terraform.io/downloads
-2. Cloud Provider account: https://console.cloud.google.com/
-
 # **GCP**
 
 1. Create an account with your Google email ID
@@ -52,9 +47,11 @@
     - type `source ~/.bashrc` to enable the change 
         - Do this everytime you start a new session of you CLI
     
-    - run `gloud init` and log in with your account 
+    - run the following and log in with your account:
+    ```
+    gloud init 
+    ``` 
     - choose the `nfl-project-de` when prompted
-    - run ``gcloud auth application-default login` and authorize your gmail account.
 
 8. To obtain access credentials for your user account, run the following code and log in with the email associated with your google cloud:
     ```
@@ -62,7 +59,7 @@
     ```
 9. You have set up your GCP! Let's build the infrastracture.
 
-# **Running the Project using GCP Virtual Machine (LINUX)**
+# **Creating GCP Virtual Machine (LINUX) using console**
 
 1. Generate ssh key used to log in on your gcp project
     - Open GitBash
@@ -89,7 +86,15 @@
     ssh -i ~/.ssh/gcp <username>@<externalipaddress>
     ```
 
-5. Alternatively, you can create SSH access without using the console. You can do the following to create SSH access to your VM. Just make sure you have selected your project upon initializing the Google SDK using `gcloud init` and `gcloud auth application-default login`:
+5. The VM instance is now running. 
+
+## **Creating GCP Virtual Machine (LINUX) using Google SDK**
+1. Alternatively, you can create a VM using google SDK. In your CLI, run:
+    ```
+    gcloud compute instances create <name-of-the-vm> --zone=<google-cloud-zone> --image-family=ubuntu-2004-lts --image-project=ubuntu-os-cloud --machine-type=e2-standard-4 --boot-disk-size=30GB
+    ```
+
+2. You can also create SSH access without using the console. You can do the following to create SSH access to your VM. Just make sure you have selected your project upon initializing the Google SDK using `gcloud init` and `gcloud auth application-default login`:
     ```
     gcloud compute config-ssh
     ```
@@ -97,17 +102,17 @@
     - After running this, it should give you a code in the form of `ssh instance.region.project`
     - Copy the code and run it in your CLI. 
     - Your VM instance should now be accessible.
-    - You can use the `instance.region.project` to open a remote window and connect to the VM in VSCODE (Optional)
+    - You can use the `instance.region.project` to open a remote window and connect to the VM in VSCODE.
 
-6. The VM instance is now running. 
+3. The VM instance is now running. 
 
-## Installing Anaconda and Docker within the VM
+## **Installing within the VM**
 1. Update your VM in your ssh session
     ```
     sudo apt update && sudo apt -y upgrade
     ```
 
-### Anaconda
+### Anaconda (OPTIONAL - CAN BE SKIPPED)
 
 1. In your SSH session, download Anaconda for Linux using this link: https://repo.anaconda.com/archive/Anaconda3-2023.03-1-Linux-x86_64.sh
     - This can be found here: https://www.anaconda.com/download
@@ -125,7 +130,7 @@
     ```
     rm Anaconda3-2023.03-1-Linux-x86_64.sh
     ```
-### Docker
+### **Docker**
 1. Install docker using:
     ```
     sudo apt install docker.io
@@ -136,7 +141,7 @@
 
     sudo gpasswd -a $USER docker
     ```
-3. Exit your SSH session and log back in.
+3. Exit your SSH session by running `exit` and log back in.
 4. Restart Docker daemon:
     ```
     sudo service docker restart
@@ -146,7 +151,7 @@
     docker run hello-world
     ```
 
-### Docker Compose
+### **Docker Compose**
 1. Install docker compose from docker compose github repo (`v.2.17.3`):
     ```
     # Create a bin folder in your `~` directory
@@ -175,7 +180,8 @@
     - Save and exit. (CTRL+S, CTRL+X)
 6. For the changes to take effect, do `source .bashrc`
 7. Try running `docker-compose`
-### Terraform
+
+### **Terraform**
 
 1. Run the following:
     ```
@@ -189,7 +195,8 @@
     ```
     terraform --version
     ```
-### Clone the repo within your VM
+
+### **Clone the repo within your VM**
 
 1. Clone the contents of this project repo in your `~` directory. (Do `cd ~` if you're not there.) 
 
@@ -218,21 +225,21 @@
     - Run `gloud init` and log in with your account, choose login with new gmail account (if your account is not shown). Follow the given link and authorize with the gmail account associated with the project.
     - Choose the `nfl-project-de` when prompted
 
-    <!-- - To obtain access credentials for your user account, run the following code and log in with the email associated with your google cloud:
+    - To obtain access credentials for your user account, run the following code and log in with the email associated with your google cloud:
     ```
     gcloud auth application-default login
-    ``` -->
+    ```
 4. Finished authorizing and installing. Let's build the infrastracture!
 
-# **Terraform**
+# **Building GCP infrastracture using Terraform**
+
 - Set up your GCP infrastracture using terraform
-- The following resources will be created:
+
+1. The following resources will be created:
 
     1. Big Query: Data Warehouse
     2. Google Cloud Storage: Data Lake
     3. Google Dataproc: Spark Cluster (for running spark jobs)
-
-1. After installing terraform, follow this guide: https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli
 
 2. Modify the project variables in the `variables.tf` according to your GCP Project ID and other details (Region, Data Lake name, etc.).
 
@@ -272,7 +279,7 @@ Prerequisites:
     ```
 
 2. Make sure you've done `source ~/.bashrc`, as instructed in [GCP](#gcp) setup section, to have your GOOGLE_APPLICATION_CREDENTIALS available in the session.
-3. Make sure you change the variables within the `airflow/dags/data_ingestion.py` like your Project ID and Bucket.
+3. Make sure you change the variables within the `airflow/dags/data_ingestion.py` and `airflow/docker-compose.yaml` like your Project ID and Bucket.
 3. Make the required directories for setting up airflow
     
     ```bash
@@ -357,5 +364,5 @@ Prerequisites:
 8. Change your bucket variable in the `airflow/code/transform_pyspark.py`.
 
 9. Run the 2 dags separately, in this order:
-    1. `nfl_extract_load_GCS` 
-    2. `nfl_transform_load_BQ` 
+    1. `nfl_extraction_dag`
+    2. `nfl_transformation_dag`
