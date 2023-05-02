@@ -292,7 +292,7 @@ Prerequisites:
     i. Start docker daemon by opening Docker Desktop in Windows and run the following in your CLI
 
     ```
-    echo -e "AIRFLOW_UID=$(id -u) > .env
+    echo -e "AIRFLOW_UID=$(id -u)" > .env
     ```
 
     ii. Build the image
@@ -333,7 +333,7 @@ Prerequisites:
 
 5. Login to Airflow web UI on localhost:8080 with default creds: airflow/airflow
     - If you can't access localhost:8080 you may need to forward ports of your VM machine to your local machine
-    - The easiest way to do this is connect your VM to VSCODE and forward ports there:
+    - The easiest way to do this is to connect your VM to VSCODE and forward ports there:
         - Open a remote window by clicking the bottom-left icon (><) and choose connect to Host (Remote-SSH)
             - ![](./images/2023-05-02-12-24-09.png)
         - Forward port for Airflow webserver (8080):
@@ -354,7 +354,9 @@ Prerequisites:
     ```
     gcloud init
     ```
-
+    ```
+    gcloud auth application-default login
+    ```
     Choose your account and project when prompted.
 
 7. You can choose to run the DAGs for different years, just change the params in the parameter section of the DAG in `airflow/dags/data_ingestion.py`. If airflow was setup correctly, changes within the DAG (on your local copy) should sync with the DAG in the docker container.
