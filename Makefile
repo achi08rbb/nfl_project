@@ -33,7 +33,7 @@ gcloud-initialize:
 	@mkdir -p ~/.google/credentials/
 	@gcloud iam service-accounts create ${GCLOUD_SERVICE_ACCOUNT_USER} --description="Service account for ML projects" --display-name="${GCLOUD_SERVICE_ACCOUNT_USER}"
 	
-# @gcloud iam service-accounts get-iam-policy ${GCLOUD_SERVICE_ACCOUNT_USER}@machine-learning-387107.iam.gserviceaccount.com --format json > ~/.google/credentials/${GCLOUD_SERVICE_ACCOUNT_USER}-policy.json
+# @gcloud iam service-accounts get-iam-policy ${GCLOUD_SERVICE_ACCOUNT_USER}@macYhine-learning-387107.iam.gserviceaccount.com --format json > ~/.google/credentials/${GCLOUD_SERVICE_ACCOUNT_USER}-policy.json
 # 
 # @gcloud iam service-accounts set-iam-policy ${GCLOUD_SERVICE_ACCOUNT_USER}@machine-learning-387107.iam.gserviceaccount.com \
 # ~/.google/credentials/${GCLOUD_SERVICE_ACCOUNT_USER}-policy.json
@@ -61,8 +61,8 @@ gcloud-initialize:
 
 	@gcloud projects add-iam-policy-binding ${GCLOUD_PROJECT_ID} --member="serviceAccount:${GCLOUD_SERVICE_ACCOUNT_USER}@${GCLOUD_PROJECT_ID}.iam.gserviceaccount.com" \
 	--role="roles/dataproc.serviceAgent"
-	
-	@cd ${GCLOUD_CREDENTIALS_DIR} && gcloud iam service-accounts keys create ml_credentials.json --iam-account=${GCLOUD_SERVICE_ACCOUNT_USER}@${GCLOUD_PROJECT_ID}.iam.gserviceaccount.com
+
+	@cd ${GCLOUD_CREDENTIALS_DIR} && gcloud iam service-accounts keys create ${GOOGLE_CREDENTIALS_NAME} --iam-account=${GCLOUD_SERVICE_ACCOUNT_USER}@${GCLOUD_PROJECT_ID}.iam.gserviceaccount.com
 	@gcloud auth application-default login
 
 
@@ -74,9 +74,11 @@ airflow-setup:
 
 # In another shell session, get the worker id 
 airflow-gcloud-init:
-	docker exec -it $(docker ps --filter "name=airflow-worker" --format "{{.ID}}") bash
-	gcloud init
-	gcloud auth application-default login
+	docker exec -it $(docker ps --filter "name=airflow-worker-1" --format "{{.ID}}") gcloud init
+	docker exec -it $(docker ps --filter "name=airflow-worker-1" --format "{{.ID}}") gcloud auth application-default login
+# gcloud init
+# gcloud auth application-default login
+# port forward and go to localhost:8080 in browser, airflow:airflow
 
 vm-down:
 	@gcloud compute instances delete ${GCLOUD_VM} --zone asia-east1-a
