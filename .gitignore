@@ -1,2 +1,6 @@
 airflow/logs
 7ProjectAirflow.code-workspace
+*.pyc
+*.tfstate
+*.hcl
+.terraform
