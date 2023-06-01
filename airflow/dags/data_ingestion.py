@@ -37,11 +37,7 @@ from extraction_nfl import get_teams, get_teams_stats, get_athlete_ids, get_athl
 # CHANGE YOUR PROJECT VARIABLES HERE (Ex. ("GCP_PROJECT_ID", "to-be-changed"))
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "nfl-project-de")
 BUCKET = os.environ.get("GCP_GCS_BUCKET", "nfl-data-lake_nfl-project-de")
-<<<<<<< HEAD
 REGION= os.environ.get("GCP_REGION", "asia-east1")
-
-=======
->>>>>>> 2b83a45 (Update)
 #===================================================================================
 # CHANGE DESIRED PARAMS HERE
 year=2022

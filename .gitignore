@@ -1,12 +1,9 @@
 airflow/logs
 7ProjectAirflow.code-workspace
-<<<<<<< HEAD
-**/__pycache__/
-=======
 **/__pycache/
->>>>>>> 2b83a45 (Update)
 *.tfstate
 *.hcl
 .terraform
 airflow/dags/__pycache__/
 *.pyc
+git
