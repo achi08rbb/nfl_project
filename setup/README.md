@@ -12,7 +12,7 @@ Prerequisites
 
 4. To run, go into the root of project directory `~/nfl_project/`. Make sure the folder follows the `nfl_project` name:
 
-  1. Download `setup_vm.sh` and `.env` file. Setup GCP VM using the `setup_vm.sh`
+  1. Download `setup_vm.sh` and `.env` file. Modify the `.env` file. Setup GCP VM using the `setup_vm.sh`
 
       ```
       export $(cat .env|xargs)
@@ -21,11 +21,15 @@ Prerequisites
 
       ssh $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
       ```
+
 - You should now be in the VM's shell
+
   2. Clone the repo and move to the repo directory to use the Makefile
 
       ```
       git clone https://github.com/rbblmr/nfl_project.git
+
+      cd nfl_project
       ```
 
   3. Modify the .env file depending on your setup, modify the GOOGLE_APPLICATION_CREDENTIALS in the Makefile
@@ -49,9 +53,11 @@ Prerequisites
       ```
   
   
-  7. Initialize gcloud:
+  7. Initialize gcloud, choose to log in with new account (your gmail account):
 
       ```
+      cd nfl_project
+
       make gcloud-initialize
       ```
   
@@ -82,10 +88,15 @@ Prerequisites
 
       or
   
-      Open another terminal session:
+      Open another terminal session and move to the local location where you downloaded your .env in STEP 1 :
 
       ```
+      export $(cat .env|xargs)
+
       ssh -L 8080:localhost:8080 $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
       ```
+      - You can now access `localhost:8080` in your browser
   
   13. In the airflow UI, enter the default credentials `username: airflow` `password:airflow` you should see two DAGs. Run them.
+    a. Unpause the first DAG and wait for the run to finish before unpausing the second DAG
+        - ![](./setup/images/2023-06-01-23-30-50.png)
