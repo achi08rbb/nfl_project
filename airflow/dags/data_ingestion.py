@@ -219,11 +219,7 @@ def nfl_transform_load_BQ():
             task_id="pyspark_job_to_dataproc",
             bash_command=f"gcloud dataproc jobs submit pyspark \
                 --cluster=nfl-spark-cluster \
-<<<<<<< HEAD
-                --region={REGION} \
-=======
                 --region={GCP_ZONE} \
->>>>>>> 2b83a45 (Update)
                 --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.30.0.jar\
                 gs://{BUCKET}/code/transform_pyspark.py \
                 -- \
