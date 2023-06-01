@@ -33,6 +33,7 @@ from extraction_nfl import get_teams, get_teams_stats, get_athlete_ids, get_athl
 # CHANGE YOUR PROJECT VARIABLES HERE
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "nfl-project-de")
 BUCKET = os.environ.get("GCP_GCS_BUCKET", "nfl-data-lake_nfl-project-de")
+REGION= os.environ.get("GCP_REGION", "asia-east1")
 
 #===================================================================================
 # CHANGE DESIRED PARAMS HERE
@@ -215,7 +216,7 @@ def nfl_transform_load_BQ():
             task_id="pyspark_job_to_dataproc",
             bash_command=f"gcloud dataproc jobs submit pyspark \
                 --cluster=nfl-spark-cluster \
-                --region=europe-west6 \
+                --region={REGION} \
                 --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.30.0.jar\
                 gs://{BUCKET}/code/transform_pyspark.py \
                 -- \

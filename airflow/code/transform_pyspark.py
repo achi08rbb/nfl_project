@@ -6,7 +6,7 @@ from pyspark.sql import types
 import argparse
 
 # Create Spark Session
-spark = SparkSession.builder.master("local[*]").appName("Spark").getOrCreate()
+spark = SparkSession.builder.appName("Spark").getOrCreate()
 
 # Set up parameters
 parser=argparse.ArgumentParser()
@@ -21,7 +21,7 @@ season_type=args.season_type
 #===============================================================
 #Submit to bigquery
 BUCKET = 'gs://nfl-data-lake_nfl-project-de'
-temp_bucket = "dataproc-temp-europe-west6-447072446412-ooqjzme9"
+temp_bucket = "dataproc-temp-asia-east1-447072446412-2avywn4z"
 spark.conf.set('temporaryGcsBucket', temp_bucket)
 
 #===============================================================

@@ -9,16 +9,16 @@ variable "project" {
 
 variable "region" {
   description = "Region for GCP resources. Choose as per your location: https://cloud.google.com/about/locations"
-  default     = "asia-east1-a"
+  default     = "asia-east1"
   type        = string
 }
 
 # If you did not set up the `GOOGLE_APPLICATION_CREDENTIALS` variable, uncomment this
-# variable "credentials" {
-#   description = "path to the correct google service account"
-#   default = "<path-to-your-google-cloud-credentials/.google/credentials/<credential-file-name>.json"
-#   type = string
-# }
+variable "credentials" {
+  description = "path to the correct google service account"
+  default = "~/.google/credentials/google_credentials.json"
+  type = string
+}
 
 variable "storage_class" {
   description = "Storage class type for your bucket. Check official docs for more info."
