@@ -1,5 +1,6 @@
 airflow/logs
 7ProjectAirflow.code-workspace
+**/__pycache__/
 *.tfstate
 *.hcl
 .terraform
