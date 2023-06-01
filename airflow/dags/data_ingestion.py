@@ -22,19 +22,26 @@ from datetime import datetime,timedelta
 
 import os.path
 import sys
+from dotenv import load_dotenv
+
+# load .env, looks for .env file in pwd or parent directory
+load_dotenv()
 
 # Add code directory to python path to access the extraction_nfl module
 sys.path.append(os.path.join(os.path.dirname('/opt/airflow/code/')))
 
-# Import functions from the module                
+# Import functions from the module
 from extraction_nfl import get_teams, get_teams_stats, get_athlete_ids, get_athletes_stats, get_athletes, webscrape_defense_stats, get_leaders
 
 #===================================================================================
-# CHANGE YOUR PROJECT VARIABLES HERE
+# CHANGE YOUR PROJECT VARIABLES HERE (Ex. ("GCP_PROJECT_ID", "to-be-changed"))
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "nfl-project-de")
 BUCKET = os.environ.get("GCP_GCS_BUCKET", "nfl-data-lake_nfl-project-de")
+<<<<<<< HEAD
 REGION= os.environ.get("GCP_REGION", "asia-east1")
 
+=======
+>>>>>>> 2b83a45 (Update)
 #===================================================================================
 # CHANGE DESIRED PARAMS HERE
 year=2022
@@ -216,7 +223,11 @@ def nfl_transform_load_BQ():
             task_id="pyspark_job_to_dataproc",
             bash_command=f"gcloud dataproc jobs submit pyspark \
                 --cluster=nfl-spark-cluster \
+<<<<<<< HEAD
                 --region={REGION} \
+=======
+                --region={GCP_ZONE} \
+>>>>>>> 2b83a45 (Update)
                 --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.30.0.jar\
                 gs://{BUCKET}/code/transform_pyspark.py \
                 -- \

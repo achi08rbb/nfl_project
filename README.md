@@ -52,8 +52,8 @@
   - Future queries would most likely involve computing data pertinent to teamId or athleteId.
   - No clustering was performed since the dataset is relatively small and the benefits may not be as pronounced as with large datasets.
 
-## **Transformations**
-  - Tranformations were defined with Spark, although the dataset is relatively small. For learning purposes, Spark was the tool of choice.
+## **Transformation**
+  - Transformation code is found in [airflow](./airflow/code/transform_pyspark.py) folder.Tranformations were defined with Spark, although the dataset is relatively small. For learning purposes, Spark was the tool of choice.
   - Spark jobs were submitted to Dataproc 
 
 ## **Dashboard**
@@ -66,9 +66,27 @@
 
     Sample:
 
-    ![](./setup/images/2023-05-01-17-02-36.png)
+    ![](./setup/images/nfl_project_tableau.png)
+
 
 ## **Reproducibility**
  - Instructions are provided in the [setup](./setup/Setup(VM).md) folder to guide you through the installation and configuration process. 
  - Following these instructions carefully can help ensure a smooth and successful setup process.
+
+  - To run:
+
+  1. Create a GCP VM using the setupVM.sh
+  1. Modify the .env file depending on your setup, modify the GOOGLE_APPLICATION_CREDENTIALS in the Makefile
+
+  2. Clone the repo and move to the repo directory to use the Makefile
+    ```
+    git clone https://github.com/rbblmr/nfl_project.git
+    ```
+  
+  3. Run to have make avaiable as a command
+    ```
+    sudo apt install make
+    ```
+  
+  4. Install prer
 
