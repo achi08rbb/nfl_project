@@ -3,12 +3,7 @@ Prerequisites
 
 2. Setup your project named `nfl-project-de`. Take note of your `project ID`.
 
-3. Download google SDK. Enable the following APIs in the console:
-
-    - https://console.cloud.google.com/apis/library/iam.googleapis.com
-    - https://console.cloud.google.com/apis/library/iamcredentials.googleapis.com
-    - https://console.developers.google.com/apis/api/dataproc.googleapis.com/
-
+3. Download Google SDK
 
 4. To run, go into the root of project directory `~/nfl_project/`. Make sure the folder follows the `nfl_project` name:
 
@@ -98,5 +93,5 @@ Prerequisites
       - You can now access `localhost:8080` in your browser
   
   13. In the airflow UI, enter the default credentials `username: airflow` `password:airflow` you should see two DAGs. Run them.
-    a. Unpause the first DAG and wait for the run to finish before unpausing the second DAG
+    a. Unpause the first DAG and WAIT for the run to finish before unpausing the second DAG
         - ![](./setup/images/2023-06-01-23-30-50.png)
