@@ -6,4 +6,3 @@ airflow/logs
 .terraform
 airflow/dags/__pycache__/
 *.pyc
-git

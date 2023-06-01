@@ -1,14 +1,14 @@
 SHELL:=/bin/bash
 -include .env
-# Outside prerequisites:
+# Outside make:
 # sudo apt install make
 
-# this makes it available to the terminal session not only in this makefile
+# This does not makee it available to the terminal session, only in this makefile
 export GOOGLE_APPLICATION_CREDENTIALS=~/.google/credentials/google_credentials.json
 
-#Clone repo and move to the repo directory to use the make file
-#git clone https://github.com/rbblmr/nfl_project.git
-#sudo apt install make
+# Clone repo and move to the repo directory to use the make file
+# git clone https://github.com/rbblmr/nfl_project.git
+# sudo apt install make
 
 prerequisites: 
 	@sudo apt update && sudo apt -y upgrade
@@ -18,8 +18,9 @@ prerequisites:
 	@-sudo gpasswd -a ${USER} docker
 # exit
 # ssh ml-instance.${GCLOUD_ZONE}.${GCLOUD_PROJECT_ID}
-	@sudo service docker restart
-# adding - before the command ignores any warning
+# @sudo service docker restart # Try not doing this
+
+# Adding - before the command ignores any warning
 	@-mkdir ~/bin
 	@cd ~/bin; wget https://github.com/docker/compose/releases/download/v2.17.3/docker-compose-linux-x86_64 -O docker-compose
 	@chmod +x ~/bin/docker-compose
@@ -27,6 +28,7 @@ prerequisites:
 	@echo 'export PATH="${HOME}/bin:${PATH}"' >> ~/.bashrc
 # echo -e makes the /t /n /r possible escapes
 	@source ~/.bashrc
+	@make terraform-setup
 
 terraform-setup:
 	curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
@@ -34,19 +36,19 @@ terraform-setup:
 	sudo apt-get update && sudo apt-get install terraform
 
 gcloud-initialize:
+	@echo "export $(cat ~/nfl_project/.env|xargs)"
 	@gcloud init
 	@mkdir -p ~/.google/credentials/
-	@gcloud iam service-accounts create ${GCP_SERVICE_ACCOUNT_USER} --description="Service account for ML projects" --display-name="${GCP_SERVICE_ACCOUNT_USER}"
-	
-<<<<<<< HEAD
-# @gcloud iam service-accounts get-iam-policy ${GCLOUD_SERVICE_ACCOUNT_USER}@macYhine-learning-387107.iam.gserviceaccount.com --format json > ~/.google/credentials/${GCLOUD_SERVICE_ACCOUNT_USER}-policy.json
-=======
-# @gcloud iam service-accounts get-iam-policy ${GCP_SERVICE_ACCOUNT_USER}@machine-learning-387107.iam.gserviceaccount.com --format json > ~/.google/credentials/${GCP_SERVICE_ACCOUNT_USER}-policy.json
->>>>>>> 2b83a45 (Update)
-# 
-# @gcloud iam service-accounts set-iam-policy ${GCP_SERVICE_ACCOUNT_USER}@machine-learning-387107.iam.gserviceaccount.com \
-# ~/.google/credentials/${GCP_SERVICE_ACCOUNT_USER}-policy.json
+####################################### FIX TO ENABLE API ##############################	
+# Enable API services
+	@gcloud services enable iam.googleapis.com
+	@gcloud services enable iamcredentials.googleapis.com
+	@gcloud services enable dataproc.googleapis.com
 
+# Create Service Account
+	@gcloud iam service-accounts create ${GCP_SERVICE_ACCOUNT_USER} --description="Service account for NFL project" --display-name="${GCP_SERVICE_ACCOUNT_USER}"
+
+# Add roles
 	@gcloud projects add-iam-policy-binding ${GCP_PROJECT_ID} --member="serviceAccount:${GCP_SERVICE_ACCOUNT_USER}@${GCP_PROJECT_ID}.iam.gserviceaccount.com" \
     --role="roles/viewer"
 
@@ -70,24 +72,22 @@ gcloud-initialize:
 
 	@gcloud projects add-iam-policy-binding ${GCP_PROJECT_ID} --member="serviceAccount:${GCP_SERVICE_ACCOUNT_USER}@${GCP_PROJECT_ID}.iam.gserviceaccount.com" \
 	--role="roles/dataproc.serviceAgent"
-<<<<<<< HEAD
 
-	@cd ${GCLOUD_CREDENTIALS_DIR} && gcloud iam service-accounts keys create ${GOOGLE_CREDENTIALS_NAME} --iam-account=${GCLOUD_SERVICE_ACCOUNT_USER}@${GCLOUD_PROJECT_ID}.iam.gserviceaccount.com
-=======
-	
-	@cd ${GCP_CREDENTIALS_DIR} && gcloud iam service-accounts keys create ml_credentials.json --iam-account=${GCP_SERVICE_ACCOUNT_USER}@${GCP_PROJECT_ID}.iam.gserviceaccount.com
->>>>>>> 2b83a45 (Update)
+# Download the credentials
+	@cd ${GCP_CREDENTIALS_DIR} && gcloud iam service-accounts keys create ${GCP_CREDENTIALS_NAME} --iam-account=${GCP_SERVICE_ACCOUNT_USER}@${GCP_PROJECT_ID}.iam.gserviceaccount.com
+
+# Authenticate the credentials
 	@gcloud auth application-default login
 
 
-terraform-infrastracture: 
+terraform-infra: 
 	cd ~/nfl_project/terraform; terraform init; terraform plan -var="project=${GCP_PROJECT_ID}"; terraform apply -var="project=${GCP_PROJECT_ID}"
 
 airflow-setup:
 	cd ~/nfl_project/airflow; mkdir -p ./dags ./logs ./plugins; echo -e "AIRFLOW_UID=$(id -u)" > ./airflow/.env; docker-compose build; docker-compose up -d
 
-# In another shell session, get the worker id 
 airflow-gcloud-init:
+# Google credentials variable must be available in the session
 	docker exec -it $(docker ps --filter "name=airflow-worker-1" --format "{{.ID}}") gcloud init
 	docker exec -it $(docker ps --filter "name=airflow-worker-1" --format "{{.ID}}") gcloud auth application-default login
 # gcloud init
