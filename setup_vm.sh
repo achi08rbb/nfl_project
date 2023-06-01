@@ -7,4 +7,3 @@ gcloud compute instances create $GCP_VM --zone=$GCP_ZONE --image-family=ubuntu-2
 gcloud compute config-ssh
 ssh $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
 
-

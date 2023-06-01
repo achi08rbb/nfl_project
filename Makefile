@@ -16,8 +16,10 @@ prerequisites:
 	@sudo pip install pipenv
 	@-sudo groupadd docker
 	@-sudo gpasswd -a ${USER} docker
+	@echo "export $(cat ~/nfl_project/.env|xargs)"
+# Do this to make the .env variables available in the session	
 # exit
-# ssh ml-instance.${GCLOUD_ZONE}.${GCLOUD_PROJECT_ID}
+# ssh ${GCP_VM}.${GCP_ZONE}.${GCP_PROJECT_ID}
 # @sudo service docker restart # Try not doing this
 
 # Adding - before the command ignores any warning
@@ -27,6 +29,7 @@ prerequisites:
 	@touch ~/.bashrc
 	@echo 'export PATH="${HOME}/bin:${PATH}"' >> ~/.bashrc
 # echo -e makes the /t /n /r possible escapes
+
 	@source ~/.bashrc
 	@make terraform-setup
 
@@ -36,7 +39,6 @@ terraform-setup:
 	sudo apt-get update && sudo apt-get install terraform
 
 gcloud-initialize:
-	@echo "export $(cat ~/nfl_project/.env|xargs)"
 	@gcloud init
 	@mkdir -p ~/.google/credentials/
 ####################################### FIX TO ENABLE API ##############################	
@@ -87,7 +89,7 @@ airflow-setup:
 	cd ~/nfl_project/airflow; mkdir -p ./dags ./logs ./plugins; echo -e "AIRFLOW_UID=$(id -u)" > ./airflow/.env; docker-compose build; docker-compose up -d
 
 airflow-gcloud-init:
-# Google credentials variable must be available in the session
+# Google credentials variable must be available in the parent session
 	docker exec -it $(docker ps --filter "name=airflow-worker-1" --format "{{.ID}}") gcloud init
 	docker exec -it $(docker ps --filter "name=airflow-worker-1" --format "{{.ID}}") gcloud auth application-default login
 # gcloud init
@@ -95,4 +97,4 @@ airflow-gcloud-init:
 # port forward and go to localhost:8080 in browser, airflow:airflow
 
 vm-down:
-	@gcloud compute instances delete ${GCP_VM} --zone asia-east1-a
+	@gcloud compute instances delete ${GCP_VM} --zone ${GCP_ZONE}
