@@ -1,9 +1,9 @@
 Prerequisites 
-1. Create a GCP account with your Google email address
+1. Create a GCP account with your Google email address. 
 
 2. Setup your project named `nfl-project-de`. Take note of your `project ID`.
 
-3. Enable the following APIs in the console:
+3. Download google SDK. Enable the following APIs in the console:
 
     - https://console.cloud.google.com/apis/library/iam.googleapis.com
     - https://console.cloud.google.com/apis/library/iamcredentials.googleapis.com
@@ -12,10 +12,14 @@ Prerequisites
 
 4. To run, go into the root of project directory `~/nfl_project/`. Make sure the folder follows the `nfl_project` name:
 
-  1. Create a GCP VM using the `setup_vm.sh`
+  1. Download `setup_vm.sh` and `.env` file. Setup GCP VM using the `setup_vm.sh`
 
       ```
+      export $(cat .env|xargs)
+
       ./setup_vm.sh
+
+      ssh $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
       ```
 - You should now be in the VM's shell
   2. Clone the repo and move to the repo directory to use the Makefile
