@@ -91,6 +91,7 @@ airflow-setup:
 
 airflow-gcloud-init:
 # Google credentials variable must be available in the parent session
+# Must use $$ for () so that function will appear in the shell
 	docker exec -it $$(docker ps --filter "name=airflow-worker" --format "{{.ID}}") gcloud init
 	docker exec -it $$(docker ps --filter "name=airflow-worker" --format "{{.ID}}") gcloud auth application-default login
 # gcloud init
