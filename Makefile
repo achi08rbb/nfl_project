@@ -87,18 +87,21 @@ terraform-infra:
 	cd ~/nfl_project/terraform; terraform init; terraform plan -var="project=${GCP_PROJECT_ID}"; terraform apply -var="project=${GCP_PROJECT_ID}"
 
 airflow-setup:
+<<<<<<< HEAD
 	cd ~/nfl_project/airflow; mkdir -p ./dags ./logs ./plugins; echo -e "AIRFLOW_UID=$$(id -u)" > ./airflow/.env"; docker-compose build; docker-compose up -d
+=======
+	cd ~/nfl_project/airflow; mkdir -p ./dags ./logs ./plugins; echo -e "AIRFLOW_UID=$$(id -u)" > ./airflow/.env; docker-compose build; docker-compose up -d
+>>>>>>> refs/remotes/origin/main
 
 airflow-gcloud-init:
 # Google credentials variable must be available in the parent session
-	docker exec -it $(docker ps --filter "name=airflow-worker-1" --format "{{.ID}}") gcloud init
-	docker exec -it $(docker ps --filter "name=airflow-worker-1" --format "{{.ID}}") gcloud auth application-default login
+	docker exec -it $$(docker ps --filter "name=airflow-worker" --format "{{.ID}}") gcloud init
+	docker exec -it $$(docker ps --filter "name=airflow-worker" --format "{{.ID}}") gcloud auth application-default login
 # gcloud init
 # gcloud auth application-default login
 # port forward and go to localhost:8080 in browser, airflow:airflow
-
 clean:
-	cd ~/nfl_project/airflow; docker-compose down
+	cd ~/nfl_project/airflow; docker-compose down --volumes --rmi all
 	cd ~/nfl_project/terraform; terraform destroy
 vm-down:
 	@gcloud compute instances delete ${GCP_VM} --zone ${GCP_ZONE}
