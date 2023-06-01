@@ -46,6 +46,7 @@ gcloud-initialize:
 	@gcloud services enable iam.googleapis.com
 	@gcloud services enable iamcredentials.googleapis.com
 	@gcloud services enable dataproc.googleapis.com
+#@gcloud services enable compute.googleapis.com
 
 # Create Service Account
 	@gcloud iam service-accounts create ${GCP_SERVICE_ACCOUNT_USER} --description="Service account for NFL project" --display-name="${GCP_SERVICE_ACCOUNT_USER}"
