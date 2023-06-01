@@ -5,6 +5,8 @@ SHELL:=/bin/bash
 export GOOGLE_APPLICATION_CREDENTIALS=~/.google/credentials/google_credentials.json
 
 #Clone repo and move to the repo directory to use the make file
+#git clone https://github.com/achi08rbb/nfl_project.git
+#sudo apt install make
 
 prerequisites: 
 	@sudo apt update && sudo apt -y upgrade

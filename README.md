@@ -7,6 +7,7 @@
   - Transforming the data using Pyspark
   - Loading the transformed data to BigQuery (Data Warehouse)
   - Visualize the data using Tableau
+    ![](./setup/images/nfl_project_architecture.png)
 
 ## **Problem description**
  - The regular season of the National Football League (NFL) consists of 17 weeks and each of the 32 teams plays 16 games. This is followed by a single-elimination playoff tournament, consisting of 14 teams: 4 division winners and 3 wild-card teams from each conference (AFC and NFC). The playoffs culminates during the Super Bowl to determine the champion of the season.
