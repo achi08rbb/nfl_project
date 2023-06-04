@@ -7,7 +7,7 @@ Prerequisites
 
 4. To run, go into the root of project directory `~/nfl_project/`. Make sure the folder follows the `nfl_project` name:
 
-  1. Download `setup_vm.sh` and `.env` file. Modify the `.env` file. Setup GCP VM using the `setup_vm.sh`
+  1. Download `setup_vm.sh` and `.env` file. Modify the `.env` file with your GCP Project details. Setup GCP VM using the `setup_vm.sh`
 
       ```
       export $(cat .env|xargs)
@@ -27,28 +27,26 @@ Prerequisites
       cd nfl_project
       ```
 
-  3. Modify the .env file depending on your setup, modify the GOOGLE_APPLICATION_CREDENTIALS in the Makefile
-
-  4. Run this to have `make` avaiable as a command in the VM:
+  3. Run this to have `make` avaiable as a command in the VM:
 
       ```
       sudo apt install make
       ```
   
-  5. Install prerequisites: (CHECK IF YOU need to restart docker again on new ssh)
+  4. Install prerequisites:
     
       ```
       make prerequisites
       ```
 
-  6. Exit the shell and start an SSH session again
+  5. Exit the shell and start an SSH session again
 
       ```
       ssh $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
       ```
   
   
-  7. Initialize gcloud, choose to log in with new account (your gmail account):
+  6. Initialize gcloud, choose to log in with new account (your gmail account):
 
       ```
       cd nfl_project
@@ -56,34 +54,39 @@ Prerequisites
       make gcloud-initialize
       ```
   
-  8. Create terraform infrastructure:
+  7. Create terraform infrastructure:
 
       ```
       make terraform-infra
       ```
 
-  9. Setup airflow:
+  8. Setup airflow:
 
       ```
       make airflow-setup
       ```
 
-  10. Initialize gcloud within the airflow worker:
+  9. Initialize gcloud within the airflow worker:
 
       ```
       make airflow-gcloud-init
       ```
   
-  12. Forward the 8080 port to access airflow in your browser. The easiest way to do this is in VSCode. You already have your config file when you used `gcloud compute config-ssh` in `setup_vm.sh`.
-    a. Make sure you've installed `Remote-SSH` extension in VSCode
-    b. Open a Remote Window and select `Connect to Host`
-    c. Choose your $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
-    d. In the Terminal panel, choose ports and do port forwarding.
-    e. You can now access the airflow UI in your browser
+  10. Forward the 8080 port to access airflow in your browser. The easiest way to do this is in VSCode. You already have your config file when you used `gcloud compute config-ssh` in `setup_vm.sh`.
 
-      or
+        a. Make sure you've installed `Remote-SSH` extension in VSCode
+
+        b. Open a Remote Window and select `Connect to Host`
+        
+        c. Choose your $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
+        
+        d. In the Terminal panel, choose ports and do port forwarding.
+        
+        e. You can now access the airflow UI in your browser
+
+    Alternatively:
   
-      Open another terminal session and move to the local location where you downloaded your .env in STEP 1 :
+    Open another terminal session and move to the local location where you downloaded your .env in STEP 1 :
 
       ```
       export $(cat .env|xargs)
@@ -93,5 +96,5 @@ Prerequisites
       - You can now access `localhost:8080` in your browser
   
   13. In the airflow UI, enter the default credentials `username: airflow` `password:airflow` you should see two DAGs. Run them.
+
     a. Unpause the first DAG and WAIT for the run to finish before unpausing the second DAG
-        - ![](./setup/images/2023-06-01-23-30-50.png)

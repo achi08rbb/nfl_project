@@ -1,10 +1,5 @@
 SHELL:=/bin/bash
 -include .env
-# Outside make:
-# sudo apt install make
-
-# This does not makee it available to the terminal session, only in this makefile
-export GOOGLE_APPLICATION_CREDENTIALS=~/.google/credentials/google_credentials.json
 
 # Clone repo and move to the repo directory to use the make file
 # git clone https://github.com/rbblmr/nfl_project.git
@@ -16,8 +11,8 @@ prerequisites:
 	@sudo pip install pipenv
 	@-sudo groupadd docker
 	@-sudo gpasswd -a ${USER} docker
-	@echo "export $(cat ~/nfl_project/.env|xargs)"
 # Do this to make the .env variables available in the session	
+	@echo "export $(cat ~/nfl_project/.env|xargs)"
 # exit
 # ssh ${GCP_VM}.${GCP_ZONE}.${GCP_PROJECT_ID}
 # @sudo service docker restart # Try not doing this
@@ -41,7 +36,7 @@ terraform-setup:
 gcloud-initialize:
 	@gcloud init
 	@mkdir -p ~/.google/credentials/
-####################################### FIX TO ENABLE API ##############################	
+
 # Enable API services
 	@gcloud services enable iam.googleapis.com
 	@gcloud services enable iamcredentials.googleapis.com
@@ -91,7 +86,7 @@ airflow-setup:
 
 airflow-gcloud-init:
 # Google credentials variable must be available in the parent session
-# Must use $$ for () so that function will appear in the shell
+# Must use $$ for () so that the enclosed function will appear in the shell
 	docker exec -it $$(docker ps --filter "name=airflow-worker" --format "{{.ID}}") gcloud init
 	docker exec -it $$(docker ps --filter "name=airflow-worker" --format "{{.ID}}") gcloud auth application-default login
 # gcloud init
