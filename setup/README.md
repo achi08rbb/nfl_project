@@ -10,7 +10,7 @@ Prerequisites
   1. Download `setup_vm.sh` and `.env` file. Modify the `.env` file with your GCP Project details. Setup GCP VM using the `setup_vm.sh`
 
       ```
-      export $(cat .env|xargs)
+      export $(grep -v '^#' .env | xargs)
 
       ./setup_vm.sh
 
@@ -89,7 +89,7 @@ Prerequisites
     Open another terminal session and move to the local location where you downloaded your .env in STEP 1 :
 
       ```
-      export $(cat .env|xargs)
+      export $(grep -v '^#' .env | xargs)
 
       ssh -L 8080:localhost:8080 $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
       ```
