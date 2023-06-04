@@ -1,10 +1,6 @@
-locals {
-  data_lake_bucket = "nfl-data-lake"
-  dataproc_bucket  = "nfl-spark-staging"
-}
-
+# Change these variables
 variable "project" {
-  description = "nfl-project-de"
+  default = "nfl-project-de"
 }
 
 variable "region" {
@@ -13,7 +9,19 @@ variable "region" {
   type        = string
 }
 
-# If you did not set up the `GOOGLE_APPLICATION_CREDENTIALS` variable, uncomment this
+# service account syntax: GCP_SERVICE_ACCOUNT_USER@GCP_PROJECT_ID.iam.gserviceaccount.com
+variable "service_account" {
+  description = "Name of service account"
+  type        = string
+  default     = "nfl-user@nfl-project-de.iam.gserviceaccount.com"
+}
+
+# Do not change the following
+locals {
+  data_lake_bucket = "nfl-data-lake"
+  dataproc_bucket  = "nfl-spark-staging"
+}
+
 variable "credentials" {
   description = "path to the correct google service account"
   default = "~/.google/credentials/google_credentials.json"
@@ -37,11 +45,6 @@ variable "DATAPROC_CLUSTER" {
   default     = "nfl-spark-cluster"
 }
 
-variable "service_account" {
-  description = "Name of service account"
-  type        = string
-  default     = "nfl-user@nfl-project-de.iam.gserviceaccount.com"
-}
 
 # "projects/nfl-project-de/regions/europe-west6/subnetworks/default"
 

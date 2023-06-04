@@ -7,8 +7,11 @@ Prerequisites
 
 4. To run, go into the root of project directory `~/nfl_project/`. Make sure the folder follows the `nfl_project` name:
 
-  1. Download `setup_vm.sh` and `.env` file. Modify the `.env` file with your GCP Project details. Setup GCP VM using the `setup_vm.sh`
-
+  1. Download `setup_vm.sh` and `.env` file. Modify the `.env` file with your GCP Project details.
+    - Modify the ~/nfl_project/terraform/variables_tf accordingly.
+    - Setup GCP VM using the `setup_vm.sh`.
+    - You will be prompted to choose your email and project. Select accordingly.
+    - You will be asked to enable compute.googleapis.com API. Select `Y` option.
       ```
       export $(grep -v '^#' .env | xargs)
 
@@ -42,11 +45,17 @@ Prerequisites
   5. Exit the shell and start an SSH session again
 
       ```
+      exit
+      ```
+
+      ```
       ssh $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
       ```
   
   
   6. Initialize gcloud, choose to log in with new account (your gmail account):
+    - You will be asked to login with a new account and will be redirected to a link to authenticate with your email account for Google SDK. Select your project after.
+    - You will again be asked to authenticate with Google Auth Library, follow the link and authorize.
 
       ```
       cd nfl_project
@@ -67,7 +76,9 @@ Prerequisites
       ```
 
   9. Initialize gcloud within the airflow worker:
-
+    - You will be asked to login with a new account and will be redirected to a link to authenticate with your email account for Google SDK. Select your project after.
+    - You will again be asked to authenticate with Google Auth Library, follow the link and authorize.
+      
       ```
       make airflow-gcloud-init
       ```
@@ -84,17 +95,30 @@ Prerequisites
         
         e. You can now access the airflow UI in your browser
 
-    Alternatively:
-  
-    Open another terminal session and move to the local location where you downloaded your .env in STEP 1 :
+        Alternatively:
+    
+        Open another terminal session and move to the local location where you downloaded your .env in STEP 1 :
 
-      ```
-      export $(grep -v '^#' .env | xargs)
+        ```
+        export $(grep -v '^#' .env | xargs)
 
-      ssh -L 8080:localhost:8080 $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
-      ```
-      - You can now access `localhost:8080` in your browser
-  
-  13. In the airflow UI, enter the default credentials `username: airflow` `password:airflow` you should see two DAGs. Run them.
+        ssh -L 8080:localhost:8080 $GCP_VM.$GCP_ZONE.$GCP_PROJECT_ID
+        ```
+        - You can now access `localhost:8080` in your browser
+    
+  11. In the airflow UI, enter the default credentials `username: airflow` `password:airflow` you should see two DAGs. Run them.
 
-    a. Unpause the first DAG and WAIT for the run to finish before unpausing the second DAG
+    a. Unpause the first DAG (nfl_extraction_dag) by clicking on the toggle button and WAIT for the run to finish before unpausing the second DAG (nfl_transformation_dag)
+        
+    - DAG home
+        
+    - ![](./images/nfl_airflow_dags.png)
+    
+    - You should see the following once it's finished running (9 tasks finished):
+    
+    - ![](./images/nfl_airflow_dag_1.png)
+
+    b. Unpause the second DAG and wait for it to finish 
+
+  12. You should now have your data in the Big Query data warehouse which you can access to create a dashboard in Tableau or any other tool.
+
