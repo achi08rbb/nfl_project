@@ -107,18 +107,18 @@ Prerequisites
         - You can now access `localhost:8080` in your browser
     
   10. In the airflow UI, enter the default credentials `username: airflow` `password:airflow` you should see two DAGs. Run them.
-
-    a. Unpause the first DAG (nfl_extraction_dag) by clicking on the toggle button and WAIT for the run to finish before unpausing the second DAG (nfl_transformation_dag)
+  
+      a. Unpause the first DAG (nfl_extraction_dag) by clicking on the toggle button and WAIT for the run to finish before unpausing the second DAG (nfl_transformation_dag)
         
-    - DAG home
-        
-    - ![](./images/nfl_airflow_dags.png)
-    
-    - You should see the following once it's finished running (9 tasks finished):
-    
-    - ![](./images/nfl_airflow_dag_1.png)
+      - DAG home
+          
+      - ![](./images/nfl_airflow_dags.png)
+      
+      - You should see the following once it's finished running (9 tasks finished):
+      
+      - ![](./images/nfl_airflow_dag_1.png)
 
-    b. Unpause the second DAG and wait for it to finish 
+      b. Unpause the second DAG and wait for it to finish 
 
   11. You should now have your data in the Big Query data warehouse which you can access to create a dashboard in Tableau or any other tool.
 
