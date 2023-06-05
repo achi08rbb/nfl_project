@@ -5,13 +5,12 @@ Prerequisites
 
 3. Download Google SDK
 
-4. To run, go into the root of project directory `~/nfl_project/`. Make sure the folder follows the `nfl_project` name:
-
-  1. Download `setup_vm.sh` and `.env` file. Modify the `.env` file with your GCP Project details.
+4. Download `setup_vm.sh` and `.env` file. Modify the `.env` file with your GCP Project details.
     - Modify the ~/nfl_project/terraform/variables_tf accordingly.
     - Setup GCP VM using the `setup_vm.sh`.
     - You will be prompted to choose your email and project. Select accordingly.
     - You will be asked to enable compute.googleapis.com API. Select `Y` option.
+    - Input the following in your terminal:
       ```
       export $(grep -v '^#' .env | xargs)
 
@@ -22,7 +21,8 @@ Prerequisites
 
 - You should now be in the VM's shell
 
-  2. Clone the repo and move to the repo directory to use the Makefile
+## In the VM
+  1. Clone the repo and move to the repo directory to use the Makefile
 
       ```
       git clone https://github.com/rbblmr/nfl_project.git
@@ -30,19 +30,19 @@ Prerequisites
       cd nfl_project
       ```
 
-  3. Run this to have `make` avaiable as a command in the VM:
+  2. Run this to have `make` avaiable as a command in the VM:
 
       ```
       sudo apt install make
       ```
   
-  4. Install prerequisites:
+  3. Install prerequisites:
     
       ```
       make prerequisites
       ```
 
-  5. Exit the shell and start an SSH session again
+  4. Exit the shell and start an SSH session again
 
       ```
       exit
@@ -53,7 +53,7 @@ Prerequisites
       ```
   
   
-  6. Initialize gcloud, choose to log in with new account (your gmail account):
+  5. Initialize gcloud, choose to log in with new account (your gmail account):
     - You will be asked to login with a new account and will be redirected to a link to authenticate with your email account for Google SDK. Select your project after.
     - You will again be asked to authenticate with Google Auth Library, follow the link and authorize.
 
@@ -63,19 +63,19 @@ Prerequisites
       make gcloud-initialize
       ```
   
-  7. Create terraform infrastructure:
+  6. Create terraform infrastructure:
 
       ```
       make terraform-infra
       ```
 
-  8. Setup airflow:
+  7. Setup airflow:
 
       ```
       make airflow-setup
       ```
 
-  9. Initialize gcloud within the airflow worker:
+  8. Initialize gcloud within the airflow worker:
     - You will be asked to login with a new account and will be redirected to a link to authenticate with your email account for Google SDK. Select your project after.
     - You will again be asked to authenticate with Google Auth Library, follow the link and authorize.
       
@@ -83,7 +83,7 @@ Prerequisites
       make airflow-gcloud-init
       ```
   
-  10. Forward the 8080 port to access airflow in your browser. The easiest way to do this is in VSCode. You already have your config file when you used `gcloud compute config-ssh` in `setup_vm.sh`.
+  9. Forward the 8080 port to access airflow in your browser. The easiest way to do this is in VSCode. You already have your config file when you used `gcloud compute config-ssh` in `setup_vm.sh`.
 
         a. Make sure you've installed `Remote-SSH` extension in VSCode
 
@@ -106,7 +106,7 @@ Prerequisites
         ```
         - You can now access `localhost:8080` in your browser
     
-  11. In the airflow UI, enter the default credentials `username: airflow` `password:airflow` you should see two DAGs. Run them.
+  10. In the airflow UI, enter the default credentials `username: airflow` `password:airflow` you should see two DAGs. Run them.
 
     a. Unpause the first DAG (nfl_extraction_dag) by clicking on the toggle button and WAIT for the run to finish before unpausing the second DAG (nfl_transformation_dag)
         
@@ -120,5 +120,5 @@ Prerequisites
 
     b. Unpause the second DAG and wait for it to finish 
 
-  12. You should now have your data in the Big Query data warehouse which you can access to create a dashboard in Tableau or any other tool.
+  11. You should now have your data in the Big Query data warehouse which you can access to create a dashboard in Tableau or any other tool.
 
